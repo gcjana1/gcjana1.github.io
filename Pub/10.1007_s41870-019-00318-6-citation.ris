@@ -1,0 +1,19 @@
+TY  - JOUR
+AU  - Chakraborty, Sabyasachi
+AU  - Jana, Gopal Chandra
+AU  - Kumari, Divya
+AU  - Swetapadma, Aleena
+PY  - 2020
+DA  - 2020/06/01
+TI  - An improved method using supervised learning technique for diabetic retinopathy detection
+JO  - International Journal of Information Technology
+SP  - 473
+EP  - 477
+VL  - 12
+IS  - 2
+AB  - Now a day’s intelligent diagnoses approaches are massively accepted for the purpose of advance analysis and detection of several diseases. In this work a supervised learning based approach using artificial neural network (ANN) has been proposed to achieve more accurate diagnoses outcomes for the case of diabetic retinopathy. Features extracted from the retina images are used as input to the ANN based classifier. Customized ANN architecture by estimating several entities of traditional ANN has been used to improve the accuracy of the method. The ANN architecture used in this work is feed forward back propagation neural network. Accuracy obtained for the proposed method is found to be 97.13%. The results suggest that proposed method can be used to detect diabetic retinopathy effectively.
+SN  - 2511-2112
+UR  - https://doi.org/10.1007/s41870-019-00318-6
+DO  - 10.1007/s41870-019-00318-6
+ID  - Chakraborty2020
+ER  - 
