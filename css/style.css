@@ -24,7 +24,7 @@ width:50%;
 {
 background-position:center;
 background-repeat:no-repeat;
-background-size:cover;
+background-size: auto;
 }
 .section-container .columns.content .content-container
 {
@@ -44,7 +44,7 @@ margin-bottom:20px;
 margin-bottom:15px;
 text-align:justify;
 }
-@media screen and (max-width:1000px)
+@media screen and (max-width:767px)
 {
 .section-container
 {
