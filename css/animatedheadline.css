@@ -39,8 +39,6 @@ a {
 	font-weight: 700;
 	margin-bottom: 20px;
 	text-transform: none;
-	position: fixed;
-	z-index: 1;
 }
 
 div#text-btn button {
