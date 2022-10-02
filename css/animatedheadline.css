@@ -38,7 +38,7 @@ a {
 	line-height: 38px;
 	font-weight: 700;
 	margin-bottom: 20px;
-	text-transform: uppercase;
+	text-transform: none;
 }
 
 div#text-btn button {
@@ -64,7 +64,7 @@ div#text-btn button:hover {
     background: transparent;
 }
 span.gold-title {
-    font-size: 38px !important;
+    font-size: 32px !important;
     margin: -10px 0;
     color: #0000FF;
 }
