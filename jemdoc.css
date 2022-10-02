@@ -11,7 +11,7 @@ body {
 	/*font-family: Georgia, serif;*/
 	font-family: Arial, sans-serif;
 	padding-bottom: 8px;
-	margin-left: 120px;
+	margin: 0;
 }
 
 #layout-menu {
@@ -21,17 +21,16 @@ body {
 	padding-left: 8px;
 	padding-right: 8px;
 	font-size: 1.0em;
-	hight: 100%
 	width: auto;
 	white-space: nowrap;
     	text-align: left;
     	vertical-align: top;
-	position: fixed;
 }
 
 #layout-menu td {
 	background: #f4f4f4;
     vertical-align: top;
+	position: fixed;
 }
 
 #layout-content {
