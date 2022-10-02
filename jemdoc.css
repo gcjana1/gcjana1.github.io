@@ -23,8 +23,9 @@ body {
 	font-size: 1.0em;
 	width: auto;
 	white-space: nowrap;
-    text-align: left;
-    vertical-align: top;
+    	text-align: left;
+    	vertical-align: top;
+	position: fixed;
 }
 
 #layout-menu td {
