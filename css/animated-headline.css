@@ -227,7 +227,7 @@ Primary style
     animation: cd-pulse 1s infinite;
   }
   .cd-headline.type .cd-words-wrapper.selected {
-    background-color: #aebcb9;
+    background-color: #0000FF;
   }
   .cd-headline.type .cd-words-wrapper.selected::after {
     visibility: hidden;
