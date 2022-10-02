@@ -25,12 +25,12 @@ body {
 	white-space: nowrap;
     	text-align: left;
     	vertical-align: top;
-	position: fixed;
 }
 
 #layout-menu td {
 	background: #f4f4f4;
     vertical-align: top;
+	position: fixed;
 }
 
 #layout-content {
