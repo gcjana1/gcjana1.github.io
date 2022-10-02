@@ -10,7 +10,7 @@ body {
 	background: white;
 	/*font-family: Georgia, serif;*/
 	font-family: Arial, sans-serif;
-	width: 160px;
+	width: auto;
 	padding-bottom: 8px;
 	margin: 0;
 }
@@ -22,7 +22,7 @@ body {
 	padding-left: 8px;
 	padding-right: 8px;
 	font-size: 1.0em;
-	width: 160px;
+	width: auto;
 	white-space: nowrap;
     	text-align: left;
     	vertical-align: top;
