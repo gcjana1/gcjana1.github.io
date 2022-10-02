@@ -11,6 +11,7 @@ body {
 	/*font-family: Georgia, serif;*/
 	font-family: Arial, sans-serif;
 	padding-bottom: 8px;
+	width: auto;
 	margin: 0;
 }
 
@@ -25,12 +26,12 @@ body {
 	white-space: nowrap;
     	text-align: left;
     	vertical-align: top;
+	position: fixed;
 }
 
 #layout-menu td {
 	background: #f4f4f4;
     vertical-align: top;
-	position: fixed;
 }
 
 #layout-content {
