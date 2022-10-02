@@ -25,7 +25,7 @@ jQuery(document).ready(function($){
 		//insert <i> element for each letter of a changing word
 		singleLetters($('.cd-headline.letters').find('b'));
 		//initialise headline animation
-		animatedheadline($('.cd-headline'));
+		animateHeadline($('.cd-headline'));
 	}
 
 	function singleLetters($words) {
@@ -42,7 +42,7 @@ jQuery(document).ready(function($){
 		});
 	}
 
-	function animatedheadline($headlines) {
+	function animateHeadline($headlines) {
 		var duration = animationDelay;
 		$headlines.each(function(){
 			var headline = $(this);
