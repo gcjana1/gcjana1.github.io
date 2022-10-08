@@ -151,4 +151,21 @@ jQuery(document).ready(function($){
 		$oldWord.removeClass('is-visible').addClass('is-hidden');
 		$newWord.removeClass('is-hidden').addClass('is-visible');
 	}
+ //preloader
+    $(window).on('load', function() {
+        $("#loader").delay(1000).fadeOut(500);
+    })
+
+    //Videos popup jQuery 
+    var popupvideos = $('.popup-videos');
+    if(popupvideos.length){
+        $('.popup-videos').magnificPopup({
+            disableOn: 10,
+            type: 'iframe',
+            mainClass: 'mfp-fade',
+            removalDelay: 160,
+            preloader: false,
+            fixedContentPos: false
+        }); 
+    }
 });
