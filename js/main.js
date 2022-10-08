@@ -151,6 +151,7 @@ jQuery(document).ready(function($){
 		$oldWord.removeClass('is-visible').addClass('is-hidden');
 		$newWord.removeClass('is-hidden').addClass('is-visible');
 	}
+});
  //preloader
     $(window).on('load', function() {
         $("#loader").delay(1000).fadeOut(500);
@@ -168,4 +169,4 @@ jQuery(document).ready(function($){
             fixedContentPos: false
         }); 
     }
-});
+
