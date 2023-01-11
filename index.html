@@ -116,8 +116,68 @@ If you have relevant opening and are interested, you can review the following do
 </li>
 </ul>
 <h2>Selected Publications:</h2>
+<style>
+      .modalDialog {
+        position: fixed;
+        font-family: Arial, Helvetica, sans-serif;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.1);
+        z-index: 99999;
+        opacity: 0;
+        -webkit-transition: opacity 400ms ease-in;
+        -moz-transition: opacity 400ms ease-in;
+        transition: opacity 400ms ease-in;
+        pointer-events: none;
+      }
+      .modalDialog:target {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modalDialog > div {
+        width: 400px;
+        position: relative;
+        margin: 10% auto;
+        padding: 5px 20px 13px 20px;
+        border-radius: 10px;
+        background: -moz-linear-gradient(#2edbe8, #01a6b2);
+        background: -webkit-linear-gradient(#2edbe8, #01a6b2);
+        background: -o-linear-gradient(#2edbe8, #01a6b2);
+      }
+      .close {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        right: -12px;
+        text-align: center;
+        top: -10px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 1px 1px 3px #000;
+        -webkit-box-shadow: 1px 1px 3px #000;
+        box-shadow: 1px 1px 3px #000;
+      }
+      .close:hover {
+        background: #6ed1d8;
+      }
+    </style>
 <ol>
-<li><p align="justify"><b>Gopal Chandra Jana</b>, Anupam Agrawal et. al., “DWT-EMD Feature Level Fusion Based Approach over Multi and Single Channel EEG Signals for Seizure Detection” <i>Diagnostics(MDPI)</i>, vol. 12, Issue. 2, pp. 324, 2022. <a href="Pub/diagnostics-v12-i02_20220318.bib" target="_blank"><i>BibTeX</i></a> <a href="https://sites.google.com/site/gcjanahomepage/publications/Publications-Source-Codes" target="_blank"><i>Source Code</i></a> <a href="Pub/diagnostics-12-00324.pdf" target="_blank"><i>Paper(PDF)</i></a><font style="color:blue"> [Q2] </font></p>
+<li><p align="justify"><b>Gopal Chandra Jana</b>, Anupam Agrawal et. al., “DWT-EMD Feature Level Fusion Based Approach over Multi and Single Channel EEG Signals for Seizure Detection” <i>Diagnostics(MDPI)<font style="color:blue"> [Q2] </font></i>, vol. 12, Issue. 2, pp. 324, 2022. <a href="Pub/diagnostics-v12-i02_20220318.bib" target="_blank"><i>BibTeX</i></a>, <a href="https://sites.google.com/site/gcjanahomepage/publications/Publications-Source-Codes" target="_blank"><i>Source Code</i></a>,
+<a href="#openModal1">Paper(PDF)</a>
+    <div id="openModal1" class="modalDialog">
+      <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2><font style="color:red"> Alert <span>&#33</span></font></h2>
+       <p align="center">&#9734; MDPI This PDF has been included here only for the non-commercial academic and research use.  All copyright maintained by the Journal and MDPI. Any form of Copying &#40;including figures, etc.&#41; from this article aren't allowed and Violate copyright policy of the journal.<a href="Pub/diagnostics-12-00324.pdf" target="_blank"><i>Paper(PDF)</i></a>.</p>
+      </div>
+    </div></p>
 </li>
 <li><p align="justify"><b>Gopal Chandra Jana</b>, Anshuman Sabath and Anupam Agrawal, 
 “Capsule neural networks on spatio-temporal EEG frames for cross-subject emotion recognition” <i>Biomedical Signal Processing and Control (Elsevier)</i>, 
