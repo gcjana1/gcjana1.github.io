@@ -1,0 +1,14 @@
+TY  - JOUR
+AU  - Jana, Gopal Chandra
+AU  - Swami, Keshav
+AU  - Agrawal, Anupam
+PY  - 2023
+DA  - 2023/03/11
+TI  - Capsule neural network based approach for subject specific and cross-subjects seizure detection from EEG signals
+JO  - Multimedia Tools and Applications
+AB  - The objective of this study is to propose an approach to detect Seizure and Non-Seizure phenomenon from the highly inconsistent and non-linear EEG signals. In the view of performing cross-subject classification over the inconsistency and non-linear characteristics of EEG signals, we have proposed a fine-tuned Capsule Neural Network (CapsNet) based approach to classify the seizure and non-seizure EEG signals through subject specific and cross-subject training and testing. In this experiment, first we have normalized the input data using L2 normalization technique. In the second step, the normalized data have been given to the CapsNet and model level fine-tuning has been carried out. In addition to this, we have performed seizure and non-seizure classification performance evaluation using three more classifiers such as Decision Tree, Logistic Regression, Convolutional Neural Network to compare with the performance of the proposed approach. To estimate the effectiveness of the proposed approach, subject specific and cross-subject training and testing have been performed. In both experiments, we have used multi-channel and single channel EEG datasets. For subject specific experiment, the proposed approach achieved a mean accuracy of 93.50% over the dataset-1 (multi-channel) and an accuracy of 82.61% for dataset-2 (single channel). For cross-subject experiment, the proposed approach achieved a highest mean accuracy of 86.41% over the dataset-1(multi-channel) and a mean accuracy of 48.45% over the dataset-2 (single channel) which shows an advantage of CapsNet in a certain data scenario as described in result section. Overall performance of the proposed approach shown a comparable improvement over the existing approaches.
+SN  - 1573-7721
+UR  - https://doi.org/10.1007/s11042-023-14995-w
+DO  - 10.1007/s11042-023-14995-w
+ID  - Jana2023
+ER  - 
