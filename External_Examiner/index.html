@@ -6,75 +6,87 @@
     <meta name="description" content="Dr. Gopal Chandra Jana - External Examiner for PhD and MTech Thesis in EEG Signal Analysis, BCI, Applied Machine Learning, Medical AI.">
     <title>External Examiner for PhD & MTech Thesis - Dr. Gopal Chandra Jana</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #87CEEB; /* Sky Blue */
-            text-align: center;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-        h1 {
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #87CEEB; /* Sky Blue */
+        text-align: center;
+    }
+    
+    .container {
+        max-width: 100%;
+        margin: auto;
+        background: white;
+        padding: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+    }
+    
+    h1 {
         color: #333;
         text-decoration: underline;
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-        font-size: 24px; /* Adjust size if needed */
+        font-size: clamp(20px, 5vw, 24px); /* Adjust size for mobile */
         text-align: center;
-        word-wrap: break-word;
-        }
-        p {
-            line-height: 1.6;
-            color: #555;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li::before {
-            content: "✔️";
-            padding-right: 10px;
-            color: #4CAF50;
-        }
-        .menu {
-            background: #4682B4; /* Steel Blue */
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            left: 0;
-            z-index: 1000;
-        }
-        .menu-item {
-            display: inline-block;
-            margin: 5px;
-        }
-        .menu-item a {
-            text-decoration: none;
-            color: white;
-            padding: 8px 12px;
-            background: #1E90FF; /* Dodger Blue */
-            border-radius: 5px;
-        }
-        .menu-item a:hover {
-            background: #5F9EA0; /* Cadet Blue */
-        }
-        .highlight {
-            color: #0000FF; /* Blue */
-        }
-        .content {
-            margin-top: 60px; /* Offset for fixed menu */
-        }
+        word-break: break-word;
+    }
+    
+    p {
+        line-height: 1.6;
+        color: #555;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    ul li::before {
+        content: "✔️";
+        padding-right: 10px;
+        color: #4CAF50;
+    }
+    
+    .menu {
+        background: #4682B4; /* Steel Blue */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        position: relative; /* Change from fixed */
+        width: 100%;
+        overflow-x: auto; /* Allow horizontal scrolling if needed */
+    }
+    
+    .menu-item {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+    
+    .menu-item a {
+        text-decoration: none;
+        color: white;
+        padding: 8px 12px;
+        background: #1E90FF; /* Dodger Blue */
+        border-radius: 5px;
+        display: inline-block;
+    }
+    
+    .menu-item a:hover {
+        background: #5F9EA0; /* Cadet Blue */
+    }
+    
+    .highlight {
+        color: #0000FF; /* Blue */
+    }
+    
+    .content {
+        margin-top: 20px; /* Reduce space for better mobile layout */
+    }
+
     </style>
 </head>
 <body>
