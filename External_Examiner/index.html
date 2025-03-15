@@ -35,7 +35,7 @@
     h1 {
         color: #333;
         text-decoration: underline;
-        font-size: clamp(20px, 5vw, 24px); /* Adjust size for mobile */
+        font-size: clamp(20px, 5vw, 24px);
         text-align: center;
         word-break: break-word;
     }
@@ -56,18 +56,21 @@
         color: #4CAF50;
     }
     
+    /* Fixed Menu */
     .menu {
         background: #4682B4; /* Steel Blue */
         padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 20px;
+        border-radius: 0;
+        position: fixed; /* Fixed position */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 5px;
-        position: relative; /* Change from fixed */
-        width: 100%;
-        overflow-x: auto; /* Allow horizontal scrolling if needed */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     
     .menu-item {
@@ -87,18 +90,20 @@
     .menu-item a:hover {
         background: #5F9EA0; /* Cadet Blue */
     }
-    
-    .highlight {
-        color: #0000FF; /* Blue */
-    }
-    
+
+    /* Prevent content from being hidden under the fixed menu */
     .content {
-        margin-top: 20px; /* Reduce space for better mobile layout */
+        margin-top: 60px; /* Adjust this based on the menu height */
+    }
+
+    .highlight {
+        color: #0000FF;
     }
 
     </style>
 </head>
 <body>
+
     <div class="menu">
         <div class="menu-item"><a href="https://www.gcjana.in">Home</a></div>
         <div class="menu-item"><a href="https://www.gcjana.in/publications.html">Publications</a></div>
@@ -145,6 +150,6 @@
             If you're interested in having me as an examiner, please reach out to me via email with details (synopsis/summary of the thesis max. 2 pages) about the thesis work.
         </p>
     </div>
+
 </body>
 </html>
-
