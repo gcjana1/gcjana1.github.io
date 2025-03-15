@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gopal Chandra Jana - External Examiner for PhD and MTech Thesis in EEG Signal Analysis, BCI, Applied Machine Learning, Medical AI.">
+    <meta name="description" content="Dr. Gopal Chandra Jana - External Examiner for PhD and MTech Thesis in EEG Signal Analysis, BCI, Applied Machine Learning, Medical AI.">
     <title>External Examiner for PhD & MTech Thesis - Dr. Gopal Chandra Jana</title>
     <style>
         body {
@@ -24,6 +24,10 @@
         h1 {
             color: #333;
             text-decoration: underline;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
         }
         p {
             line-height: 1.6;
@@ -43,6 +47,11 @@
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            left: 0;
+            z-index: 1000;
         }
         .menu-item {
             display: inline-block;
@@ -61,11 +70,14 @@
         .highlight {
             color: #0000FF; /* Blue */
         }
+        .content {
+            margin-top: 60px; /* Offset for fixed menu */
+        }
     </style>
 </head>
 <body>
     <div class="menu">
-        <div class="menu-item"><a href="https://www.gcjana.in" class="current">Home</a></div>
+        <div class="menu-item"><a href="https://www.gcjana.in">Home</a></div>
         <div class="menu-item"><a href="https://www.gcjana.in/publications.html">Publications</a></div>
         <div class="menu-item"><a href="https://www.gcjana.in/research.html">Research</a></div>
         <div class="menu-item"><a href="https://www.gcjana.in/activities.html">Activities</a></div>
@@ -76,7 +88,7 @@
         <div class="menu-item"><a href="https://www.gcjana.in/External_Examiner">Available as External Examiner</a></div>
     </div>
 
-    <div class="container">
+    <div class="container content">
         <h1>External Examiner for PhD & MTech Thesis - Dr. Gopal Chandra Jana</h1>
         <p>
             I am available to serve as an external examiner for PhD and MTech thesis evaluations. My research interests for thesis evaluation include:
@@ -103,3 +115,4 @@
     </div>
 </body>
 </html>
+
