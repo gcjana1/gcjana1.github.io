@@ -1,0 +1,11 @@
+Gopal Chandra Jana, Abhishek Karmakar, Anupam Agrawal,
+EEG VMAC Toolbox: A User-Friendly Open-Source Toolbox for EEG Signals Visualization Manipulation Analysis and Classification,
+Procedia Computer Science,
+Volume 258,
+2025,
+Pages 1062-1080,
+ISSN 1877-0509,
+https://doi.org/10.1016/j.procs.2025.04.342.
+(https://www.sciencedirect.com/science/article/pii/S1877050925014449)
+Abstract: Electroencephalography (EEG) is a well-known, non-invasive method for monitoring and recording electrical activities of the human brain. Problem: EEG signal visualization, manipulation, analysis, and classification are essential for clinical experts, doctors, and researchers to make certain decisions. So, there is a need for a toolbox that can provide such functionalities with a user-friendly graphical user interface (GUI); availability may be commercial or open-source. Aim: This paper describes the proposed and developed open-source EEG VMAC Toolbox, which provides an interface with features including a series of state-of-the-art methods for EEG signal analysis. Method: The main menu options of EEG VMAC Toolbox are - 1) File, 2) Signal Visualization, 3) Filtering, 4) Signal Decomposition, 5) Feature Reduction, 6) Feature Extraction, 7) Label, 8) Classification Models, and 9) Help. Each menu of the toolbox contains several functionalities. In addition to these nine menus, a file conversion option is available at the bottom of the toolbox. EEG VMAC Toolbox integrates all major state-of-the-art functionalities for EEG signal visualization, manipulation, analysis, and classification, which would be a valuable addition to the current literature. Results and Findings: The EEG VMAC Toolbox has been developed using Python programming language and tested over the CHB-MIT EEG Scalp EEG dataset, a benchmark dataset for seizure detection. So, this toolbox has a provision to bring psychologists, neuroscientists, clinical experts, and EEG researchers on the same platform to pursue extensive investigation and research for better reach.
+Keywords: Electroencephalogram (EEG); EEG toolbox; EEG signal visualization toolbox; EEG signal analysis tool; Open-source toolbox; Python EEG toolbox
