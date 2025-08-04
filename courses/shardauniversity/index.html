@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="robots" content="index, follow" />
   <meta name="description" content="Courses handled by Dr. GC Jana including Artificial Intelligence and Quantum Computing for B.Tech students at Sharda and Galgotias University." />
-  <meta name="keywords" content="GC Jana, Artificial Intelligence, Quantum Computing, Sharda University, Galgotias University, CSE472, CSE063, CSP472" />
   <title>Courses by Dr. GC Jana</title>
   <style>
     body {
@@ -16,18 +15,17 @@
       color: #333;
     }
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
-
     .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100vh;
       background-color: #2c3e50;
       color: white;
       padding: 15px 10px;
-      width: 15%;
-      max-width: 180px;
       box-sizing: border-box;
+      overflow-y: auto;
     }
 
     .menu-category {
@@ -59,8 +57,11 @@
     }
 
     .content {
-      flex: 1;
+      margin-left: 180px;
       padding: 30px;
+      height: 100vh;
+      overflow-y: auto;
+      box-sizing: border-box;
     }
 
     h2, h3 {
@@ -106,132 +107,118 @@
       color: #2c3e50;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
       .sidebar {
+        position: relative;
         width: 100%;
-        max-width: none;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         height: auto;
       }
 
-      .menu-item {
-        flex: 1 1 auto;
-        text-align: center;
-      }
-
       .content {
-        padding: 20px;
+        margin-left: 0;
+        height: auto;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="sidebar">
-    <div class="menu-category">Menu</div>
-    <div class="menu-item"><a href="https://www.gcjana.in">Home</a></div>
-    <div class="menu-item"><a href="https://www.gcjana.in/publications.html">Publications</a></div>
-    <div class="menu-item"><a href="https://www.gcjana.in/research.html">Research</a></div>
-    <div class="menu-item"><a href="https://www.gcjana.in/activities.html">Activities</a></div>
-    <div class="menu-item"><a href="https://www.gcjana.in/courses.html">Courses</a></div>
-  </div>
+<div class="sidebar">
+  <div class="menu-category">Menu</div>
+  <div class="menu-item"><a href="https://www.gcjana.in">Home</a></div>
+  <div class="menu-item"><a href="https://www.gcjana.in/publications.html">Publications</a></div>
+  <div class="menu-item"><a href="https://www.gcjana.in/research.html">Research</a></div>
+  <div class="menu-item"><a href="https://www.gcjana.in/activities.html">Activities</a></div>
+  <div class="menu-item"><a href="https://www.gcjana.in/courses.html">Courses</a></div>
+</div>
 
-  <div class="content">
-    <h2>Courses Offered by Dr. GC Jana</h2>
+<div class="content">
+  <h2>Courses Offered by Dr. GC Jana</h2>
 
-    <h3>Sharda University (Term: 2501)</h3>
-    <table>
-      <tr>
-        <th>Semester</th>
-        <th>Course Code</th>
-        <th>Course Name</th>
-        <th>Course Type</th>
-        <th>Offered To</th>
-      </tr>
-      <tr>
-        <td>Odd Sem 2025</td>
-        <td>CSE472 / CSP472</td>
-        <td><a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE472/">Artificial Intelligence (Theory & Lab)</td>
-        <td>Theory + Lab</td>
-        <td>7th Sem (B.Tech – 4th Year)</td>
-      </tr>
-      <tr>
-        <td>Odd Sem 2025</td>
-        <td>CSE063</td>
-        <td><a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE063/">Quantum Computing</td>
-        <td>Theory Only</td>
-        <td>7th Sem (B.Tech – 4th Year)</td>
-      </tr>
-    </table>
-    <!--
-    <h3>Galgotias University (March 2023 – March 2025)</h3>
-    <table>
-      <tr>
-        <th>Semester</th>
-        <th>Course Code</th>
-        <th>Course Name</th>
-        <th>Course Type</th>
-        <th>Offered To</th>
-      </tr>
-      <tr>
-        <td>Odd Sem 2024–2025</td>
-        <td>R1UC503B</td>
-        <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/">Advanced Data Structures and Algorithms (ADSA)</a></td>
-        <td>Blended</td>
-        <td>5th Sem (B.Tech – 3rd Year)</td>
-      </tr>
-      <tr>
-        <td>Winter 2023–2024</td>
-        <td>R1UC601B</td>
-        <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2024/">Advanced Algorithmic Problem Solving</a></td>
-        <td>Blended</td>
-        <td>6th Sem (B.Tech – 3rd Year)</td>
-      </tr>
-      <tr>
-        <td>Summer 2022–2023</td>
-        <td>E2UC303B</td>
-        <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/oddsem2023/">Data Structures</a></td>
-        <td>Integrated</td>
-        <td>3rd Sem (B.Tech – 2nd Year)</td>
-      </tr>
-      <tr>
-        <td>Winter 2022–2023</td>
-        <td>BTCS3602</td>
-        <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2023/">Compiler Design</a></td>
-        <td>Core – Theory</td>
-        <td>6th Sem</td>
-      </tr>
-      <tr>
-        <td>Winter 2022–2023</td>
-        <td>E2UC403B</td>
-        <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2023/">Design & Analysis of Algorithms</a></td>
-        <td>Core – Comprehensive</td>
-        <td>4th Sem</td>
-      </tr>
-    </table>
--->
-    <h3>Inspirational Quotes on Teaching</h3>
-    <blockquote>
-      <strong>Dr. APJ Abdul Kalam:</strong> “Teaching is a very noble profession that shapes the character, calibre, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.”
-    </blockquote>
-    <blockquote>
-      <strong>Benjamin Franklin:</strong> “Tell me and I forget. Teach me and I remember. <strong>Involve me and I learn.</strong>”
-    </blockquote>
-    <blockquote>
-      <strong>Gail Godwin:</strong> “Good teaching is one-fourth preparation and three-fourths theater.”
-    </blockquote>
-    <blockquote>
-      <strong>William A. Foster:</strong> “Quality is never an accident; it is always the result of high intention, sincere effort, intelligent direction and skillful execution; it represents the wise choice of many alternatives.”
-    </blockquote>
-  </div>
+  <h3>Sharda University (Term: 2501)</h3>
+  <table>
+    <tr>
+      <th>Semester</th>
+      <th>Course Code</th>
+      <th>Course Name</th>
+      <th>Course Type</th>
+      <th>Offered To</th>
+    </tr>
+    <tr>
+      <td>Odd Sem 2025</td>
+      <td>CSE472 / CSP472</td>
+      <td>Artificial Intelligence (Theory & Lab)</td>
+      <td>Core + Lab</td>
+      <td>7th Sem (B.Tech – 4th Year)</td>
+    </tr>
+    <tr>
+      <td>Odd Sem 2025</td>
+      <td>CSE063</td>
+      <td>Quantum Computing</td>
+      <td>Theory Only</td>
+      <td>7th Sem (B.Tech – 4th Year)</td>
+    </tr>
+  </table>
+
+  <h3>Galgotias University (March 2023 – March 2025)</h3>
+  <table>
+    <tr>
+      <th>Semester</th>
+      <th>Course Code</th>
+      <th>Course Name</th>
+      <th>Course Type</th>
+      <th>Offered To</th>
+    </tr>
+    <tr>
+      <td>Odd Sem 2024–2025</td>
+      <td>R1UC503B</td>
+      <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/">Advanced Data Structures and Algorithms (ADSA)</a></td>
+      <td>Blended</td>
+      <td>5th Sem (B.Tech – 3rd Year)</td>
+    </tr>
+    <tr>
+      <td>Winter 2023–2024</td>
+      <td>R1UC601B</td>
+      <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2024/">Advanced Algorithmic Problem Solving</a></td>
+      <td>Blended</td>
+      <td>6th Sem (B.Tech – 3rd Year)</td>
+    </tr>
+    <tr>
+      <td>Summer 2022–2023</td>
+      <td>E2UC303B</td>
+      <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/oddsem2023/">Data Structures</a></td>
+      <td>Integrated</td>
+      <td>3rd Sem (B.Tech – 2nd Year)</td>
+    </tr>
+    <tr>
+      <td>Winter 2022–2023</td>
+      <td>BTCS3602</td>
+      <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2023/">Compiler Design</a></td>
+      <td>Core – Theory</td>
+      <td>6th Sem</td>
+    </tr>
+    <tr>
+      <td>Winter 2022–2023</td>
+      <td>E2UC403B</td>
+      <td><a href="https://www.gcjana.in/courses/galgotiasuniversity/evensem2023/">Design & Analysis of Algorithms</a></td>
+      <td>Core – Comprehensive</td>
+      <td>4th Sem</td>
+    </tr>
+  </table>
+
+  <h3>Inspirational Quotes on Teaching</h3>
+  <blockquote>
+    <strong>Dr. APJ Abdul Kalam:</strong> “Teaching is a very noble profession that shapes the character, calibre, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.”
+  </blockquote>
+  <blockquote>
+    <strong>Benjamin Franklin:</strong> “Tell me and I forget. Teach me and I remember. <strong>Involve me and I learn.</strong>”
+  </blockquote>
+  <blockquote>
+    <strong>Gail Godwin:</strong> “Good teaching is one-fourth preparation and three-fourths theater.”
+  </blockquote>
+  <blockquote>
+    <strong>William A. Foster:</strong> “Quality is never an accident; it is always the result of high intention, sincere effort, intelligent direction and skillful execution; it represents the wise choice of many alternatives.”
+  </blockquote>
 </div>
 
 <!-- Tawk.to Chat Script -->
