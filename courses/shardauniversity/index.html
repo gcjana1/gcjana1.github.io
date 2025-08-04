@@ -116,6 +116,14 @@
         width: 100%;
         padding: 20px;
       }
+      .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa;
+      padding: 15px 0 10px;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
     }
   </style>
 </head>
@@ -131,7 +139,9 @@
   </div>
 
   <div class="content">
-    <h2>Courses Offered by Dr. GC Jana</h2>
+    <div class="sticky-header">
+      <h2>Courses Offered by Dr. GC Jana</h2>
+    </div>
 
     <h3>Sharda University (Term: 2501)</h3>
     <table>
