@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="robots" content="index, follow" />
-  <meta name="description" content="Courses handled by Dr. GC Jana including AI and Quantum Computing for B.Tech students at Sharda and Galgotias University." />
+  <meta name="description" content="Courses handled by Dr. GC Jana including Artificial Intelligence and Quantum Computing for B.Tech students at Sharda and Galgotias University." />
   <title>Courses by Dr. GC Jana</title>
   <style>
     body {
@@ -24,7 +24,7 @@
       width: 180px;
       background-color: #2c3e50;
       color: white;
-      padding: 15px 10px;
+      padding: 10px 5px;
       position: fixed;
       top: 0;
       left: 0;
@@ -58,6 +58,15 @@
       padding: 30px;
       box-sizing: border-box;
       width: calc(100% - 180px);
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #f8f9fa;
+      padding: 15px 0 10px;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
     h2, h3 {
@@ -103,12 +112,16 @@
       color: #2c3e50;
     }
 
-    /* Responsive layout for mobile */
     @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
       .sidebar {
         position: relative;
         width: 100%;
         height: auto;
+        padding: 10px;
       }
 
       .content {
@@ -116,14 +129,6 @@
         width: 100%;
         padding: 20px;
       }
-      .sticky-header {
-      position: sticky;
-      top: 0;
-      background-color: #f8f9fa;
-      padding: 15px 0 10px;
-      z-index: 999;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
     }
   </style>
 </head>
