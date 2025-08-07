@@ -150,34 +150,62 @@
       position: relative;
     }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+   @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 
-      .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 10px;
-      }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px 0;
+    background-color: #2c3e50;
+  }
 
-      .content {
-        margin-left: 0;
-        width: 100%;
-        padding: 20px;
-      }
+  .menu-item {
+    width: 45%;
+    margin: 5px 0;
+  }
 
-      .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+  .menu-item a {
+    font-size: 14px;
+    padding: 10px 12px;
+    display: block;
+    text-align: center;
+  }
 
-      .header-image {
-        margin-top: 10px;
-        margin-left: 0;
-      }
-    }
+  .content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-image {
+    margin-top: 10px;
+    margin-left: 0;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  table {
+    font-size: 14px;
+    overflow-x: auto;
+    display: block;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+}
   </style>
 </head>
 <body>
@@ -233,6 +261,7 @@
         <td>Theory Only</td>
         <td>7th Sem (B.Tech – 4th Year)</td>
       </tr>
+      <tr>
         <td>Odd Sem 2025</td>
         <td>CSP39</td>
         <td>Project Based Learning - 3 (PBL-3)</td>
