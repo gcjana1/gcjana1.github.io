@@ -124,12 +124,19 @@
       padding: 20px 10px;
       font-size: 14px;
     }
-    
-  html {
+
+    html {
       scroll-behavior: smooth;
-      scroll-padding-top: 140px; /* height of fixed header + nav */
     }
 
+    /* ✅ Fix anchor scroll offset */
+    section::before {
+      content: "";
+      display: block;
+      height: 140px;  /* height of header + nav */
+      margin-top: -140px;
+      visibility: hidden;
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
