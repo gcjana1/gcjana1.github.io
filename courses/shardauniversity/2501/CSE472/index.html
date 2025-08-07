@@ -6,62 +6,47 @@
   <title>Artificial Intelligence (CSE472 & CSP472)</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 170px; /* Adjust for fixed header + course nav */
     }
 
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f6f8;
-      padding-top: 150px; /* Adjusted for fixed headers */
+      color: #333;
+      line-height: 1.6;
     }
 
-    /* Top Main Header */
-    .top-header {
+    /* ---------------- Header ---------------- */
+    header {
       background: #2c3e50;
       color: white;
-      padding: 10px 20px;
+      padding: 15px 20px;
+      text-align: center;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
     }
 
-    .top-header h1 {
+    .main-title {
       font-size: 20px;
-    }
-
-    .main-menu {
-      display: flex;
-      gap: 10px;
-    }
-
-    .main-menu a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 4px;
-    }
-
-    .main-menu a:hover,
-    .main-menu a.active {
-      background: #1abc9c;
     }
 
     .menu-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
     }
 
     .menu-toggle span {
@@ -71,44 +56,63 @@
       margin: 4px 0;
     }
 
-    /* Course Submenu */
-    .course-menu {
-      background-color: #34495e;
+    .main-nav {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .main-nav a {
       color: white;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      background-color: #1abc9c;
+    }
+
+    /* ---------------- Course Nav ---------------- */
+    .course-nav {
+      background-color: #1a252f;
+      color: white;
+      padding: 10px 20px;
       position: fixed;
-      top: 60px;
+      top: 80px;
       left: 0;
       right: 0;
       z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
-    .course-menu .nav-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 1000px;
-      margin: auto;
-      padding: 10px 0;
+    .course-info {
+      font-size: 14px;
     }
 
     .course-menu a {
-      padding: 10px 15px;
       color: white;
       text-decoration: none;
+      margin-left: 15px;
       font-weight: 500;
-      transition: background-color 0.3s;
     }
 
     .course-menu a:hover,
     .course-menu a.active {
-      background-color: #1abc9c;
+      color: #1abc9c;
     }
 
-    /* Content */
+    /* ---------------- Page Content ---------------- */
     .container {
       max-width: 1000px;
       margin: auto;
-      padding: 30px 20px;
+      padding: 180px 20px 30px; /* Adjust padding for fixed navs */
     }
 
     section {
@@ -117,83 +121,85 @@
       border-radius: 8px;
       padding: 20px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      position: relative;
     }
 
     section h2 {
-      margin-bottom: 15px;
       color: #2c3e50;
+      margin-bottom: 15px;
     }
 
-    section::before {
-      content: "";
-      display: block;
-      height: 120px; /* Adjust to match combined header height */
-      margin-top: -120px;
-      visibility: hidden;
+    ul {
+      list-style: disc inside;
     }
 
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    /* ---------------- Footer ---------------- */
     footer {
-      text-align: center;
-      padding: 20px;
-      background: #2c3e50;
+      background-color: #2c3e50;
       color: white;
+      text-align: center;
+      padding: 20px 10px;
       font-size: 14px;
     }
 
-    /* Responsive */
+    /* ---------------- Mobile ---------------- */
     @media (max-width: 768px) {
-      .main-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .main-menu.show {
-        display: flex;
-      }
-
       .menu-toggle {
         display: flex;
       }
 
-      .main-menu a {
+      .main-nav {
+        display: none;
+        flex-direction: column;
+        background: #2c3e50;
         padding: 10px;
-        border-top: 1px solid #555;
       }
 
-      .course-menu .nav-container {
-        flex-direction: column;
-        align-items: center;
+      .main-nav.show {
+        display: flex;
+      }
+
+      .course-menu {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
       }
 
       .course-menu a {
-        padding: 10px 0;
+        display: inline-block;
+        margin: 10px 5px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Site-Wide Header -->
-  <div class="top-header">
-    <h1>Dr. GC Jana</h1>
+  <!-- Main Header -->
+  <header>
     <div class="menu-toggle" onclick="toggleMainMenu()">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <div class="main-menu" id="mainMenu">
-      <a href="https://www.gcjana.in/">Home</a>
+    <div class="main-title">Dr. Gopal Chandra Jana</div>
+    <div class="main-nav" id="mainNav">
+      <a href="https://www.gcjana.in" target="_blank">Home</a>
       <a href="https://www.gcjana.in/students/">Students</a>
       <a href="https://www.gcjana.in/research/">Research</a>
       <a href="https://www.gcjana.in/contact/">Contact</a>
     </div>
-  </div>
+  </header>
 
-  <!-- Course-Specific Menu -->
-  <div class="course-menu">
-    <div class="nav-container">
+  <!-- Course Navigation -->
+  <div class="course-nav">
+    <div class="course-info">
+      <strong>Artificial Intelligence (CSE472 & CSP472)</strong><br>
+      Semester Term 2501, Sharda University
+    </div>
+    <div class="course-menu">
       <a href="#syllabus-cse472">Syllabus (CSE472)</a>
       <a href="#syllabus-csp472">Syllabus (CSP472)</a>
       <a href="#lecture">Lectures</a>
@@ -203,7 +209,7 @@
     </div>
   </div>
 
-  <!-- Page Content -->
+  <!-- Main Page Content -->
   <div class="container">
     <section id="syllabus-cse472">
       <h2>Syllabus (CSE472 - Theory)</h2>
@@ -266,16 +272,19 @@
     </section>
   </div>
 
+  <!-- Footer -->
   <footer>
-    © 2025 Dr. Gopal Chandra Jana | All rights reserved.
+    &copy; 2025 Dr. Gopal Chandra Jana | All rights reserved.
   </footer>
 
+  <!-- Scripts -->
   <script>
     function toggleMainMenu() {
-      document.getElementById('mainMenu').classList.toggle('show');
+      var nav = document.getElementById("mainNav");
+      nav.classList.toggle("show");
     }
 
-    // Optional: Highlight active section manually or via JS scrollspy
+    // Highlight current section
     const courseLinks = document.querySelectorAll('.course-menu a');
     courseLinks.forEach(link => {
       link.addEventListener('click', () => {
@@ -286,3 +295,4 @@
   </script>
 </body>
 </html>
+
