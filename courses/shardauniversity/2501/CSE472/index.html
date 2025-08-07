@@ -1,129 +1,121 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CSE472 - Artificial Intelligence</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Intelligence – CSE472/CSP472</title>
   <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f6f8fa;
     }
 
-    a {
-      text-decoration: none;
-    }
-
-    /* Fixed Main Header */
+    /* MAIN HEADER (with site links) */
     .main-header {
-      background-color: #1a293e;
-      color: white;
-      padding: 10px 0;
       position: fixed;
       top: 0;
       width: 100%;
+      background-color: #1e2d3d;
+      color: white;
       z-index: 1000;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .main-header .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
-      flex-wrap: wrap;
+      padding: 10px 20px;
     }
 
-    .site-title {
+    .main-header h1 {
+      margin: 0;
       font-size: 20px;
-      font-weight: bold;
     }
 
-    .main-nav a {
+    .main-header nav a {
       color: white;
       margin-left: 20px;
+      text-decoration: none;
       font-weight: bold;
     }
 
-    .main-nav a:hover {
+    .main-header nav a:hover {
       text-decoration: underline;
     }
 
-    /* Fixed Course Nav */
-    .course-nav {
-      position: sticky;
-      top: 56px; /* height of main-header */
-      background-color: #1e3a5f;
+    /* COURSE HEADER */
+    .course-header {
+      position: fixed;
+      top: 50px; /* height of main header */
+      width: 100%;
+      background-color: #163354;
       color: white;
-      z-index: 999;
-    }
-
-    .course-info {
-      text-align: center;
       padding: 8px 10px;
+      z-index: 999;
+      text-align: center;
+      font-size: 14px;
       line-height: 1.4;
-      font-size: 13px;
     }
 
-    .course-menu {
+    /* COURSE NAV */
+    .course-nav {
+      position: fixed;
+      top: 110px; /* header (50px) + course header (60px) */
+      width: 100%;
+      background-color: #1e2d3d;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       padding: 10px 0;
+      z-index: 998;
     }
 
-    .course-menu a {
-      background-color: #2a4b7c;
+    .course-nav a {
+      background-color: #2c3e50;
       color: white;
-      padding: 6px 14px;
-      border-radius: 5px;
+      padding: 8px 15px;
+      text-decoration: none;
+      border-radius: 4px;
       font-weight: bold;
       font-size: 14px;
     }
 
-    .course-menu a:hover,
-    .course-menu a.current {
-      background-color: #26c281;
+    .course-nav a:hover,
+    .course-nav a.active {
+      background-color: #00b894;
     }
 
-    /* Anchor offset fix */
-    :target::before {
-      content: "";
-      display: block;
-      height: 120px;
-      margin-top: -120px;
+    /* Content Padding (after fixed navs) */
+    .content {
+      padding: 180px 20px 60px; /* adjust this padding to prevent content being hidden */
     }
 
-    /* Page Content */
-    .content-section {
-      padding: 30px 20px;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    .section-box {
-      background-color: white;
+    section {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: #fefefe;
       padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      scroll-margin-top: 180px; /* offset for smooth scroll to section */
     }
 
-    .section-box h2 {
+    h2 {
       margin-top: 0;
     }
 
-    /* Footer */
     footer {
       text-align: center;
-      padding: 20px 0;
+      padding: 15px;
       background-color: #f0f0f0;
-      color: #555;
       font-size: 14px;
       margin-top: 30px;
+      color: #555;
     }
 
     /* Responsive */
@@ -133,62 +125,60 @@
         align-items: flex-start;
       }
 
-      .main-nav {
-        margin-top: 10px;
+      .course-nav {
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 8px;
       }
 
-      .main-nav a {
-        margin: 5px 10px 0 0;
-        display: inline-block;
+      .course-header {
+        font-size: 13px;
       }
 
-      .course-info {
-        font-size: 12px;
-      }
-
-      .course-menu {
-        flex-direction: column;
-        align-items: center;
+      .course-nav a {
+        padding: 6px 10px;
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Main Header -->
+  <!-- MAIN HEADER -->
   <header class="main-header">
     <div class="container">
-      <div class="site-title">Dr. GC Jana</div>
-      <nav class="main-nav">
-        <a href="https://www.gcjana.in/">Home</a>
-        <a href="https://www.gcjana.in/students/">Students</a>
-        <a href="https://www.gcjana.in/research/">Research</a>
-        <a href="https://www.gcjana.in/contact/">Contact</a>
+      <h1>Dr. GC Jana</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Students</a>
+        <a href="#">Research</a>
+        <a href="#">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- Fixed Course Nav -->
-  <div class="course-nav">
-    <div class="course-info">
-      <strong>Artificial Intelligence (Theory & Lab)</strong> | <strong>CSE472 / CSP472</strong><br />
-      Offered by Dr. Gopal Chandra Jana (Dr. GC Jana)<br />
-      Assistant Professor, Department of CSE, SoCSE<br />
-      Email: First_Name [dot] Last_Name {@} sharda.ac.in
-    </div>
-    <div class="course-menu">
-      <a href="#syllabus-cse472">Syllabus (CSE472)</a>
-      <a href="#syllabus-csp472">Syllabus (CSP472)</a>
-      <a href="#lecture">Lectures</a>
-      <a href="#lab">Lab</a>
-      <a href="#assignments">Assignments</a>
-      <a href="#quizzes">Quizzes</a>
-    </div>
+  <!-- COURSE DETAILS -->
+  <div class="course-header">
+    <strong>Artificial Intelligence (Theory & Lab)</strong> | CSE472 / CSP472<br>
+    Offered by Dr. Gopal Chandra Jana (Dr. GC Jana)<br>
+    Assistant Professor, Department of CSE, SoCSE<br>
+    Email: First_Name [dot] Last_Name {@} sharda.ac.in
   </div>
 
-  <!-- Page Content -->
-  <div class="content-section">
-    <div id="syllabus-cse472" class="section-box">
+  <!-- COURSE NAVIGATION -->
+  <nav class="course-nav">
+    <a href="#syllabus-cse472">Syllabus (CSE472)</a>
+    <a href="#syllabus-csp472">Syllabus (CSP472)</a>
+    <a href="#lectures">Lectures</a>
+    <a href="#lab">Lab</a>
+    <a href="#assignments">Assignments</a>
+    <a href="#quizzes">Quizzes</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <section id="syllabus-cse472">
       <h2>Syllabus (CSE472 - Theory)</h2>
       <ul>
         <li>Unit 1: Foundations of AI, History, Agents and Environments</li>
@@ -198,9 +188,9 @@
         <li>Unit 5: Probabilistic Reasoning and Machine Learning Introduction</li>
         <li>Unit 6: Expert Systems and Applications</li>
       </ul>
-    </div>
+    </section>
 
-    <div id="syllabus-csp472" class="section-box">
+    <section id="syllabus-csp472">
       <h2>Syllabus (CSP472 - Lab)</h2>
       <ul>
         <li>LISP, Prolog, CLIPS: Basic Programming</li>
@@ -209,30 +199,31 @@
         <li>Expert Systems in CLIPS</li>
         <li>Knowledge Base using Prolog</li>
       </ul>
-    </div>
+    </section>
 
-    <div id="lecture" class="section-box">
+    <section id="lectures">
       <h2>Lectures</h2>
-      <p>Lecture slides and notes will be posted here.</p>
-    </div>
+      <p>Lecture materials will be uploaded here.</p>
+    </section>
 
-    <div id="lab" class="section-box">
+    <section id="lab">
       <h2>Lab</h2>
-      <p>Lab assignments and instructions will appear here.</p>
-    </div>
+      <p>Lab instructions and materials.</p>
+    </section>
 
-    <div id="assignments" class="section-box">
+    <section id="assignments">
       <h2>Assignments</h2>
-      <p>Download and submit assignments as per schedule.</p>
-    </div>
+      <p>Assignment details will appear here.</p>
+    </section>
 
-    <div id="quizzes" class="section-box">
+    <section id="quizzes">
       <h2>Quizzes</h2>
-      <p>Quiz information and links will be updated here.</p>
-    </div>
+      <p>Quiz schedule and results.</p>
+    </section>
+
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     © 2025 Dr. Gopal Chandra Jana | All rights reserved.
   </footer>
