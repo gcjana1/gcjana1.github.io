@@ -329,27 +329,32 @@
     background: #f1f6ff;
   }
   
+  /* ✅ Fix list alignment */
   .lecture-card .content ul {
-    list-style: none;
-    padding: 15px 0;
+    list-style: none;       /* remove bullets */
+    padding: 10px 0 15px 0; /* tighter spacing */
     margin: 0;
+    border-left: 3px solid #1a73e8; /* optional: left blue line */
   }
   
   .lecture-card .content ul li {
-    margin: 8px 0;
+    margin: 6px 0;
+    display: flex;          /* align emoji + text neatly */
+    align-items: center;
+    gap: 6px;               /* small gap between emoji and text */
+    font-size: 15px;
+    color: #333;
   }
   
   .lecture-card .content ul li a {
     text-decoration: none;
     color: #1a73e8;
-    font-size: 15px;
     transition: color 0.2s;
   }
   
   .lecture-card .content ul li a:hover {
     color: #ff9800;
   }
-
   </style>
 </head>
 <body>
