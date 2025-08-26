@@ -99,7 +99,7 @@
       background-color: #3e65a3;
     }
 
-    /* 🔴 Blinking Announcement Button */
+    /* 🔴 Blinking Announcement */
     .announcement {
       color: red;
       font-weight: bold;
@@ -116,18 +116,21 @@
       100% { opacity: 1; }
     }
 
-    /* 📢 Scrolling Ticker */
+    /* 🔴 Scrolling Ticker (hidden initially) */
     .announcement-bar {
+      position: fixed;
+      top: 105px; /* just below header + course-header */
+      left: 0;
+      width: 100%;
       background: #fff;
-      border-radius: 5px;
+      border-top: 2px solid #ccc;
       padding: 6px 12px;
-      margin-top: 110px; /* below header + course-header */
       overflow: hidden;
       white-space: nowrap;
       font-weight: bold;
       color: red;
-      width: 100%;
-      display: none; /* hidden initially */
+      display: none;
+      z-index: 998;
     }
 
     .announcement-track {
@@ -145,7 +148,7 @@
     }
 
     .content {
-      margin-top: 180px; /* space for fixed header + ticker */
+      margin-top: 180px; /* more space for header + ticker */
       padding: 20px;
       max-width: 1100px;
       margin-left: auto;
@@ -191,7 +194,7 @@
     }
 
     html {
-      scroll-padding-top: 150px;
+      scroll-padding-top: 180px;
     }
   </style>
 </head>
@@ -230,12 +233,12 @@
       <a href="#Important-Dates">Important Dates</a>
       <a href="#Course-Feedback">Course Feedback</a>
       <a href="#thanks-from-course-instructor">Thanks</a>
-      <!-- 🔴 Important Announcement trigger -->
+      <!-- 🔴 Blinking Important Announcement -->
       <span class="announcement" onclick="toggleTicker()">Important Announcement</span>
     </div>
   </div>
 
-  <!-- 📢 Hidden Announcement Ticker -->
+  <!-- 🔴 Hidden Ticker -->
   <div id="announcement-ticker" class="announcement-bar">
     <div class="announcement-track">
       <span>📢 Quiz 1 on Sept 5th</span>
@@ -320,17 +323,17 @@
     © 2025 Dr. Gopal Chandra Jana | All rights reserved.
   </footer>
 
-  <!-- JS to Toggle Announcement Ticker -->
   <script>
     function toggleTicker() {
       const ticker = document.getElementById("announcement-ticker");
-      ticker.style.display = (ticker.style.display === "none" || ticker.style.display === "")
-        ? "block"
+      ticker.style.display = (ticker.style.display === "none" || ticker.style.display === "") 
+        ? "block" 
         : "none";
     }
   </script>
 
 </body>
 </html>
+
 
 
