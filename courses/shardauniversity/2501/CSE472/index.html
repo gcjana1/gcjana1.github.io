@@ -1,41 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Course Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artificial Intelligence (CSE472 & CSP472)- Dr. GC Jana</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
+      padding: 0;
     }
 
-    /* Navigation Bar */
-    .course-nav {
-      background: #222;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 15px;
-      position: fixed;
-      top: 0;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f7;
+      color: #000;
+      line-height: 1.6;
       width: 100%;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #12263A;
+      color: #fff;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
       z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .top-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-menu a:hover,
+    .top-menu a.current {
+      text-decoration: underline;
+    }
+
+    .course-header {
+      position: fixed;
+      top: 55px;
+      width: 100%;
+      background-color: #1f3a63;
+      color: white;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      flex-wrap: wrap;
+    }
+
+    .course-info {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .course-info b {
+      font-size: 16px;
+    }
+
+    .course-nav {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     .course-nav a {
+      padding: 8px 12px;
+      background-color: #284b80;
       color: white;
       text-decoration: none;
-      font-weight: bold;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
-    /* Blinking Important Announcement */
+    .course-nav a:hover,
+    .course-nav a.active {
+      background-color: #3e65a3;
+    }
+
+    /* 🔴 Blinking Announcement Button */
     .announcement {
       color: red;
       font-weight: bold;
-      animation: blink 2s infinite; /* slower blink */
+      animation: blink 2s infinite;
       background: #fff;
       padding: 6px 12px;
       border-radius: 5px;
@@ -48,18 +116,18 @@
       100% { opacity: 1; }
     }
 
-    /* Announcement Ticker */
+    /* 📢 Scrolling Ticker */
     .announcement-bar {
       background: #fff;
       border-radius: 5px;
       padding: 6px 12px;
-      margin-top: 50px; /* keeps it below navbar */
+      margin-top: 110px; /* below header + course-header */
       overflow: hidden;
       white-space: nowrap;
       font-weight: bold;
       color: red;
       width: 100%;
-      display: none; /* hidden by default */
+      display: none; /* hidden initially */
     }
 
     .announcement-track {
@@ -75,17 +143,99 @@
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
+
+    .content {
+      margin-top: 180px; /* space for fixed header + ticker */
+      padding: 20px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-box {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #12263A;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .top-menu {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .course-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .course-nav {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .course-info {
+        margin-bottom: 10px;
+      }
+    }
+
+    html {
+      scroll-padding-top: 150px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <div class="course-nav">
-    <a href="#thanks-from-course-instructor">Thanks</a>
-    <span class="announcement" onclick="toggleTicker()">Important Announcement</span>
+  <header>
+    <div class="site-title">Dr. GC Jana</div>
+    <div class="top-menu">
+      <a href="https://www.gcjana.in/">Home</a>
+      <a href="https://www.gcjana.in/publications.html">Publications</a>
+      <a href="https://www.gcjana.in/research.html">Research</a>
+      <a href="https://www.gcjana.in/courses.html" class="current">Courses</a>
+      <a href="https://www.gcjana.in/students/">Students</a>
+      <a href="https://www.gcjana.in/TalksandTutorials">Talks/Tutorials</a>
+      <a href="https://www.gcjana.in/External_Examiner">External Examiner</a>
+      <a href="https://www.gcjana.in/Software-Toolbox">Software/Toolbox</a>
+    </div>
+  </header>
+
+  <div class="course-header">
+    <div class="course-info">
+      <b>Artificial Intelligence (Theory & Lab) | CSE472 / CSP472</b><br>
+      Offered by: Dr. Gopal Chandra Jana (Dr. GC Jana)<br>
+      Assistant Professor, Department of CSE, SoCSE, Sharda University<br>
+      Email: First_Name [dot] Last_Name {@} sharda.ac.in
+    </div>
+    <div class="course-nav">
+      <a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE472/">Course Home</a>
+      <a href="#syllabus-cse472">Syllabus (CSE472)</a>
+      <a href="#syllabus-csp472">Syllabus (CSP472)</a>
+      <a href="#Evaluations-Schemes">Evaluations Schemes</a>
+      <a href="#lectures">Lectures</a>
+      <a href="#lab">Lab</a>
+      <a href="#assignments">Assignments</a>
+      <a href="#Post-doubts">Post Doubts</a>
+      <a href="#Important-Dates">Important Dates</a>
+      <a href="#Course-Feedback">Course Feedback</a>
+      <a href="#thanks-from-course-instructor">Thanks</a>
+      <!-- 🔴 Important Announcement trigger -->
+      <span class="announcement" onclick="toggleTicker()">Important Announcement</span>
+    </div>
   </div>
 
-  <!-- Hidden Ticker -->
+  <!-- 📢 Hidden Announcement Ticker -->
   <div id="announcement-ticker" class="announcement-bar">
     <div class="announcement-track">
       <span>📢 Quiz 1 on Sept 5th</span>
@@ -95,11 +245,87 @@
     </div>
   </div>
 
+  <div class="content">
+    <div id="syllabus-cse472" class="section-box">
+      <h2>Syllabus (CSE472 - Theory)</h2>
+      <ul>
+        <li>Unit 1: Foundations of AI, History, Agents and Environments</li>
+        <li>Unit 2: Search Strategies – BFS, DFS, UCS, A*</li>
+        <li>Unit 3: Game Playing, Minimax and Alpha-Beta Pruning</li>
+        <li>Unit 4: Knowledge Representation and Reasoning – Propositional & First-Order Logic</li>
+        <li>Unit 5: Probabilistic Reasoning and Machine Learning Introduction</li>
+        <li>Unit 6: Expert Systems and Applications</li>
+      </ul>
+    </div>
+
+    <div id="syllabus-csp472" class="section-box">
+      <h2>Syllabus (CSP472 - Lab)</h2>
+      <ul>
+        <li>LISP, Prolog, CLIPS: Basic Programming</li>
+        <li>Python AI Implementations</li>
+        <li>Search Algorithm Demos: BFS, DFS, A*</li>
+        <li>Expert Systems in CLIPS</li>
+        <li>Knowledge Base using Prolog</li>
+      </ul>
+    </div>
+
+    <div id="Evaluations-Schemes" class="section-box">
+      <h2>Evaluations Schemes</h2>
+      <ul>
+        <li>Evaluations Schemes-for theory</li>
+        <li>Evaluations Schemes-for Lab</li>
+        <li>Search Algorithm Demos: BFS, DFS, A*</li>
+        <li>Expert Systems in CLIPS</li>
+        <li>Knowledge Base using Prolog</li>
+      </ul>
+    </div>
+
+    <div id="lectures" class="section-box">
+      <h2>Lectures</h2>
+      <p>Lecture materials will be updated soon.</p>
+    </div>
+
+    <div id="lab" class="section-box">
+      <h2>Lab</h2>
+      <p>Lab details and experiments will be available here.</p>
+    </div>
+
+    <div id="assignments" class="section-box">
+      <h2>Assignments</h2>
+      <p>Assignments and deadlines will be listed here.</p>
+    </div>
+
+    <div id="Post-doubts" class="section-box">
+      <h2>Post Doubts</h2>
+      <p>Post your doubts here.</p>
+    </div>
+
+    <div id="Important-Dates" class="section-box">
+      <h2>Important Dates</h2>
+      <p>Quiz dates and instructions will be added soon.</p>
+    </div>
+
+    <div id="Course-Feedback" class="section-box">
+      <h2>Course Feedback</h2>
+      <p>Quiz dates and instructions will be added soon.</p>
+    </div>
+
+    <div id="thanks-from-course-instructor" class="section-box">
+      <h2>Thanks From Course Instructor</h2>
+      <p>Thanks message from the Course Instructor.</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Dr. Gopal Chandra Jana | All rights reserved.
+  </footer>
+
+  <!-- JS to Toggle Announcement Ticker -->
   <script>
     function toggleTicker() {
       const ticker = document.getElementById("announcement-ticker");
-      ticker.style.display = (ticker.style.display === "none" || ticker.style.display === "") 
-        ? "block" 
+      ticker.style.display = (ticker.style.display === "none" || ticker.style.display === "")
+        ? "block"
         : "none";
     }
   </script>
