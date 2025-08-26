@@ -98,14 +98,15 @@
       background-color: #3e65a3;
     }
 
-    /* 🔴 Blinking Announcement Style */
+    /* 🔴 Blinking Important Announcement */
     .announcement {
       color: red;
       font-weight: bold;
-      animation: blink 2s infinite;
+      animation: blink 2s infinite; /* slower blink */
       background: #fff;
       padding: 6px 12px;
       border-radius: 5px;
+      cursor: pointer;
     }
 
     @keyframes blink {
@@ -114,8 +115,35 @@
       100% { opacity: 1; }
     }
 
+    /* 📢 Announcement Ticker */
+    .announcement-bar {
+      background: #fff;
+      border-radius: 5px;
+      padding: 6px 12px;
+      margin-top: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: bold;
+      color: red;
+      width: 100%;
+    }
+
+    .announcement-track {
+      display: inline-block;
+      animation: scroll 15s linear infinite;
+    }
+
+    .announcement-track span {
+      margin-right: 60px;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
     .content {
-      margin-top: 150px;
+      margin-top: 200px; /* space for header + ticker */
       padding: 20px;
       max-width: 1100px;
       margin-left: auto;
@@ -161,7 +189,7 @@
     }
 
     html {
-      scroll-padding-top: 150px;
+      scroll-padding-top: 200px;
     }
   </style>
 </head>
@@ -200,8 +228,18 @@
       <a href="#Important-Dates">Important Dates</a>
       <a href="#Course-Feedback">Course Feedback</a>
       <a href="#thanks-from-course-instructor">Thanks</a>
-      <!-- 🔴 Important Announcement -->
-      <span class="announcement">Important Announcement: Quiz 1 on Sept 5th</span>
+      <!-- 🔴 Blinking Important Announcement -->
+      <span class="announcement" onclick="toggleTicker()">Important Announcement</span>
+    </div>
+  </div>
+
+  <!-- 📢 Hidden Scrolling Announcements -->
+  <div id="announcement-ticker" class="announcement-bar" style="display:none;">
+    <div class="announcement-track">
+      <span>📢 Quiz 1 on Sept 5th</span>
+      <span>📢 Assignment 1 Due Sept 10th</span>
+      <span>📢 Lab starts Sept 12th</span>
+      <span>📢 Midterm Exam in October</span>
     </div>
   </div>
 
@@ -280,6 +318,18 @@
     © 2025 Dr. Gopal Chandra Jana | All rights reserved.
   </footer>
 
+  <script>
+    function toggleTicker() {
+      const ticker = document.getElementById("announcement-ticker");
+      if (ticker.style.display === "none") {
+        ticker.style.display = "block";
+      } else {
+        ticker.style.display = "none";
+      }
+    }
+  </script>
+
 </body>
 </html>
+
 
