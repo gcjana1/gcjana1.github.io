@@ -158,6 +158,20 @@
       0%   { transform: translateX(0%); }
       100% { transform: translateX(-50%); }
     }
+    /* Style for announcements */
+      .announcement-item {
+        color: #0056b3;            /* nice blue shade */
+        font-weight: 500;          /* medium-bold */
+        font-size: 16px;           /* readable text */
+        padding: 0 40px;           /* spacing between items */
+        white-space: nowrap;       /* keep text in one line */
+        display: inline-block;
+      }
+      
+      .announcement-item b {
+        color: #d9534f;            /* important parts in red */
+        font-weight: 600;          /* make bolded text stand out */
+      }
 
     .content {
       margin-top: 180px; /* JS will update this for accuracy */
@@ -256,16 +270,45 @@
   <!-- 📢 Sliding ticker (JS sets its top dynamically) -->
   <div id="announcement-ticker" class="announcement-bar" aria-hidden="true">
     <div class="announcement-track" role="marquee" aria-label="Latest announcements">
-      <span style="color:blue;">📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class from <b>11.35 am to 12.25 pm</b>.</span>
-      <span style="color:blue;">📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for <b>attending Assessment-1</b>. </span>
-      <span style="color:blue;">📢 <b>Assignment -1</b> Submission due date is <b>05/09/2025</b>.</span>
-      <span style="color:blue;">📢 Assessment-2 will be scheduled during 10th Nov to 15th Nov 2025. The specific date will be announced soon.</span>
+        <span class="announcement-item">
+          📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class 
+          from <b>11:35 AM – 12:25 PM</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for 
+          <b>appearing in Assessment-1</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>Assignment-1</b> submission deadline: <b>05/09/2025</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>Assessment-2</b> will be scheduled between <b>10th – 15th Nov 2025</b>. 
+          The specific date will be announced soon.
+        </span>
+
   
       <!-- second copy -->
-      <span style="color:blue;">📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class from <b>11.35 am to 12.25 pm</b>.</span>
-      <span style="color:blue;">📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for <b>attending Assessment-1</b>. </span>
-      <span style="color:blue;">📢 <b>Assignment -1</b> Submission due date is <b>05/09/2025</b>.</span>
-      <span style="color:blue;">📢 Assessment-2 will be scheduled during 10th Nov to 15th Nov 2025. The specific date will be announced soon.</span>
+      <span class="announcement-item">
+          📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class 
+          from <b>11:35 AM – 12:25 PM</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for 
+          <b>appearing in Assessment-1</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>Assignment-1</b> submission deadline: <b>05/09/2025</b>.
+        </span>
+        
+        <span class="announcement-item">
+          📢 <b>Assessment-2</b> will be scheduled between <b>10th – 15th Nov 2025</b>. 
+          The specific date will be announced soon.
+        </span>
     </div>
   </div>
 
