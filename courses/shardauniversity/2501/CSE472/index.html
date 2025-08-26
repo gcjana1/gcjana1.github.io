@@ -98,6 +98,22 @@
       background-color: #3e65a3;
     }
 
+    /* 🔴 Blinking Announcement Style */
+    .announcement {
+      color: red;
+      font-weight: bold;
+      animation: blink 1s infinite;
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
     .content {
       margin-top: 150px;
       padding: 20px;
@@ -184,11 +200,12 @@
       <a href="#Important-Dates">Important Dates</a>
       <a href="#Course-Feedback">Course Feedback</a>
       <a href="#thanks-from-course-instructor">Thanks</a>
+      <!-- 🔴 Important Announcement -->
+      <span class="announcement">Important Announcement: Quiz 1 on Sept 5th</span>
     </div>
   </div>
 
   <div class="content">
-
     <div id="syllabus-cse472" class="section-box">
       <h2>Syllabus (CSE472 - Theory)</h2>
       <ul>
@@ -211,6 +228,7 @@
         <li>Knowledge Base using Prolog</li>
       </ul>
     </div>
+
     <div id="Evaluations-Schemes" class="section-box">
       <h2>Evaluations Schemes</h2>
       <ul>
@@ -221,6 +239,7 @@
         <li>Knowledge Base using Prolog</li>
       </ul>
     </div>
+
     <div id="lectures" class="section-box">
       <h2>Lectures</h2>
       <p>Lecture materials will be updated soon.</p>
@@ -235,18 +254,22 @@
       <h2>Assignments</h2>
       <p>Assignments and deadlines will be listed here.</p>
     </div>
+
     <div id="Post-doubts" class="section-box">
       <h2>Post Doubts</h2>
       <p>Post your doubts here.</p>
     </div>
+
     <div id="Important-Dates" class="section-box">
       <h2>Important Dates</h2>
       <p>Quiz dates and instructions will be added soon.</p>
     </div>
+
     <div id="Course-Feedback" class="section-box">
       <h2>Course Feedback</h2>
       <p>Quiz dates and instructions will be added soon.</p>
     </div>
+
     <div id="thanks-from-course-instructor" class="section-box">
       <h2>Thanks From Course Instructor</h2>
       <p>Thanks message from the Course Instructor.</p>
