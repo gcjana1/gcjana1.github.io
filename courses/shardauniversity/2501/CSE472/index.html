@@ -147,7 +147,7 @@
 
     .announcement-track {
       display: inline-block;
-      animation: scroll 25s linear infinite;
+      animation: scroll 30s linear infinite;
     }
 
     .announcement-track span {
@@ -155,8 +155,8 @@
     }
 
     @keyframes scroll {
-      0%   { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
     }
 
     .content {
@@ -256,6 +256,12 @@
   <!-- 📢 Sliding ticker (JS sets its top dynamically) -->
   <div id="announcement-ticker" class="announcement-bar" aria-hidden="true">
     <div class="announcement-track" role="marquee" aria-label="Latest announcements">
+      <span style="color:blue;">📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class from <b>11.35 am to 12.25 pm</b>.</span>
+      <span style="color:blue;">📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for <b>attending Assessment-1</b>. </span>
+      <span style="color:blue;">📢 <b>Assignment -1</b> Submission due date is <b>05/09/2025</b>.</span>
+      <span style="color:blue;">📢 Assessment-2 will be scheduled during 10th Nov to 15th Nov 2025. The specific date will be announced soon.</span>
+  
+      <!-- second copy -->
       <span style="color:blue;">📢 <b>Assessment-1</b> is scheduled on <b>11/09/2025 (Thursday)</b> during the scheduled class from <b>11.35 am to 12.25 pm</b>.</span>
       <span style="color:blue;">📢 <b>75% Attendance (as on 04/09/2025)</b> is mandatory for <b>attending Assessment-1</b>. </span>
       <span style="color:blue;">📢 <b>Assignment -1</b> Submission due date is <b>05/09/2025</b>.</span>
