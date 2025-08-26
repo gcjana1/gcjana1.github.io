@@ -322,26 +322,31 @@
   
   /* Collapsible content */
   .lecture-card .content {
-    padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
     background: #f1f6ff;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+    padding: 0 20px;   /* no vertical padding when collapsed */
+  }
+  
+  /* Expanded state (add/remove via JS) */
+  .lecture-card .content.active {
+    padding: 12px 20px 15px 20px; /* only show vertical padding when open */
   }
   
   /* ✅ Fix list alignment */
   .lecture-card .content ul {
-    list-style: none;       /* remove bullets */
-    padding: 10px 0 15px 0; /* tighter spacing */
+    list-style: none;       
     margin: 0;
-    border-left: 3px solid #1a73e8; /* optional: left blue line */
+    padding: 0;  /* no extra gap above first item */
+    border-left: 3px solid #1a73e8; /* optional: blue accent */
   }
   
   .lecture-card .content ul li {
     margin: 6px 0;
-    display: flex;          /* align emoji + text neatly */
+    display: flex;          
     align-items: center;
-    gap: 6px;               /* small gap between emoji and text */
+    gap: 6px;               
     font-size: 15px;
     color: #333;
   }
@@ -355,6 +360,7 @@
   .lecture-card .content ul li a:hover {
     color: #ff9800;
   }
+
   </style>
 </head>
 <body>
@@ -705,18 +711,22 @@
       });
     })();
 
-    // 🎓 Collapsible lecture cards
-  document.querySelectorAll(".collapsible").forEach(button => {
-    button.addEventListener("click", function () {
-      this.classList.toggle("active");
-      const content = this.nextElementSibling;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
+  // 🎓 Collapsible lecture cards
+  const coll = document.querySelectorAll(".collapsible");
+    coll.forEach(btn => {
+      btn.addEventListener("click", function () {
+        this.classList.toggle("active");
+        const content = this.nextElementSibling;
+    
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+          content.classList.remove("active");
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+          content.classList.add("active");
+        }
+      });
     });
-  });
   </script>
 
 </body>
