@@ -273,7 +273,68 @@
   .laptop-icon {
     color: #1a73e8;   /* blue laptop icon */
   }
-  </style>
+
+  .units-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .left-column,
+  .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .unit-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .unit-card h3 {
+    margin: 0 0 10px;
+    background: #1E56A0;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .unit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .unit-card ul li {
+    margin: 5px 0;
+  }
+  
+  .unit-card ul li a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: 500;
+  }
+  
+  .unit-card ul li a:hover {
+    color: #ff9800;
+  }
+  
+  .full-row {
+    margin-top: 15px;
+  }
+  
+  .full-row .unit-card {
+    width: 100%;
+  }
+
+</style>
+  
 </head>
 <body>
 
@@ -498,49 +559,68 @@
     <div id="lectures" class="section-box">
       <h2 class="lectures-title">📚 Lectures</h2>
     <p class="lectures-intro">Theory lecture materials will be uploaded unit-wise. Each unit will include:</p>
-    <div class="lecture-container">
-      <!-- Unit 1 -->
-      <div class="lecture-card">
-        <button class="collapsible">Unit 1: Introduction to AI</button>
-        <div class="content">
-          <ul>
-            <li><a href="#">📑 Lecture PPT</a></li>
-            <li><a href="#">📘 Book PPT</a></li>
-            <li><a href="#">📖 Book Chapter</a></li>
-            <li><a href="#">🔗 Additional Reference</a></li>
-          </ul>
-        </div>
-      </div>
-    
-      <!-- Unit 2 -->
-      <div class="lecture-card">
-        <button class="collapsible">Unit 2: Problem Solving Agents</button>
-        <div class="content">
-          <ul>
-            <li><a href="#">📑 Lecture PPT</a></li>
-            <li><a href="#">📘 Book PPT</a></li>
-            <li><a href="#">📖 Book Chapter</a></li>
-            <li><a href="#">🔗 Additional Reference</a></li>
-          </ul>
-        </div>
-      </div>
-    
-      <!-- Unit 3 -->
-      <div class="lecture-card">
-        <button class="collapsible">Unit 3: Knowledge & Reasoning</button>
-        <div class="content">
-          <ul>
-            <li><a href="#">📑 Lecture PPT</a></li>
-            <li><a href="#">📘 Book PPT</a></li>
-            <li><a href="#">📖 Book Chapter</a></li>
-            <li><a href="#">🔗 Additional Reference</a></li>
-          </ul>
-        </div>
-      </div>
-    
-      <!-- Add Units 4, 5 similarly -->
+    <div class="units-container">
+  <!-- Left Column -->
+  <div class="left-column">
+    <div class="unit-card">
+      <h3>Unit 1: Introduction</h3>
+      <ul>
+        <li><a href="#">📑 Lecture PPT</a></li>
+        <li><a href="#">📘 Book PPT</a></li>
+        <li><a href="#">📖 Book Chapter</a></li>
+        <li><a href="#">🔗 Additional Reference</a></li>
+      </ul>
     </div>
+
+    <div class="unit-card">
+      <h3>Unit 2: Problem Solving</h3>
+      <ul>
+        <li><a href="#">📑 Lecture PPT</a></li>
+        <li><a href="#">📘 Book PPT</a></li>
+        <li><a href="#">📖 Book Chapter</a></li>
+        <li><a href="#">🔗 Additional Reference</a></li>
+      </ul>
     </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="right-column">
+    <div class="unit-card">
+      <h3>Unit 3: Knowledge Representation</h3>
+      <ul>
+        <li><a href="#">📑 Lecture PPT</a></li>
+        <li><a href="#">📘 Book PPT</a></li>
+        <li><a href="#">📖 Book Chapter</a></li>
+        <li><a href="#">🔗 Additional Reference</a></li>
+      </ul>
+    </div>
+
+    <div class="unit-card">
+      <h3>Unit 4: Planning & Reasoning</h3>
+      <ul>
+        <li><a href="#">📑 Lecture PPT</a></li>
+        <li><a href="#">📘 Book PPT</a></li>
+        <li><a href="#">📖 Book Chapter</a></li>
+        <li><a href="#">🔗 Additional Reference</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Full Width Unit 5 -->
+<div class="full-row">
+  <div class="unit-card">
+    <h3>Unit 5: Machine Learning</h3>
+    <ul>
+      <li><a href="#">📑 Lecture PPT</a></li>
+      <li><a href="#">📘 Book PPT</a></li>
+      <li><a href="#">📖 Book Chapter</a></li>
+      <li><a href="#">🔗 Additional Reference</a></li>
+    </ul>
+  </div>
+</div>
+
+</div>
 
     <div id="lab" class="section-box">
       <h2>Lab</h2>
