@@ -82,7 +82,6 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     .course-nav a {
@@ -99,7 +98,7 @@
       background-color: #3e65a3;
     }
 
-    /* 🔴 Blinking Announcement */
+    /* 🔴 Blinking Announcement (button) */
     .announcement {
       color: red;
       font-weight: bold;
@@ -116,21 +115,27 @@
       100% { opacity: 1; }
     }
 
-    /* 🔴 Scrolling Ticker (hidden initially) */
+    /* 📢 Announcement Ticker */
     .announcement-bar {
       position: fixed;
-      top: 105px; /* just below header + course-header */
+      top: 110px; /* below course header */
       left: 0;
       width: 100%;
       background: #fff;
-      border-top: 2px solid #ccc;
-      padding: 6px 12px;
+      border-radius: 0 0 5px 5px;
       overflow: hidden;
       white-space: nowrap;
       font-weight: bold;
       color: red;
-      display: none;
+      max-height: 0;
+      transition: max-height 0.6s ease-out, padding 0.6s ease-out;
       z-index: 998;
+      padding: 0 12px;
+    }
+
+    .announcement-bar.open {
+      max-height: 50px;
+      padding: 6px 12px;
     }
 
     .announcement-track {
@@ -148,7 +153,7 @@
     }
 
     .content {
-      margin-top: 180px; /* more space for header + ticker */
+      margin-top: 180px; /* space for header + course header + ticker */
       padding: 20px;
       max-width: 1100px;
       margin-left: auto;
@@ -194,7 +199,7 @@
     }
 
     html {
-      scroll-padding-top: 180px;
+      scroll-padding-top: 150px;
     }
   </style>
 </head>
@@ -233,12 +238,12 @@
       <a href="#Important-Dates">Important Dates</a>
       <a href="#Course-Feedback">Course Feedback</a>
       <a href="#thanks-from-course-instructor">Thanks</a>
-      <!-- 🔴 Blinking Important Announcement -->
-      <span class="announcement" onclick="toggleTicker()">Important Announcement</span>
+      <!-- 🔴 Important Announcement (button) -->
+      <span class="announcement" id="announcement-btn">Important Announcement</span>
     </div>
   </div>
 
-  <!-- 🔴 Hidden Ticker -->
+  <!-- 📢 Hidden Ticker -->
   <div id="announcement-ticker" class="announcement-bar">
     <div class="announcement-track">
       <span>📢 Quiz 1 on Sept 5th</span>
@@ -324,12 +329,12 @@
   </footer>
 
   <script>
-    function toggleTicker() {
-      const ticker = document.getElementById("announcement-ticker");
-      ticker.style.display = (ticker.style.display === "none" || ticker.style.display === "") 
-        ? "block" 
-        : "none";
-    }
+    const btn = document.getElementById("announcement-btn");
+    const ticker = document.getElementById("announcement-ticker");
+
+    btn.addEventListener("click", () => {
+      ticker.classList.toggle("open");
+    });
   </script>
 
 </body>
