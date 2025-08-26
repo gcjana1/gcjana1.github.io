@@ -116,6 +116,11 @@
       50% { opacity: 0; }
       100% { opacity: 1; }
     }
+    /* Pause scrolling when hovered */
+    .announcement-bar:hover .announcement-track {
+      animation-play-state: paused;
+    }
+
 
     /* 📢 Sliding Announcement Ticker (starts collapsed) */
     .announcement-bar {
