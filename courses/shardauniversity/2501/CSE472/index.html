@@ -273,94 +273,6 @@
   .laptop-icon {
     color: #1a73e8;   /* blue laptop icon */
   }
-/* 🎓 Collapsible Lecture Cards */
-  .lectures-title {
-    font-size: 26px;
-    color: #1a73e8;
-    margin-bottom: 10px;
-    border-left: 6px solid #1a73e8;
-    padding-left: 10px;
-    font-weight: bold;
-  }
-  
-  .lectures-intro {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 20px;
-  }
-  
-  .lecture-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .lecture-card {
-    background: #f9fbfd;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    overflow: hidden;
-  }
-  
-  /* Collapsible button */
-  .collapsible {
-    background-color: #1a73e8;
-    color: white;
-    cursor: pointer;
-    padding: 14px 20px;
-    width: 100%;
-    text-align: left;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    transition: background 0.3s ease;
-  }
-  
-  .collapsible:hover {
-    background-color: #1558b0;
-  }
-  
-  /* Collapsible content */
-  .lecture-card .content {
-    max-height: 0;
-    overflow: hidden;
-    background: #f1f6ff;
-    transition: max-height 0.35s ease, padding 0.3s ease;
-    padding: 0 20px;   /* no vertical padding when collapsed */
-  }
-  
-  /* Expanded state (add/remove via JS) */
-  .lecture-card .content.active {
-    padding: 12px 20px 15px 20px; /* only show vertical padding when open */
-  }
-  
-  /* ✅ Fix list alignment */
-  .lecture-card .content ul {
-    list-style: none;       
-    margin: 0;
-    padding: 0;  /* no extra gap above first item */
-    border-left: 3px solid #1a73e8; /* optional: blue accent */
-  }
-  
-  .lecture-card .content ul li {
-    margin: 6px 0;
-    display: flex;          
-    align-items: center;
-    gap: 6px;               
-    font-size: 15px;
-    color: #333;
-  }
-  
-  .lecture-card .content ul li a {
-    text-decoration: none;
-    color: #1a73e8;
-    transition: color 0.2s;
-  }
-  
-  .lecture-card .content ul li a:hover {
-    color: #ff9800;
-  }
-
   </style>
 </head>
 <body>
@@ -711,24 +623,6 @@
       });
     })();
 </script>
-<script>
-  // 🎓 Collapsible lecture cards
-  const coll = document.querySelectorAll(".collapsible");
-    coll.forEach(btn => {
-      btn.addEventListener("click", function () {
-        this.classList.toggle("active");
-        const content = this.nextElementSibling;
-    
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-          content.classList.remove("active");
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-          content.classList.add("active");
-        }
-      });
-    });
-  </script>
 
 </body>
 </html>
