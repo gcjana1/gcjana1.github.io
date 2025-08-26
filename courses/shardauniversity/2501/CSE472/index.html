@@ -496,8 +496,145 @@
     </div>
 
     <div id="lectures" class="section-box">
-      <h2>Lectures</h2>
-      <p>Lecture materials will be updated soon.</p>
+      <h2 class="lectures-title">📚 Lectures</h2>
+    <p class="lectures-intro">Theory lecture materials will be uploaded unit-wise. Each unit will include:</p>
+    
+    <div class="lecture-container">
+      <!-- Unit 1 -->
+      <div class="lecture-card">
+        <button class="collapsible">Unit 1: Introduction to AI</button>
+        <div class="content">
+          <ul>
+            <li><a href="#">📑 Lecture PPT</a></li>
+            <li><a href="#">📘 Book PPT</a></li>
+            <li><a href="#">📖 Book Chapter</a></li>
+            <li><a href="#">🔗 Additional Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <!-- Unit 2 -->
+      <div class="lecture-card">
+        <button class="collapsible">Unit 2: Problem Solving Agents</button>
+        <div class="content">
+          <ul>
+            <li><a href="#">📑 Lecture PPT</a></li>
+            <li><a href="#">📘 Book PPT</a></li>
+            <li><a href="#">📖 Book Chapter</a></li>
+            <li><a href="#">🔗 Additional Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <!-- Unit 3 -->
+      <div class="lecture-card">
+        <button class="collapsible">Unit 3: Knowledge & Reasoning</button>
+        <div class="content">
+          <ul>
+            <li><a href="#">📑 Lecture PPT</a></li>
+            <li><a href="#">📘 Book PPT</a></li>
+            <li><a href="#">📖 Book Chapter</a></li>
+            <li><a href="#">🔗 Additional Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <!-- Add Units 4, 5 similarly -->
+    </div>
+    
+    <style>
+      .lectures-title {
+        font-size: 26px;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        border-left: 6px solid #1a73e8;
+        padding-left: 10px;
+        font-weight: bold;
+      }
+    
+      .lectures-intro {
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 20px;
+      }
+    
+      .lecture-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+    
+      .lecture-card {
+        background: #f9fbfd;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        overflow: hidden;
+      }
+    
+      /* Collapsible button */
+      .collapsible {
+        background-color: #1a73e8;
+        color: white;
+        cursor: pointer;
+        padding: 14px 20px;
+        width: 100%;
+        text-align: left;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        transition: background 0.3s ease;
+      }
+    
+      .collapsible:hover {
+        background-color: #1558b0;
+      }
+    
+      /* Collapsible content */
+      .content {
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        background: #f1f6ff;
+      }
+    
+      .content ul {
+        list-style: none;
+        padding: 15px 0;
+        margin: 0;
+      }
+    
+      .content ul li {
+        margin: 8px 0;
+      }
+    
+      .content ul li a {
+        text-decoration: none;
+        color: #1a73e8;
+        font-size: 15px;
+        transition: color 0.2s;
+      }
+    
+      .content ul li a:hover {
+        color: #ff9800;
+      }
+    </style>
+    
+    <script>
+      const coll = document.querySelectorAll(".collapsible");
+      coll.forEach(button => {
+        button.addEventListener("click", function () {
+          this.classList.toggle("active");
+          let content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      });
+    </script>
+
     </div>
 
     <div id="lab" class="section-box">
