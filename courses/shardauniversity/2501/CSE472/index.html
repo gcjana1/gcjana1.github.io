@@ -332,6 +332,94 @@
   .full-row .unit-card {
     width: 100%;
   }
+  /* Blue header bar */
+  .assignments-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .assignments-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Common instructions card */
+  .common-instructions {
+    background: #f1f7ff;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  }
+  .common-instructions h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  .common-instructions ul {
+    margin: 8px 0 0 20px;
+    color: #444;
+  }
+
+  /* Assignment cards layout */
+  .assignment-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .assignment-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    width: 48%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .assignment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  .assignment-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #2c3e50;
+  }
+  .assignment-card p {
+    margin: 8px 0;
+    color: #333;
+  }
+  .instructions {
+    margin: 10px 0 15px;
+    padding-left: 20px;
+  }
+  .instructions li {
+    margin-bottom: 6px;
+    color: #444;
+  }
+  .pdf-link {
+    color: #0073e6;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .pdf-link:hover {
+    text-decoration: underline;
+  }
+  .submit-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #0073e6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover {
+    background: #005bb5;
+  }
 
 </style>
   
@@ -627,10 +715,50 @@
       <p>Lab details and experiments will be available here.</p>
     </div>
 
-    <div id="assignments" class="section-box">
-      <h2>Assignments</h2>
-      <p>Assignments and deadlines will be listed here.</p>
+  <div id="assignments" class="section-box">
+        <div class="assignments-header">
+      <h2>📑 Assignments</h2>
+      </div>
+    <!-- Common Instructions -->
+    <div class="common-instructions">
+      <h3>📌 Common Instructions</h3>
+      <ul>
+        <li>All assignments must be submitted before the due date.</li>
+        <li>Upload your solution in <strong>PDF format</strong>.</li>
+        <li>Plagiarism will not be tolerated.</li>
+        <li>Late submissions may not be accepted.</li>
+      </ul>
     </div>
+    <!-- Assignment Cards -->
+    <div class="assignment-container">
+  
+      <!-- Assignment 1 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 1: Knowledge Representation</h3>
+        <p><strong>Due Date:</strong> 15th September 2025</p>
+        <ul class="instructions">
+          <li>Solve all questions from Unit-3 (Logic & Knowledge Representation).</li>
+          <li>Submit as a single PDF file.</li>
+          <li>Handwritten or typed submissions are allowed.</li>
+        </ul>
+        <a href="assignment1.pdf" target="_blank" class="pdf-link">📄 View Assignment</a><br><br>
+        <a href="https://example.com/assignment1" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+      <!-- Assignment 2 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 2: Planning and Machine Learning</h3>
+        <p><strong>Due Date:</strong> 30th September 2025</p>
+        <ul class="instructions">
+          <li>Attempt any 5 out of 7 questions.</li>
+          <li>Include clear reasoning steps.</li>
+          <li>Submit scanned handwritten or typed document.</li>
+        </ul>
+        <a href="assignment2.pdf" target="_blank" class="pdf-link">📄 View Assignment</a><br><br>
+        <a href="https://example.com/assignment2" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+  
+    </div>
+  </div>
 
     <div id="Post-doubts" class="section-box">
       <h2>Post Doubts</h2>
