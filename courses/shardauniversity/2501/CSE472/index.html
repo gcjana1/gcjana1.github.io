@@ -455,6 +455,43 @@
   }
   .doubt-btn:hover { background: #005bb5; transform: scale(1.05); }
 
+
+
+
+
+
+/*Thanks Message*/
+  /* Blue header bar */
+  .thanks-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .thanks-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Card style */
+  .thanks-card {
+    background: linear-gradient(135deg, #f9f9f9, #eef6ff);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    text-align: center;
+  }
+  .thanks-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+  .thanks-card p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
 </style>
   
 </head>
@@ -839,9 +876,29 @@
     </div>
 
     <div id="thanks-from-course-instructor" class="section-box">
-      <h2>Thanks From Course Instructor</h2>
-      <p>Thanks message from the Course Instructor.</p>
-    </div>
+      <!-- Blue Header -->
+  <div class="thanks-header">
+    <h2>🙏 Thanks From Your Course Instructor</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="thanks-card">
+    <p>
+      Dear Students,  
+      <br><br>
+      Thank you for your active participation in the course.  
+      Your enthusiasm, curiosity, and commitment make this learning journey inspiring. 🌟  
+    </p>
+
+    <p style="font-weight:600; color:#0073e6;">
+      Keep asking questions, keep exploring, and never stop learning! 🚀
+    </p>
+
+    <p style="margin-top:18px; color:#444;">
+      — <b>Dr. Gopal Chandra Jana</b><br>
+      (Course Instructor)
+    </p>
+  </div>
   </div>
 
   <footer>
