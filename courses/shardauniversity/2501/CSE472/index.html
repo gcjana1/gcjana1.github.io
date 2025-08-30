@@ -421,6 +421,40 @@
     background: #005bb5;
   }
 
+     .doubts-header {
+    background: #0073e6; color: white;
+    padding: 12px 20px; border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .doubts-header h2 { margin: 0; font-size: 22px; }
+
+  .doubts-card {
+    background: #f9f9f9; border-radius: 12px;
+    padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .form-input, .doubt-input {
+    width: 100%; margin-bottom: 10px;
+    padding: 10px; font-size: 15px;
+    border: 1px solid #ccc; border-radius: 8px;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus, .doubt-input:focus {
+    border-color: #0073e6;
+    box-shadow: 0 0 6px rgba(0,115,230,0.3);
+  }
+  .doubt-input { height: 100px; resize: none; }
+
+  .doubt-btn {
+    margin-top: 12px; padding: 10px 18px;
+    background: #0073e6; color: white;
+    border: none; border-radius: 8px;
+    font-size: 15px; font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .doubt-btn:hover { background: #005bb5; transform: scale(1.05); }
+
 </style>
   
 </head>
@@ -761,8 +795,37 @@
   </div>
 
     <div id="Post-doubts" class="section-box">
-      <h2>Post Doubts</h2>
-      <p>Post your doubts here.</p>
+       <!-- Blue Header -->
+  <div class="doubts-header">
+    <h2>❓ Post Your Doubts</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="doubts-card">
+    <p>Please fill in your details and doubt. Your submission will be recorded securely.</p>
+
+    <!-- Google Form -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSfs_f4pI58sWuPNEQyIs7Esdh7NdVMzK4VIgxEyi5ES7CM8bA/formResponse" 
+          method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+
+      <input type="text" name="entry.1615842241" placeholder="Student Name" class="form-input" required><br>
+      <input type="text" name="entry.875262622" placeholder="Roll No." class="form-input" required><br>
+      <input type="text" name="entry.1937575059" placeholder="System ID" class="form-input" required><br>
+      <input type="tel"  name="entry.1629869264" placeholder="Mobile No." class="form-input" required><br>
+      <input type="email" name="entry.927567540" placeholder="Email ID" class="form-input" required><br>
+      <textarea name="entry.1974734374" placeholder="Type your doubt here..." class="doubt-input" required></textarea><br>
+
+      <button type="submit" class="doubt-btn">🚀 Submit Doubt</button>
+    </form>
+
+    <!-- Hidden iframe -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <!-- Confirmation -->
+    <p id="thankyou-msg" style="display:none; color:green; font-weight:bold; margin-top:10px;">
+      ✅ Your doubt has been submitted successfully!
+    </p>
+  </div>
     </div>
 
     <div id="Important-Dates" class="section-box">
@@ -831,6 +894,15 @@
         updateContentOffset();
       });
     })();
+
+    let submitted = false;
+  document.querySelector("form").addEventListener("submit", function() {
+    setTimeout(() => {
+      if (submitted) {
+        document.getElementById("thankyou-msg").style.display = "block";
+      }
+    }, 500);
+  });
 </script>
 
 </body>
