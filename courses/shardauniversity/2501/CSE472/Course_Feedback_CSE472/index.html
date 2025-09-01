@@ -59,11 +59,12 @@
       font-size: 16px;
       margin-top: 15px;
     }
+    #stay-connected-btn {
+      display: none; /* initially hidden */
+      margin-top: 15px;
+    }
     .btn-group {
       margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -75,7 +76,8 @@
   </div>
 
   <div class="feedback-card">
-    <p>Please provide your feedback honestly. Your response will help us improve the course.</p>
+    <!-- Instruction text (only before submission) -->
+    <p id="instruction-text">Please provide your feedback honestly. Your response will help us improve the course.</p>
 
     <!-- Feedback Form -->
     <form id="feedback-form"
@@ -152,7 +154,6 @@
 
       <div class="btn-group">
         <button type="submit" class="feedback-btn">🚀 Submit Feedback</button>
-        <a href="https://your-link-here.com" class="stay-btn" target="_blank">🔗 Stay Connected</a>
       </div>
     </form>
 
@@ -161,6 +162,9 @@
 
     <!-- Confirmation -->
     <p id="thankyou-msg"></p>
+
+    <!-- Stay Connected Button (moved below Thank You) -->
+    <a href="https://your-link-here.com" id="stay-connected-btn" class="stay-btn" target="_blank">🔗 Stay Connected</a>
   </div>
 </div>
 
@@ -170,10 +174,18 @@
   function showThankYou() {
     const name = document.getElementById("student-name").value;
     const systemId = document.getElementById("system-id").value;
+
+    // Hide form and instruction text
     document.getElementById("feedback-form").style.display = "none";
+    document.getElementById("instruction-text").style.display = "none";
+
+    // Show thank you message
     document.getElementById("thankyou-msg").style.display = "block";
     document.getElementById("thankyou-msg").innerText =
       `✅ Thank you (${name} - ${systemId})! Your feedback has been submitted successfully.`;
+
+    // Show Stay Connected button
+    document.getElementById("stay-connected-btn").style.display = "inline-block";
   }
 </script>
 
