@@ -8,161 +8,143 @@
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .section-box {
-      background: #fff;
+    .container {
+      background: white;
       padding: 20px;
-      margin: 20px auto;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 700px;
-    }
-    .feedback-header {
-      background: #007bff;
-      color: #fff;
-      padding: 12px;
-      border-radius: 8px 8px 0 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
       text-align: center;
     }
-    .feedback-card {
-      padding: 20px;
-    }
-    .form-input, .feedback-input, select {
-      width: 100%;
-      padding: 10px;
-      margin: 6px 0 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .feedback-btn {
+    h2 {
       background: #007bff;
       color: white;
-      padding: 12px 18px;
-      border: none;
+      padding: 15px;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
     }
-    .feedback-btn:hover {
+    form {
+      margin-top: 20px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
       background: #0056b3;
     }
-    #thankyou-msg {
+    .thankyou {
       display: none;
+      margin-top: 20px;
       color: green;
       font-weight: bold;
-      font-size: 16px;
+    }
+    .stay-btn {
       margin-top: 15px;
+      background: #28a745;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .stay-btn:hover {
+      background: #218838;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>📘 Course Feedback</h2>
 
-<div id="Course-Feedback" class="section-box">
-  <div class="feedback-header">
-    <h2>📝 Course Feedback</h2>
+    <!-- Instructions + form wrapped in one section -->
+    <div id="form-section">
+      <p>Please provide your feedback honestly. Your response will help us improve the course.</p>
+      <form id="feedbackForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="roll">Roll Number:</label>
+        <input type="text" id="roll" required>
+
+        <label for="systemId">System ID:</label>
+        <input type="text" id="systemId" required>
+
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="doubt">Feedback / Doubts:</label>
+        <textarea id="doubt" rows="3"></textarea>
+
+        <button type="submit">Submit Feedback</button>
+      </form>
+    </div>
+
+    <!-- Thank you + stay connected -->
+    <div id="confirmationMessage" class="thankyou"></div>
+    <a href="https://gcjana.in" id="stayConnectedBtn" class="stay-btn" style="display:none;">🌐 Stay Connected</a>
   </div>
 
-  <div class="feedback-card">
-    <p>Please provide your feedback honestly. Your response will help us improve the course.</p>
+  <script>
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-    <!-- Feedback Form -->
-    <form id="feedback-form"
-          action="https://docs.google.com/forms/d/e/1FAIpQLScvM7of0H1-fvF8v4wFSy9BPVLMRWYxAklkDFAaZUdcx45Kpg/formResponse"
-          method="POST"
-          target="hidden_iframe"
-          onsubmit="submitted=true;">
+      const name = document.getElementById("name").value;
+      const roll = document.getElementById("roll").value;
+      const systemId = document.getElementById("systemId").value;
+      const mobile = document.getElementById("mobile").value;
+      const email = document.getElementById("email").value;
+      const doubt = document.getElementById("doubt").value;
 
-      <!-- Student Info -->
-      <input type="text" id="student-name" name="entry.251027817" placeholder="Student Name" class="form-input" required>
-      <input type="text" id="roll-no" name="entry.1452575491" placeholder="Roll No." class="form-input" required>
-      <input type="text" id="system-id" name="entry.10266487" placeholder="System ID" class="form-input" required>
-      <input type="text" id="mobile-no" name="entry.1114617674" placeholder="Mobile No." class="form-input" required>
-      <input type="email" id="email" name="entry.70645523" placeholder="Valid Email ID" class="form-input" required>
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfs_f4pI58sWuPNEQyIs7Esdh7NdVMzK4VIgxEyi5ES7CM8bA/formResponse?";
 
-      <!-- Rating Questions -->
-      <label>1️⃣ How would you rate the course content?</label>
-      <select name="entry.1146520465" class="form-input" required>
-        <option value="">-- Select --</option>
-        <option value="1">⭐ 1</option>
-        <option value="2">⭐⭐ 2</option>
-        <option value="3">⭐⭐⭐ 3</option>
-        <option value="4">⭐⭐⭐⭐ 4</option>
-        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-      </select>
+      const data = 
+        "entry.251027817=" + encodeURIComponent(name) +
+        "&entry.1452575491=" + encodeURIComponent(roll) +
+        "&entry.10266487=" + encodeURIComponent(systemId) +
+        "&entry.1114617674=" + encodeURIComponent(mobile) +
+        "&entry.70645523=" + encodeURIComponent(email) +
+        "&entry.1001508311=" + encodeURIComponent(doubt);
 
-      <label>2️⃣ How would you rate the teaching method?</label>
-      <select name="entry.760139106" class="form-input" required>
-        <option value="">-- Select --</option>
-        <option value="1">⭐ 1</option>
-        <option value="2">⭐⭐ 2</option>
-        <option value="3">⭐⭐⭐ 3</option>
-        <option value="4">⭐⭐⭐⭐ 4</option>
-        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-      </select>
-
-      <label>3️⃣ How would you rate the learning materials (PPTs, references, etc.)?</label>
-      <select name="entry.1140791594" class="form-input" required>
-        <option value="">-- Select --</option>
-        <option value="1">⭐ 1</option>
-        <option value="2">⭐⭐ 2</option>
-        <option value="3">⭐⭐⭐ 3</option>
-        <option value="4">⭐⭐⭐⭐ 4</option>
-        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-      </select>
-
-      <label>4️⃣ How much did this course improve your knowledge?</label>
-      <select name="entry.2030859153" class="form-input" required>
-        <option value="">-- Select --</option>
-        <option value="1">⭐ 1</option>
-        <option value="2">⭐⭐ 2</option>
-        <option value="3">⭐⭐⭐ 3</option>
-        <option value="4">⭐⭐⭐⭐ 4</option>
-        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-      </select>
-
-      <!-- Open Feedback -->
-      <label>5️⃣ What did you like most about this course?</label>
-      <textarea name="entry.1001508311" placeholder="Write your response..." class="feedback-input"></textarea>
-
-      <label>6️⃣ What improvements would you suggest?</label>
-      <textarea name="entry.723318004" placeholder="Write your suggestions..." class="feedback-input"></textarea>
-
-      <!-- Overall Rating -->
-      <label>🌟 Overall Course Rating</label>
-      <select name="entry.2075848187" class="form-input" required>
-        <option value="">-- Select --</option>
-        <option value="1">⭐ 1</option>
-        <option value="2">⭐⭐ 2</option>
-        <option value="3">⭐⭐⭐ 3</option>
-        <option value="4">⭐⭐⭐⭐ 4</option>
-        <option value="5">⭐⭐⭐⭐⭐ 5</option>
-      </select>
-
-      <button type="submit" class="feedback-btn">🚀 Submit Feedback</button>
-    </form>
-
-    <!-- Hidden iframe -->
-    <iframe name="hidden_iframe" style="display:none;" onload="if(submitted){showThankYou();}"></iframe>
-
-    <!-- Confirmation -->
-    <p id="thankyou-msg"></p>
-  </div>
-</div>
-
-<script>
-  var submitted = false;
-
-  function showThankYou() {
-    const name = document.getElementById("student-name").value;
-    const systemId = document.getElementById("system-id").value;
-    document.getElementById("feedback-form").style.display = "none";
-    document.getElementById("thankyou-msg").style.display = "block";
-    document.getElementById("thankyou-msg").innerText =
-      `✅ Thank you (${name} - ${systemId})! Your feedback has been submitted successfully.`;
-  }
-</script>
-
+      fetch(formUrl + data, { method: "POST", mode: "no-cors" })
+        .then(() => {
+          document.getElementById("form-section").style.display = "none";
+          document.getElementById("confirmationMessage").style.display = "block";
+          document.getElementById("confirmationMessage").innerHTML = 
+            `✔ Thank you <b>${name} - ${systemId}</b>! Your feedback has been submitted successfully.`;
+          document.getElementById("stayConnectedBtn").style.display = "inline-block";
+        })
+        .catch(err => {
+          alert("Error submitting feedback. Please try again.");
+          console.error(err);
+        });
+    });
+  </script>
 </body>
 </html>
