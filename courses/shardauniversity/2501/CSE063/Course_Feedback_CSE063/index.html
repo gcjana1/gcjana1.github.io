@@ -1,1 +1,193 @@
-Course_Feedback_CSE063.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Feedback Form - Quantum Computing | CSE063</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .section-box {
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+    }
+    .feedback-header {
+      background: #007bff;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+    }
+    .feedback-card {
+      padding: 20px;
+    }
+    .form-input, .feedback-input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .feedback-btn, .stay-btn {
+      background: #007bff;
+      color: white;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+    }
+    .feedback-btn:hover, .stay-btn:hover {
+      background: #0056b3;
+    }
+    #thankyou-msg {
+      display: none;
+      color: green;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    #stay-connected-btn {
+      display: none; /* initially hidden */
+      margin-top: 15px;
+    }
+    .btn-group {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="Course-Feedback" class="section-box">
+  <div class="feedback-header">
+    <h2>📝 Course Feedback for Quantum Computing | CSE063</h2>
+  </div>
+
+  <div class="feedback-card">
+    <!-- Instruction text (only before submission) -->
+    <p id="instruction-text">Please provide your feedback honestly. Your response will help us improve the course.</p>
+
+    <!-- Feedback Form -->
+    <form id="feedback-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSe5WPCkPdhRiWsrSN8RlQXQmdIGcvkASlC4UkIBt0Xbg0lTDw/formResponse"
+          method="POST"
+          target="hidden_iframe"
+          onsubmit="submitted=true;">
+
+      <!-- Student Info -->
+      <input type="text" id="student-name" name="entry.588028032" placeholder="Student Name" class="form-input" required>
+      <input type="text" id="roll-no" name="entry.1129955011" placeholder="Roll No." class="form-input" required>
+      <input type="text" id="system-id" name="entry.1479390563" placeholder="System ID" class="form-input" required>
+      <input type="text" id="mobile-no" name="entry.76738570" placeholder="Mobile No." class="form-input" required>
+      <input type="email" id="email" name="entry.2046197350" placeholder="Valid Email ID" class="form-input" required>
+
+      <!-- Rating Questions -->
+      <label>1️⃣ How would you rate the course content?</label>
+      <select name="entry.1863114305" class="form-input" required>
+        <option value="">-- Select --</option>
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+      </select>
+
+      <label>2️⃣ How would you rate the teaching method?</label>
+      <select name="entry.941467258" class="form-input" required>
+        <option value="">-- Select --</option>
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+      </select>
+
+      <label>3️⃣ How would you rate the learning materials (PPTs, references, etc.)?</label>
+      <select name="entry.125052807" class="form-input" required>
+        <option value="">-- Select --</option>
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+      </select>
+
+      <label>4️⃣ How much did this course improve your knowledge?</label>
+      <select name="entry.1776271690" class="form-input" required>
+        <option value="">-- Select --</option>
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+      </select>
+
+      <!-- Open Feedback -->
+      <label>5️⃣ What did you like most about this course?</label>
+      <textarea name="entry.996744787" placeholder="Write your response..." class="feedback-input"></textarea>
+
+      <label>6️⃣ What improvements would you suggest?</label>
+      <textarea name="entry.1720337278" placeholder="Write your suggestions..." class="feedback-input"></textarea>
+
+      <!-- Overall Rating -->
+      <label>🌟 Overall Course Rating</label>
+      <select name="entry.1536881078" class="form-input" required>
+        <option value="">-- Select --</option>
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+      </select>
+
+      <div class="btn-group">
+        <button type="submit" class="feedback-btn">🚀 Submit Feedback</button>
+      </div>
+    </form>
+
+    <!-- Hidden iframe -->
+    <iframe name="hidden_iframe" style="display:none;" onload="if(submitted){showThankYou();}"></iframe>
+
+    <!-- Confirmation -->
+    <p id="thankyou-msg"></p>
+
+    <!-- Stay Connected Button (moved below Thank You) -->
+    <a href="https://www.gcjana.in/" id="stay-connected-btn" class="stay-btn" target="_blank">🔗 Stay Connected</a>
+  </div>
+</div>
+
+<script>
+  var submitted = false;
+
+  function showThankYou() {
+    const name = document.getElementById("student-name").value;
+    const systemId = document.getElementById("system-id").value;
+
+    // Hide form and instruction text
+    document.getElementById("feedback-form").style.display = "none";
+    document.getElementById("instruction-text").style.display = "none";
+
+    // Show thank you message
+    document.getElementById("thankyou-msg").style.display = "block";
+    document.getElementById("thankyou-msg").innerText =
+      `✅ Thank you (${name} - ${systemId})! Your feedback has been submitted successfully.`;
+
+    // Show Stay Connected button
+    document.getElementById("stay-connected-btn").style.display = "inline-block";
+  }
+</script>
+
+</body>
+</html>
