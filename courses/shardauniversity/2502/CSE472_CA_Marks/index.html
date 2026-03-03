@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CSE472 CA Marks</title>
+    <title>Student Marks Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,7 +63,7 @@
 <body>
 
 <div class="container">
-    <h2>Check Your CSE472 CA Marks</h2>
+    <h2>Check Your Marks</h2>
 
     <select id="component">
         <option value="">Select Component</option>
@@ -86,41 +86,56 @@ function getMarks() {
     var resultDiv = document.getElementById("result");
 
     if(id === "" || component === ""){
-        resultDiv.innerHTML = "<div class='error'>Please enter SYSTEM ID and select component.</div>";
+        resultDiv.innerHTML = "<div class='error'>Please select component and enter ID.</div>";
         return;
     }
 
     fetch("https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json")
-    .then(response => response.json())
-    .then(data => {
+    .then(response => response.text())
+    .then(text => {
 
-        var student = data.find(s => s["SYSTEM ID"] == id);
+        // convert Google response to JSON
+        var json = JSON.parse(text.substr(47).slice(0, -2));
+        var rows = json.table.rows;
 
-        if(student){
-
-            var marks = student[component];
-
-            if(marks !== undefined && marks !== ""){
-
-                resultDiv.innerHTML = `
-                    <div class="result-card">
-                        <b>SYSTEM ID:</b> ${student["SYSTEM ID"]}<br><br>
-                        <b>STUDENT NAME:</b> ${student["NAME OF THE STUDENT"]}<br><br>
-                        <b>${component}:</b> ${marks}
-                    </div>
-                `;
-
-            } else {
-                resultDiv.innerHTML = "<div class='error'>Marks not available.</div>";
+        // find student
+        var found = null;
+        rows.forEach(r => {
+            if(r.c[0] && r.c[0].v == id){
+                found = r;
             }
+        });
 
-        } else {
-            resultDiv.innerHTML = "<div class='error'>No record found!</div>";
+        if(!found) {
+            resultDiv.innerHTML = "<div class='error'>No record found.</div>";
+            return;
         }
 
+        // mapping columns
+        var name = found.c[1] ? found.c[1].v : "";
+        var marks = "";
+        if(component === "Assignmnet-1 Marks (20)") {
+            marks = found.c[2] ? found.c[2].v : "";
+        } else if(component === "Assessment-1 Marks(20)") {
+            marks = found.c[3] ? found.c[3].v : "";
+        }
+
+        if(marks === "") {
+            resultDiv.innerHTML = "<div class='error'>No marks available.</div>";
+            return;
+        }
+
+        resultDiv.innerHTML = `
+            <div class="result-card">
+                <b>SYSTEM ID:</b> ${id}<br><br>
+                <b>STUDENT NAME:</b> ${name}<br><br>
+                <b>${component}:</b> ${marks}
+            </div>
+        `;
+
     })
-    .catch(error => {
-        resultDiv.innerHTML = "<div class='error'>Error fetching data. Check Web App URL.</div>";
+    .catch(err => {
+        resultDiv.innerHTML = "<div class='error'>Error fetching data.</div>";
     });
 }
 </script>
