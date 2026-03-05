@@ -209,7 +209,7 @@ if(component=="CA (30)") marks=found.c[2]?.v;
 if(component=="CE (30)") marks=found.c[3]?.v;
 
 
-if(!marks){
+if(marks === undefined || marks === null || marks === ""){
 
 resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
 return;
