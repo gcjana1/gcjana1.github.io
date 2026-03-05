@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSA203 CA Marks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            width: 480px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 10px;
+            width: 90%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #004aad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #003080;
+        }
+
+        .result-card {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f7ff;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: red;
+            font-weight: bold;
+        }
+        .marks-badge{
+        font-size:22px;
+        font-weight:bold;
+        padding:8px 14px;
+        border-radius:20px;
+        color:white;
+      }
+      
+      .good{
+          background:#28a745;
+      }
+      
+      .average{
+          background:#007bff;
+      }
+      
+      .low{
+          background:#dc3545;
+      }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Check Your CSA203 CA Marks</h2>
+
+    <select id="component">
+        <option value="">Select Component</option>
+        <option value="Assignmnet-1 Marks (20)">Assignment-1</option>
+        <option value="Assessment-1 Marks(20)">Assessment-1</option>
+    </select>
+
+    <input type="text" id="systemId" placeholder="Enter SYSTEM ID">
+
+    <button onclick="getMarks()">Check</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function getMarks() {
+
+    var id = document.getElementById("systemId").value.trim();
+    var component = document.getElementById("component").value;
+    var resultDiv = document.getElementById("result");
+
+    if(id === "" || component === ""){
+        resultDiv.innerHTML = "<div class='error'>Please enter SYSTEM ID and select component.</div>";
+        return;
+    }
+
+    fetch("https://docs.google.com/spreadsheets/d/1TbBGA_g-RfVjAi-upNhZbm7Ag2pqDgyu-KFgYOQ2qrc/gviz/tq?tqx=out:json")
+    .then(response => response.json())
+    .then(data => {
+
+        var student = data.find(s => s["SYSTEM ID"] == id);
+
+        if(student){
+
+            var marks = student[component];
+
+            if(marks !== undefined && marks !== ""){
+
+                var maxMarks = 20;
+
+if(component.includes("(30)")) maxMarks = 30;
+
+var percent = (marks / maxMarks) * 100;
+
+var gradeClass = "average";
+
+if(percent >= 75) gradeClass = "good";
+else if(percent < 50) gradeClass = "low";
+
+resultDiv.innerHTML = `
+<div class="result-card">
+
+<b>SYSTEM ID:</b> ${id}<br><br>
+
+<b>STUDENT NAME:</b> ${name}<br><br>
+
+<b>${component}:</b> 
+<span class="marks-badge ${gradeClass}">
+${marks} / ${maxMarks}
+</span>
+
+</div>
+`;
+
+            } else {
+                resultDiv.innerHTML = "<div class='error'>Marks not available.</div>";
+            }
+
+        } else {
+            resultDiv.innerHTML = "<div class='error'>No record found!</div>";
+        }
+
+    })
+    .catch(error => {
+        resultDiv.innerHTML = "<div class='error'>Error fetching data. Check Web App URL.</div>";
+    });
+}
+</script>
+
+</body>
+</html>
