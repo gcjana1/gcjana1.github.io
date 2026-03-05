@@ -61,6 +61,25 @@ background:#fff8e1;
 padding:10px;
 border-radius:5px;
 }
+  .marks-badge{
+    font-size:22px;
+    font-weight:bold;
+    padding:8px 14px;
+    border-radius:20px;
+    color:white;
+}
+
+.good{
+    background:#28a745;
+}
+
+.average{
+    background:#007bff;
+}
+
+.low{
+    background:#dc3545;
+}
 
 </style>
 </head>
@@ -197,18 +216,30 @@ return;
 
 }
 
-resultDiv.innerHTML=`
+var maxMarks = 20;
 
+if(component.includes("(30)")) maxMarks = 30;
+
+var percent = (marks / maxMarks) * 100;
+
+var gradeClass = "average";
+
+if(percent >= 75) gradeClass = "good";
+else if(percent < 50) gradeClass = "low";
+
+resultDiv.innerHTML = `
 <div class="result-card">
 
 <b>SYSTEM ID:</b> ${id}<br><br>
 
 <b>STUDENT NAME:</b> ${name}<br><br>
 
-<b>${component}:</b> ${marks}
+<b>${component}:</b> 
+<span class="marks-badge ${gradeClass}">
+${marks} / ${maxMarks}
+</span>
 
 </div>
-
 `;
 
 })
