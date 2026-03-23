@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz</title>
+
+<style>
+body {margin:0;font-family:Arial;background:#f4f6f9;}
+
+.header {
+  background:#007bff;color:white;padding:12px;text-align:center;
+}
+
+.timer {
+  position:sticky;top:0;
+  background:#fff3cd;padding:8px;text-align:center;font-weight:bold;
+}
+
+.container {padding:10px;}
+
+.card {
+  background:white;padding:15px;border-radius:10px;margin-bottom:10px;
+}
+
+.option {
+  display:block;padding:12px;margin:6px 0;
+  background:#eef1f5;border-radius:8px;
+}
+
+.palette {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+}
+
+.palette div {
+  padding:10px;text-align:center;
+  border-radius:6px;
+  background:#ccc;
+}
+
+/* STATUS COLORS */
+.answered {background:#28a745!important;color:white;}
+.review {background:#ffc107!important;color:black;}
+.current {border:2px solid black;}
+
+button {
+  padding:12px;width:48%;margin:5px 1%;
+  border:none;background:#007bff;color:white;border-radius:6px;
+}
+
+.full {width:100%;background:red;}
+
+.reviewBtn {background:#ffc107;color:black;width:100%;}
+</style>
+</head>
+
+<body>
+
+<div class="header">📘 Online Quiz</div>
+<div class="timer" id="timer"></div>
+
+<div class="container" id="loginBox">
+
+<div class="card">
+<h4>🔍 System Info</h4>
+<p>IP: <span id="ip"></span></p>
+<p>Location: <span id="location"></span></p>
+</div>
+
+<div class="card">
+<input id="id" placeholder="System ID"><br>
+<input id="code" placeholder="Access Code"><br>
+<button onclick="login()">Start Quiz</button>
+</div>
+
+</div>
+
+<div id="quizBox" style="display:none;" class="container">
+
+<div class="palette" id="palette"></div>
+
+<div class="card" id="questionBox"></div>
+
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Next</button>
+
+<button class="reviewBtn" onclick="markReview()">Mark for Review</button>
+
+<button class="full" onclick="confirmSubmit()">Submit</button>
+
+</div>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbx2vk5uONuOM_v_zucc6AkjmLwPu1sr11VGOcZCEnbiTdvRVp5uoUxwgS6yr5vElSxI/exec";
+const KEY="QUIZ123";
+
+let studentId,email,questions=[];
+let answers=[],reviewList=[];
+let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
+
+// IP INFO
+async function loadInfo(){
+ let r=await fetch("https://ipapi.co/json/");
+ let d=await r.json();
+ ipAddr=d.ip;
+ ip.innerText=d.ip;
+ location.innerText=d.city+", "+d.country_name;
+}
+loadInfo();
+
+// FULLSCREEN
+function enterFullScreen(){
+ let elem=document.documentElement;
+ if(elem.requestFullscreen) elem.requestFullscreen();
+}
+
+// LOGIN
+async function login(){
+ studentId=id.value;
+ let code=document.getElementById("code").value;
+
+ let res=await fetch(API,{
+  method:"POST",
+  body:JSON.stringify({action:"login",id:studentId,code,ip:ipAddr,key:KEY})
+ });
+
+ let data=await res.json();
+
+ if(data.status==="fail") return alert("Invalid");
+ if(data.status==="blocked") return alert("Submitted");
+
+ email=data.email;
+ timeLeft=data.time;
+ answers=data.answers;
+
+ loginBox.style.display="none";
+ quizBox.style.display="block";
+
+ enterFullScreen(); // activate fullscreen
+
+ loadQuestions();
+}
+
+// QUESTIONS
+async function loadQuestions(){
+ let res=await fetch(API,{
+  method:"POST",
+  body:JSON.stringify({action:"getQuestions",key:KEY})
+ });
+ questions=await res.json();
+ renderPalette();
+ showQ();
+ startTimer();
+}
+
+// PALETTE
+function renderPalette(){
+ let html="";
+ for(let i=0;i<questions.length;i++){
+  let qid=questions[i][0];
+
+  let cls="";
+  if(reviewList.includes(qid)) cls="review";
+  else if(answers.find(a=>a.q_id===qid)) cls="answered";
+
+  if(i===current) cls+=" current";
+
+  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+ }
+ palette.innerHTML=html;
+}
+
+// SHOW QUESTION
+function showQ(){
+ let q=questions[current];
+ let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
+
+ for(let j=2;j<=5;j++){
+  let checked=answers.find(a=>a.q_id===q[0] && a.answer===q[j])?"checked":"";
+
+  html+=`<label class="option">
+  <input type="radio" ${checked}
+  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}</label>`;
+ }
+
+ questionBox.innerHTML=html;
+ renderPalette();
+}
+
+// SAVE
+function save(qid,ans){
+ answers=answers.filter(a=>a.q_id!==qid);
+ answers.push({q_id:qid,answer:ans});
+
+ reviewList=reviewList.filter(r=>r!==qid);
+
+ fetch(API,{
+  method:"POST",
+  body:JSON.stringify({
+    action:"save",
+    student_id:studentId,
+    answers,
+    time:timeLeft,
+    key:KEY
+  })
+ });
+
+ renderPalette();
+}
+
+// MARK REVIEW
+function markReview(){
+ let qid=questions[current][0];
+
+ if(!reviewList.includes(qid)){
+  reviewList.push(qid);
+ }
+
+ renderPalette();
+}
+
+// NAVIGATION
+function nextQ(){ if(current<questions.length-1){current++;showQ();}}
+function prevQ(){ if(current>0){current--;showQ();}}
+function goTo(i){ current=i; showQ(); }
+
+// TIMER
+function startTimer(){
+ setInterval(()=>{
+  timeLeft--;
+  timer.innerText="⏳ "+timeLeft+" sec";
+
+  if(timeLeft<=0) submitQuiz();
+ },1000);
+}
+
+// SUBMIT
+function confirmSubmit(){
+ if(confirm(`Submit?\nAnswered: ${answers.length}/15\nReview: ${reviewList.length}`)){
+  submitQuiz();
+ }
+}
+
+async function submitQuiz(){
+ let res=await fetch(API,{
+  method:"POST",
+  body:JSON.stringify({
+    action:"submit",
+    student_id:studentId,
+    email:email,
+    answers,
+    tab_switch:tabSwitch,
+    ip:ipAddr,
+    key:KEY
+  })
+ });
+
+ let data=await res.json();
+
+ document.body.innerHTML=`<h2>Score: ${data.score}/15</h2>`;
+}
+
+// FULLSCREEN EXIT DETECT
+document.addEventListener("fullscreenchange",()=>{
+ if(!document.fullscreenElement){
+  alert("⚠️ Fullscreen exited!");
+  tabSwitch++;
+ }
+});
+
+// TAB SWITCH
+document.addEventListener("visibilitychange",()=>{
+ if(document.hidden){
+  tabSwitch++;
+  alert("⚠️ Tab switching detected!");
+ }
+});
+</script>
+
+</body>
+</html>
