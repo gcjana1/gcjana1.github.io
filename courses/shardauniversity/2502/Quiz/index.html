@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz</title>
+<title>Online Quiz</title>
 
 <style>
 body {margin:0;font-family:Arial;background:#f4f6f9;}
@@ -35,11 +35,10 @@ body {margin:0;font-family:Arial;background:#f4f6f9;}
 
 .palette div {
   padding:10px;text-align:center;
-  border-radius:6px;
-  background:#ccc;
+  border-radius:6px;background:#ccc;
 }
 
-/* STATUS COLORS */
+/* COLORS */
 .answered {background:#28a745!important;color:white;}
 .review {background:#ffc107!important;color:black;}
 .current {border:2px solid black;}
@@ -50,7 +49,6 @@ button {
 }
 
 .full {width:100%;background:red;}
-
 .reviewBtn {background:#ffc107;color:black;width:100%;}
 </style>
 </head>
@@ -60,6 +58,7 @@ button {
 <div class="header">📘 Online Quiz</div>
 <div class="timer" id="timer"></div>
 
+<!-- LOGIN -->
 <div class="container" id="loginBox">
 
 <div class="card">
@@ -76,6 +75,7 @@ button {
 
 </div>
 
+<!-- QUIZ -->
 <div id="quizBox" style="display:none;" class="container">
 
 <div class="palette" id="palette"></div>
@@ -92,20 +92,25 @@ button {
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbw1GbEvc5t-e3TCosn8pJGqjJ6d0tWdc5FFM5HNCN-wby0UaUX6SwzSDv_GFLLo8lWm/exec";
+const API="https://script.google.com/macros/s/AKfycbz9pk4Djtd6Q53c2fNADrT5cpmpXgoJxK3MNOhGIEpzwey2uOgXuA7US0qaocbL9AgM/exec";
 const KEY="QUIZ123";
 
 let studentId,email,questions=[];
 let answers=[],reviewList=[];
 let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
 
-// IP INFO
+// LOAD IP
 async function loadInfo(){
- let r=await fetch("https://ipapi.co/json/");
- let d=await r.json();
- ipAddr=d.ip;
- ip.innerText=d.ip;
- location.innerText=d.city+", "+d.country_name;
+ try{
+  let r=await fetch("https://ipapi.co/json/");
+  let d=await r.json();
+  ipAddr=d.ip;
+  ip.innerText=d.ip;
+  location.innerText=d.city+", "+d.country_name;
+ }catch{
+  ip.innerText="Unavailable";
+  location.innerText="Unavailable";
+ }
 }
 loadInfo();
 
@@ -117,28 +122,35 @@ function enterFullScreen(){
 
 // LOGIN
 async function login(){
- studentId=id.value;
- let code=document.getElementById("code").value;
+ studentId=id.value.trim();
+ let code=document.getElementById("code").value.trim();
 
  let res=await fetch(API,{
   method:"POST",
-  body:JSON.stringify({action:"login",id:studentId,code,ip:ipAddr,key:KEY})
+  body:JSON.stringify({
+    action:"login",
+    id:studentId,
+    code,
+    ip:ipAddr,
+    key:KEY
+  })
  });
 
  let data=await res.json();
 
- if(data.status==="fail") return alert("Invalid");
- if(data.status==="blocked") return alert("Submitted");
+ if(data.status==="fail") return alert("Invalid Login");
+ if(data.status==="blocked") return alert("Already submitted");
+ if(data.status==="not_started") return alert("Quiz not started");
+ if(data.status==="ended") return alert("Quiz ended");
 
  email=data.email;
  timeLeft=data.time;
- answers=data.answers;
+ answers=data.answers || [];
 
  loginBox.style.display="none";
  quizBox.style.display="block";
 
- enterFullScreen(); // activate fullscreen
-
+ enterFullScreen();
  loadQuestions();
 }
 
@@ -149,6 +161,7 @@ async function loadQuestions(){
   body:JSON.stringify({action:"getQuestions",key:KEY})
  });
  questions=await res.json();
+
  renderPalette();
  showQ();
  startTimer();
@@ -174,6 +187,7 @@ function renderPalette(){
 // SHOW QUESTION
 function showQ(){
  let q=questions[current];
+
  let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
 
  for(let j=2;j<=5;j++){
@@ -188,7 +202,7 @@ function showQ(){
  renderPalette();
 }
 
-// SAVE
+// SAVE ANSWER
 function save(qid,ans){
  answers=answers.filter(a=>a.q_id!==qid);
  answers.push({q_id:qid,answer:ans});
@@ -212,11 +226,9 @@ function save(qid,ans){
 // MARK REVIEW
 function markReview(){
  let qid=questions[current][0];
-
  if(!reviewList.includes(qid)){
   reviewList.push(qid);
  }
-
  renderPalette();
 }
 
@@ -229,19 +241,26 @@ function goTo(i){ current=i; showQ(); }
 function startTimer(){
  setInterval(()=>{
   timeLeft--;
-  timer.innerText="⏳ "+timeLeft+" sec";
 
-  if(timeLeft<=0) submitQuiz();
+  let min=Math.floor(timeLeft/60);
+  let sec=timeLeft%60;
+  timer.innerText=`⏳ ${min}:${sec<10?'0'+sec:sec}`;
+
+  if(timeLeft<=0){
+    alert("Time up!");
+    submitQuiz();
+  }
  },1000);
 }
 
-// SUBMIT
+// CONFIRM SUBMIT
 function confirmSubmit(){
  if(confirm(`Submit?\nAnswered: ${answers.length}/15\nReview: ${reviewList.length}`)){
   submitQuiz();
  }
 }
 
+// SUBMIT
 async function submitQuiz(){
  let res=await fetch(API,{
   method:"POST",
@@ -258,7 +277,21 @@ async function submitQuiz(){
 
  let data=await res.json();
 
- document.body.innerHTML=`<h2>Score: ${data.score}/15</h2>`;
+ let attempted=answers.length;
+ let percent=((data.score/15)*100).toFixed(2);
+
+ document.body.innerHTML=`
+ <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#f4f6f9;">
+  <div style="background:white;padding:25px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.2);width:300px;text-align:center;">
+    <h2 style="color:#28a745;">✅ Submitted</h2>
+    <p><b>Score:</b> ${data.score}/15</p>
+    <p><b>Percentage:</b> ${percent}%</p>
+    <p><b>Attempted:</b> ${attempted}/15</p>
+    <p><b>Time Used:</b> ${(900-timeLeft)} sec</p>
+    <hr>
+    <p>Result sent to email</p>
+  </div>
+ </div>`;
 }
 
 // FULLSCREEN EXIT DETECT
@@ -276,6 +309,12 @@ document.addEventListener("visibilitychange",()=>{
   alert("⚠️ Tab switching detected!");
  }
 });
+
+// DISABLE COPY
+document.oncopy=e=>e.preventDefault();
+document.onpaste=e=>e.preventDefault();
+document.oncontextmenu=e=>e.preventDefault();
+
 </script>
 
 </body>
