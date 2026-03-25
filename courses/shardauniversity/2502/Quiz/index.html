@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Quiz Portal | Dr. GC Jana</title>
+<title>Online Quiz Poral | Dr. GC Jana</title>
 
 <style>
 body {margin:0;font-family:Arial;background:#f4f6f9;}
@@ -12,7 +12,7 @@ body {margin:0;font-family:Arial;background:#f4f6f9;}
 .card {background:white;padding:15px;border-radius:10px;margin-bottom:10px;}
 .option {display:block;padding:12px;margin:6px 0;background:#eef1f5;border-radius:8px;}
 .palette {display:grid;grid-template-columns:repeat(5,1fr);gap:5px;}
-.palette div {padding:10px;text-align:center;background:#ccc;border-radius:6px;}
+.palette div {padding:10px;text-align:center;border-radius:6px;background:#ccc;}
 .answered {background:#28a745!important;color:white;}
 .review {background:#ffc107!important;}
 .current {border:2px solid black;}
@@ -24,12 +24,13 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 
 <body>
 
-<div class="header">Online Quiz</div>
+<div class="header">📘 Online Quiz</div>
 <div class="timer" id="timer"></div>
 
 <div class="container" id="loginBox">
+
 <div class="card">
-<h4>System Info</h4>
+<h4>🔍 System Info</h4>
 <p>IP: <span id="ip"></span></p>
 <p>Location: <span id="location"></span></p>
 </div>
@@ -39,25 +40,35 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 <input id="code" placeholder="Access Code"><br>
 <button onclick="login()">Start Quiz</button>
 </div>
+
 </div>
 
 <div id="quizBox" style="display:none;" class="container">
+
+<div class="card" id="timeInfo"></div>
+
 <div class="palette" id="palette"></div>
+
 <div class="card" id="questionBox"></div>
 
 <button onclick="prevQ()">Previous</button>
 <button onclick="nextQ()">Next</button>
+
 <button class="reviewBtn" onclick="markReview()">Mark for Review</button>
+
 <button class="full" onclick="confirmSubmit()">Submit</button>
+
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbxDxRNtnC29L24-a2XN0UezKXFDEoc9Fqs2Dcu3_eILE287feK_MTPHt85YY6SaZ_EY/exec";
+const API="https://script.google.com/macros/s/AKfycbzNKTAvrOl8_LpC8ai_U6yRGNmZiQBCVelVwxnHNZl1d8J2pWiMREfqNwvSMkfpnOh_/exec";
 const KEY="QUIZ123";
 
-let studentId,email,questions=[],answers=[],reviewList=[];
+let studentId,email,questions=[];
+let answers=[],reviewList=[];
 let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
 let quizStarted=false;
+let sessionId = localStorage.getItem("session") || "";
 
 // LOAD IP
 async function loadInfo(){
@@ -81,30 +92,50 @@ async function login(){
 
  let res=await fetch(API,{
   method:"POST",
-  body:JSON.stringify({action:"login",id:studentId,code,ip:ipAddr,key:KEY})
+  body:JSON.stringify({
+    action:"login",
+    id:studentId,
+    code,
+    ip:ipAddr,
+    session:sessionId,
+    key:KEY
+  })
  });
 
  let data=await res.json();
 
  if(data.status==="fail") return alert("Invalid Login");
  if(data.status==="blocked") return alert("Already submitted");
+ if(data.status==="already_logged") return alert("Already logged in another device");
  if(data.status==="not_started") return alert("Quiz not started yet");
  if(data.status==="ended") return alert("Quiz ended");
 
+ sessionId = data.session;
+ localStorage.setItem("session", sessionId);
+
+ email=data.email;
  timeLeft=data.time || 900;
 
  if(timeLeft<=0){
-   alert("Time already over!");
-   return;
+  alert("Time already over");
+  return;
  }
 
- email=data.email;
  answers=data.answers || [];
 
  loginBox.style.display="none";
  quizBox.style.display="block";
 
  quizStarted=true;
+
+ // SHOW START/END TIME
+ let startTime = new Date(data.start);
+ let endTime = new Date(data.end);
+
+ timeInfo.innerHTML = `
+ <b>Start:</b> ${startTime.toLocaleTimeString()}<br>
+ <b>End:</b> ${endTime.toLocaleTimeString()}
+ `;
 
  loadQuestions();
 }
@@ -152,21 +183,31 @@ function showQ(){
  renderPalette();
 }
 
-// SAVE
+// SAVE (OPTIMIZED)
 function save(qid,ans){
  answers=answers.filter(a=>a.q_id!==qid);
  answers.push({q_id:qid,answer:ans});
+
  reviewList=reviewList.filter(r=>r!==qid);
 
- fetch(API,{
-  method:"POST",
-  body:JSON.stringify({action:"save",student_id:studentId,answers,time:timeLeft,key:KEY})
- });
+ clearTimeout(window.saveTimer);
+ window.saveTimer=setTimeout(()=>{
+  fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"save",
+      student_id:studentId,
+      answers,
+      time:timeLeft,
+      key:KEY
+    })
+  });
+ },1000);
 
  renderPalette();
 }
 
-// REVIEW
+// MARK REVIEW
 function markReview(){
  let qid=questions[current][0];
  if(!reviewList.includes(qid)) reviewList.push(qid);
@@ -182,8 +223,10 @@ function goTo(i){ current=i; showQ(); }
 function startTimer(){
  setInterval(()=>{
   timeLeft--;
+
   let min=Math.floor(timeLeft/60);
   let sec=timeLeft%60;
+
   timer.innerText=`⏳ ${min}:${sec<10?'0'+sec:sec}`;
 
   if(timeLeft<=0){
@@ -216,18 +259,36 @@ async function submitQuiz(){
 
  let data=await res.json();
 
- document.body.innerHTML=`<h2>Score: ${data.score}/15</h2>`;
+ let percent=((data.score/15)*100).toFixed(2);
+
+ document.body.innerHTML=`
+ <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f6f9;">
+  <div style="background:white;padding:25px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.2);width:320px;text-align:center;">
+    <h2 style="color:#28a745;">✅ Submitted</h2>
+    <h1 style="color:#007bff;">${data.score}/15</h1>
+    <p>Percentage: ${percent}%</p>
+    <p>Attempted: ${answers.length}/15</p>
+    <hr>
+    <p>📧 Result sent to email</p>
+  </div>
+ </div>`;
 }
 
-// TAB SWITCH FIXED
+// TAB SWITCH ONLY AFTER QUIZ START
 document.addEventListener("visibilitychange",()=>{
  if(!quizStarted) return;
 
  if(document.hidden){
   tabSwitch++;
-  alert("Tab switching detected");
+  alert("⚠️ Tab switching detected!");
  }
 });
+
+// DISABLE COPY
+document.oncopy=e=>e.preventDefault();
+document.onpaste=e=>e.preventDefault();
+document.oncontextmenu=e=>e.preventDefault();
+
 </script>
 
 </body>
