@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Quiz Poral | Dr. GC Jana</title>
+<title>Online Quiz Portal | Dr. GC Jana</title>
 
 <style>
 body {margin:0;font-family:Arial;background:#f4f6f9;}
@@ -69,6 +69,7 @@ let answers=[],reviewList=[];
 let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
 let quizStarted=false;
 let sessionId = localStorage.getItem("session") || "";
+let submitted=false;
 
 // LOAD IP
 async function loadInfo(){
@@ -128,7 +129,6 @@ async function login(){
 
  quizStarted=true;
 
- // SHOW START/END TIME
  let startTime = new Date(data.start);
  let endTime = new Date(data.end);
 
@@ -158,10 +158,13 @@ function renderPalette(){
  let html="";
  for(let i=0;i<questions.length;i++){
   let qid=questions[i][0];
+
   let cls="";
   if(reviewList.includes(qid)) cls="review";
-  else if(answers.find(a=>a.q_id===qid)) cls="answered";
+  else if(answers.some(a=>String(a.q_id)===String(qid))) cls="answered";
+
   if(i===current) cls+=" current";
+
   html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
  }
  palette.innerHTML=html;
@@ -170,12 +173,17 @@ function renderPalette(){
 // SHOW QUESTION
 function showQ(){
  let q=questions[current];
+
  let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
 
  for(let j=2;j<=5;j++){
-  let checked=answers.find(a=>a.q_id===q[0] && a.answer===q[j])?"checked":"";
+  let checked = answers.some(a => 
+    String(a.q_id) === String(q[0]) && 
+    String(a.answer) === String(q[j])
+  ) ? "checked" : "";
+
   html+=`<label class="option">
-  <input type="radio" ${checked}
+  <input type="radio" name="q${current}" ${checked}
   onclick="save('${q[0]}','${q[j]}')"> ${q[j]}</label>`;
  }
 
@@ -183,7 +191,7 @@ function showQ(){
  renderPalette();
 }
 
-// SAVE (OPTIMIZED)
+// SAVE
 function save(qid,ans){
  answers=answers.filter(a=>a.q_id!==qid);
  answers.push({q_id:qid,answer:ans});
@@ -207,7 +215,7 @@ function save(qid,ans){
  renderPalette();
 }
 
-// MARK REVIEW
+// REVIEW
 function markReview(){
  let qid=questions[current][0];
  if(!reviewList.includes(qid)) reviewList.push(qid);
@@ -238,43 +246,56 @@ function startTimer(){
 
 // SUBMIT
 function confirmSubmit(){
+ if(submitted) return;
+
  if(confirm(`Submit?\nAnswered: ${answers.length}/15\nReview: ${reviewList.length}`)){
-  submitQuiz();
+   submitted=true;
+   submitQuiz();
  }
 }
 
 async function submitQuiz(){
- let res=await fetch(API,{
-  method:"POST",
-  body:JSON.stringify({
-    action:"submit",
-    student_id:studentId,
-    email:email,
-    answers,
-    tab_switch:tabSwitch,
-    ip:ipAddr,
-    key:KEY
-  })
- });
+ try{
+  let res=await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"submit",
+      student_id:studentId,
+      email:email,
+      answers,
+      tab_switch:tabSwitch,
+      ip:ipAddr,
+      key:KEY
+    })
+  });
 
- let data=await res.json();
+  let data=await res.json();
 
- let percent=((data.score/15)*100).toFixed(2);
+  if(!data || data.score===undefined){
+    alert("Submission failed");
+    return;
+  }
 
- document.body.innerHTML=`
- <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f6f9;">
-  <div style="background:white;padding:25px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.2);width:320px;text-align:center;">
-    <h2 style="color:#28a745;">✅ Submitted</h2>
-    <h1 style="color:#007bff;">${data.score}/15</h1>
-    <p>Percentage: ${percent}%</p>
-    <p>Attempted: ${answers.length}/15</p>
-    <hr>
-    <p>📧 Result sent to email</p>
-  </div>
- </div>`;
+  let percent=((data.score/15)*100).toFixed(2);
+
+  document.body.innerHTML=`
+  <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f6f9;">
+    <div style="background:white;padding:25px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.2);width:320px;text-align:center;">
+      <h2 style="color:#28a745;">✅ Submitted</h2>
+      <h1 style="color:#007bff;">${data.score}/15</h1>
+      <p>Percentage: ${percent}%</p>
+      <p>Attempted: ${answers.length}/15</p>
+      <hr>
+      <p>📧 Result sent</p>
+    </div>
+  </div>`;
+ }
+ catch(err){
+  alert("Server error");
+ }
 }
 
-// TAB SWITCH ONLY AFTER QUIZ START
+// TAB SWITCH FIXED
 document.addEventListener("visibilitychange",()=>{
  if(!quizStarted) return;
 
