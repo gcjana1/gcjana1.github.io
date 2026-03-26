@@ -29,71 +29,54 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 
 <!-- LOGIN -->
 <div class="container" id="loginBox">
-
-<div class="card">
-<h4>🔍 System Info</h4>
-<p>IP: <span id="ip"></span></p>
-<p>Location: <span id="location"></span></p>
-</div>
-
 <div class="card">
 <input id="id" placeholder="System ID"><br>
 <input id="code" placeholder="Access Code"><br>
 <button onclick="login()">Start Quiz</button>
 </div>
+</div>
 
+<!-- INSTRUCTION -->
+<div id="instructionBox" style="display:none;" class="container">
+<div class="card">
+<h3>📜 Instructions</h3>
+<ul>
+<li>Total Questions: 15</li>
+<li>Each question carries 1 mark</li>
+<li>No negative marking</li>
+<li>Do not switch tabs</li>
+</ul>
+<h3 id="insTimer"></h3>
+</div>
 </div>
 
 <!-- QUIZ -->
 <div id="quizBox" style="display:none;" class="container">
 
 <div class="card" id="timeInfo"></div>
-
 <div class="palette" id="palette"></div>
-
 <div class="card" id="questionBox"></div>
 
 <button onclick="prevQ()">Previous</button>
 <button onclick="nextQ()">Next</button>
 
 <button class="reviewBtn" onclick="markReview()">Mark for Review</button>
-
 <button class="full" onclick="confirmSubmit()">Submit</button>
 
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwwKHOVYRqRqGQY3eLccOTVN0qDlNT2ea-DK0gtReRJH8038Yc_8s25KHlDVsJfuSSw/exec";
+const API="https://script.google.com/macros/s/AKfycbwvZpPtWcvCbU3iVQ6P9es0g8ZNKgbLDEBBmwM82YtyuyohGB4oWz5fMICfOgciqrDt/exec";
 const KEY="QUIZ123";
 
 let studentId,email,questions=[];
 let answers=[],reviewList=[];
-let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
-let quizStarted=false;
-let submitted=false;
-
-// SESSION FIX
-let sessionId = localStorage.getItem("session");
-if(sessionId === null) sessionId = "";
-
-// LOAD IP
-async function loadInfo(){
- try{
-  let r=await fetch("https://ipapi.co/json/");
-  let d=await r.json();
-  ipAddr=d.ip;
-  ip.innerText=d.ip;
-  location.innerText=d.city+", "+d.country_name;
- }catch{
-  ip.innerText="Unavailable";
-  location.innerText="Unavailable";
- }
-}
-loadInfo();
+let current=0,timeLeft=0,tabSwitch=0;
+let sessionId = localStorage.getItem("session") || "";
+let quizStarted=false,submitted=false;
 
 // LOGIN
 async function login(){
-
  studentId=id.value.trim();
  let code=document.getElementById("code").value.trim();
 
@@ -103,7 +86,6 @@ async function login(){
     action:"login",
     id:studentId,
     code,
-    ip:ipAddr,
     session:sessionId,
     key:KEY
   })
@@ -111,38 +93,48 @@ async function login(){
 
  let data=await res.json();
 
- if(data.status==="fail") return alert("Invalid Login");
- if(data.status==="blocked") return alert("Already submitted");
- if(data.status==="already_logged") return alert("Already logged in another device");
- if(data.status==="not_started") return alert("Quiz not started");
- if(data.status==="ended") return alert("Quiz ended");
-
- // SAVE SESSION
- sessionId = data.session;
- localStorage.setItem("session", sessionId);
-
- email=data.email;
- timeLeft=data.time || 900;
-
- if(timeLeft<=0){
-  alert("Time already over");
+ if(data.status!=="new" && data.status!=="resume"){
+  alert(data.status);
   return;
  }
 
- answers=data.answers || [];
+ sessionId=data.session;
+ localStorage.setItem("session",sessionId);
+
+ email=data.email;
+ timeLeft=data.time;
+ answers=data.answers||[];
 
  loginBox.style.display="none";
+ instructionBox.style.display="block";
+
+ let t=180;
+
+ let int=setInterval(()=>{
+  t--;
+  insTimer.innerText="Starting in "+t+" sec";
+
+  if(t<=0){
+    clearInterval(int);
+    startQuiz(data);
+  }
+ },1000);
+}
+
+// START QUIZ
+function startQuiz(data){
+
+ instructionBox.style.display="none";
  quizBox.style.display="block";
 
  quizStarted=true;
 
- // SHOW TIME
- let startTime = new Date(data.start);
- let endTime = new Date(data.end);
+ let start=new Date(data.start);
+ let end=new Date(data.end);
 
- timeInfo.innerHTML = `
- <b>Start:</b> ${startTime.toLocaleTimeString()}<br>
- <b>End:</b> ${endTime.toLocaleTimeString()}
+ timeInfo.innerHTML=`
+ Start: ${start.toLocaleTimeString()}<br>
+ End: ${end.toLocaleTimeString()}
  `;
 
  loadQuestions();
@@ -156,26 +148,10 @@ async function loadQuestions(){
  });
 
  questions=await res.json();
+
  renderPalette();
  showQ();
  startTimer();
-}
-
-// PALETTE
-function renderPalette(){
- let html="";
- for(let i=0;i<questions.length;i++){
-  let qid=questions[i][0];
-
-  let cls="";
-  if(reviewList.includes(qid)) cls="review";
-  else if(answers.some(a=>String(a.q_id)===String(qid))) cls="answered";
-
-  if(i===current) cls+=" current";
-
-  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
- }
- palette.innerHTML=html;
 }
 
 // SHOW QUESTION
@@ -185,68 +161,85 @@ function showQ(){
  let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
 
  for(let j=2;j<=5;j++){
-  let checked = answers.some(a =>
-    String(a.q_id) === String(q[0]) &&
-    String(a.answer) === String(q[j])
-  ) ? "checked" : "";
 
-  html+=`<label class="option">
+  let checked=answers.some(a=>
+   String(a.q_id)==String(q[0]) &&
+   String(a.answer)==String(q[j])
+  )?"checked":"";
+
+  html+=`
+  <label class="option">
   <input type="radio" name="q${current}" ${checked}
-  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}</label>`;
+  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}
+  </label>`;
  }
 
  questionBox.innerHTML=html;
  renderPalette();
 }
 
-// SAVE (OPTIMIZED)
+// SAVE
 function save(qid,ans){
  answers=answers.filter(a=>a.q_id!==qid);
  answers.push({q_id:qid,answer:ans});
-
  reviewList=reviewList.filter(r=>r!==qid);
 
- clearTimeout(window.saveTimer);
- window.saveTimer=setTimeout(()=>{
-  fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"save",
-      student_id:studentId,
-      answers,
-      time:timeLeft,
-      key:KEY
-    })
-  });
- },1000);
+ fetch(API,{
+  method:"POST",
+  body:JSON.stringify({
+    action:"save",
+    student_id:studentId,
+    answers,
+    time:timeLeft,
+    key:KEY
+  })
+ });
 
  renderPalette();
 }
 
-// MARK REVIEW
+// PALETTE
+function renderPalette(){
+ let html="";
+ for(let i=0;i<questions.length;i++){
+
+  let qid=questions[i][0];
+  let cls="";
+
+  if(reviewList.includes(qid)) cls="review";
+  else if(answers.some(a=>String(a.q_id)==String(qid))) cls="answered";
+
+  if(i===current) cls+=" current";
+
+  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+ }
+
+ palette.innerHTML=html;
+}
+
+// NAV
+function nextQ(){ if(current<14){current++;showQ();}}
+function prevQ(){ if(current>0){current--;showQ();}}
+function goTo(i){ current=i; showQ(); }
+
+// REVIEW
 function markReview(){
  let qid=questions[current][0];
  if(!reviewList.includes(qid)) reviewList.push(qid);
  renderPalette();
 }
 
-// NAVIGATION
-function nextQ(){ if(current<questions.length-1){current++;showQ();}}
-function prevQ(){ if(current>0){current--;showQ();}}
-function goTo(i){ current=i; showQ(); }
-
 // TIMER
 function startTimer(){
  setInterval(()=>{
   timeLeft--;
 
-  let min=Math.floor(timeLeft/60);
-  let sec=timeLeft%60;
+  let m=Math.floor(timeLeft/60);
+  let s=timeLeft%60;
 
-  timer.innerText=`⏳ ${min}:${sec<10?'0'+sec:sec}`;
+  timer.innerText=`⏳ ${m}:${s<10?'0'+s:s}`;
 
   if(timeLeft<=0){
-    alert("Time up!");
     submitQuiz();
   }
  },1000);
@@ -256,73 +249,49 @@ function startTimer(){
 function confirmSubmit(){
  if(submitted) return;
 
- if(confirm(`Submit?\nAnswered: ${answers.length}/15\nReview: ${reviewList.length}`)){
-   submitted=true;
-   submitQuiz();
+ if(confirm("Submit quiz?")){
+  submitted=true;
+  submitQuiz();
  }
 }
 
 async function submitQuiz(){
- try{
-  let res=await fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"submit",
-      student_id:studentId,
-      email:email,
-      answers,
-      tab_switch:tabSwitch,
-      ip:ipAddr,
-      key:KEY
-    })
-  });
 
-  let text = await res.text();
-  let data = JSON.parse(text);
+ let res=await fetch(API,{
+  method:"POST",
+  body:JSON.stringify({
+    action:"submit",
+    student_id:studentId,
+    email:email,
+    answers,
+    tab_switch:tabSwitch,
+    key:KEY
+  })
+ });
 
-  if(!data || data.score===undefined){
-    alert("Submission failed");
-    console.log(text);
-    return;
-  }
+ let text=await res.text();
+ let data=JSON.parse(text);
 
-  let percent=((data.score/15)*100).toFixed(2);
+ let percent=((data.score/15)*100).toFixed(2);
 
-  localStorage.removeItem("session");
-
-  document.body.innerHTML=`
-  <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f6f9;">
-    <div style="background:white;padding:25px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.2);width:320px;text-align:center;">
-      <h2 style="color:#28a745;">✅ Submitted</h2>
-      <h1 style="color:#007bff;">${data.score}/15</h1>
-      <p>Percentage: ${percent}%</p>
-      <p>Attempted: ${answers.length}/15</p>
-      <hr>
-      <p>📧 Result sent</p>
-    </div>
-  </div>`;
- }
- catch(e){
-  alert("Server error");
-  console.error(e);
- }
+ document.body.innerHTML=`
+ <div style="display:flex;justify-content:center;align-items:center;height:100vh;">
+  <div style="background:white;padding:25px;border-radius:10px;">
+   <h2>Submitted</h2>
+   <h1>${data.score}/15</h1>
+   <p>${percent}%</p>
+  </div>
+ </div>`;
 }
 
-// TAB SWITCH (ONLY DURING QUIZ)
+// TAB SWITCH
 document.addEventListener("visibilitychange",()=>{
  if(!quizStarted) return;
-
  if(document.hidden){
   tabSwitch++;
-  alert("⚠️ Tab switching detected!");
+  alert("Tab switching detected");
  }
 });
-
-// DISABLE COPY
-document.oncopy=e=>e.preventDefault();
-document.onpaste=e=>e.preventDefault();
-document.oncontextmenu=e=>e.preventDefault();
-
 </script>
 
 </body>
