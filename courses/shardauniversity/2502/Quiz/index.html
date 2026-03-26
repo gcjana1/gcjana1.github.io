@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Quiz Portal | Dr. GC Jana</title>
+<title>Online Quiz</title>
 
 <style>
 body {margin:0;font-family:Arial;background:#f4f6f9;}
 .header {background:#007bff;color:white;padding:12px;text-align:center;}
-.timer {position:sticky;top:0;background:#fff3cd;padding:8px;text-align:center;font-weight:bold;}
+.timer {background:#fff3cd;padding:8px;text-align:center;font-weight:bold;}
 .container {padding:10px;}
 .card {background:white;padding:15px;border-radius:10px;margin-bottom:10px;}
 .option {display:block;padding:12px;margin:6px 0;background:#eef1f5;border-radius:8px;}
@@ -18,7 +18,6 @@ body {margin:0;font-family:Arial;background:#f4f6f9;}
 .current {border:2px solid black;}
 button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;color:white;border-radius:6px;}
 .full {width:100%;background:red;}
-.reviewBtn {background:#ffc107;color:black;width:100%;}
 </style>
 </head>
 
@@ -27,43 +26,7 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 <div class="header">📘 Online Quiz</div>
 <div class="timer" id="timer"></div>
 
-<!-- LOGIN -->
-<div class="container" id="loginBox">
-<div class="card">
-<input id="id" placeholder="System ID"><br>
-<input id="code" placeholder="Access Code"><br>
-<button onclick="login()">Start Quiz</button>
-</div>
-</div>
-
-<!-- INSTRUCTION -->
-<div id="instructionBox" style="display:none;" class="container">
-<div class="card">
-<h3>📜 Instructions</h3>
-<ul>
-<li>Total Questions: 15</li>
-<li>Each question carries 1 mark</li>
-<li>No negative marking</li>
-<li>Do not switch tabs</li>
-</ul>
-<h3 id="insTimer"></h3>
-</div>
-</div>
-
-<!-- QUIZ -->
-<div id="quizBox" style="display:none;" class="container">
-
-<div class="card" id="timeInfo"></div>
-<div class="palette" id="palette"></div>
-<div class="card" id="questionBox"></div>
-
-<button onclick="prevQ()">Previous</button>
-<button onclick="nextQ()">Next</button>
-
-<button class="reviewBtn" onclick="markReview()">Mark for Review</button>
-<button class="full" onclick="confirmSubmit()">Submit</button>
-
-</div>
+<div id="app"></div>
 
 <script>
 const API="https://script.google.com/macros/s/AKfycbwvZpPtWcvCbU3iVQ6P9es0g8ZNKgbLDEBBmwM82YtyuyohGB4oWz5fMICfOgciqrDt/exec";
@@ -73,7 +36,19 @@ let studentId,email,questions=[];
 let answers=[],reviewList=[];
 let current=0,timeLeft=0,tabSwitch=0;
 let sessionId = localStorage.getItem("session") || "";
-let quizStarted=false,submitted=false;
+let submitted=false;
+
+// LOGIN SCREEN
+function showLogin(){
+ document.getElementById("app").innerHTML = `
+ <div class="container">
+   <div class="card">
+     <input id="id" placeholder="System ID"><br>
+     <input id="code" placeholder="Access Code"><br>
+     <button onclick="login()">Start Quiz</button>
+   </div>
+ </div>`;
+}
 
 // LOGIN
 async function login(){
@@ -93,55 +68,67 @@ async function login(){
 
  let data=await res.json();
 
- if(data.status!=="new" && data.status!=="resume"){
-  alert(data.status);
-  return;
- }
+ if(data.status==="fail") return alert("Invalid Login");
+ if(data.status==="already_logged") return alert("Already logged in");
+ if(data.status==="not_started") return alert("Quiz not started");
+ if(data.status==="ended") return alert("Quiz ended");
 
- sessionId=data.session;
- localStorage.setItem("session",sessionId);
+ sessionId = data.session;
+ localStorage.setItem("session", sessionId);
 
  email=data.email;
  timeLeft=data.time;
- answers=data.answers||[];
 
- loginBox.style.display="none";
- instructionBox.style.display="block";
+ showInstructions(data);
+}
+
+// INSTRUCTION SCREEN (3 MIN)
+function showInstructions(data){
 
  let t=180;
 
- let int=setInterval(()=>{
+ document.getElementById("app").innerHTML = `
+ <div class="container">
+  <div class="card">
+   <h3>Instructions</h3>
+   <p>Read all questions carefully.</p>
+   <p>No tab switching allowed.</p>
+   <h2 id="insTimer"></h2>
+  </div>
+ </div>`;
+
+ let interval=setInterval(()=>{
   t--;
   insTimer.innerText="Starting in "+t+" sec";
 
   if(t<=0){
-    clearInterval(int);
+    clearInterval(interval);
     startQuiz(data);
   }
  },1000);
 }
 
 // START QUIZ
-function startQuiz(data){
+async function startQuiz(data){
 
- instructionBox.style.display="none";
- quizBox.style.display="block";
+ document.getElementById("app").innerHTML = `
+ <div class="container">
+  <div class="card" id="timeInfo"></div>
+  <div class="palette" id="palette"></div>
+  <div class="card" id="questionBox"></div>
+  <button onclick="prevQ()">Prev</button>
+  <button onclick="nextQ()">Next</button>
+  <button class="full" onclick="confirmSubmit()">Submit</button>
+ </div>`;
 
- quizStarted=true;
-
- let start=new Date(data.start);
- let end=new Date(data.end);
+ let startTime=new Date(data.start);
+ let endTime=new Date(data.end);
 
  timeInfo.innerHTML=`
- Start: ${start.toLocaleTimeString()}<br>
- End: ${end.toLocaleTimeString()}
+ Start: ${startTime.toLocaleTimeString()}<br>
+ End: ${endTime.toLocaleTimeString()}
  `;
 
- loadQuestions();
-}
-
-// LOAD QUESTIONS
-async function loadQuestions(){
  let res=await fetch(API,{
   method:"POST",
   body:JSON.stringify({action:"getQuestions",key:KEY})
@@ -152,81 +139,6 @@ async function loadQuestions(){
  renderPalette();
  showQ();
  startTimer();
-}
-
-// SHOW QUESTION
-function showQ(){
- let q=questions[current];
-
- let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
-
- for(let j=2;j<=5;j++){
-
-  let checked=answers.some(a=>
-   String(a.q_id)==String(q[0]) &&
-   String(a.answer)==String(q[j])
-  )?"checked":"";
-
-  html+=`
-  <label class="option">
-  <input type="radio" name="q${current}" ${checked}
-  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}
-  </label>`;
- }
-
- questionBox.innerHTML=html;
- renderPalette();
-}
-
-// SAVE
-function save(qid,ans){
- answers=answers.filter(a=>a.q_id!==qid);
- answers.push({q_id:qid,answer:ans});
- reviewList=reviewList.filter(r=>r!==qid);
-
- fetch(API,{
-  method:"POST",
-  body:JSON.stringify({
-    action:"save",
-    student_id:studentId,
-    answers,
-    time:timeLeft,
-    key:KEY
-  })
- });
-
- renderPalette();
-}
-
-// PALETTE
-function renderPalette(){
- let html="";
- for(let i=0;i<questions.length;i++){
-
-  let qid=questions[i][0];
-  let cls="";
-
-  if(reviewList.includes(qid)) cls="review";
-  else if(answers.some(a=>String(a.q_id)==String(qid))) cls="answered";
-
-  if(i===current) cls+=" current";
-
-  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
- }
-
- palette.innerHTML=html;
-}
-
-// NAV
-function nextQ(){ if(current<14){current++;showQ();}}
-function prevQ(){ if(current>0){current--;showQ();}}
-function goTo(i){ current=i; showQ(); }
-
-// REVIEW
-function markReview(){
- let qid=questions[current][0];
- if(!reviewList.includes(qid)) reviewList.push(qid);
- renderPalette();
 }
 
 // TIMER
@@ -245,13 +157,55 @@ function startTimer(){
  },1000);
 }
 
+// QUESTION
+function showQ(){
+ let q=questions[current];
+
+ let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
+
+ for(let j=2;j<=5;j++){
+  let checked=answers.some(a=>a.q_id==q[0] && a.answer==q[j])?"checked":"";
+
+  html+=`<label class="option">
+  <input type="radio" name="q${current}" ${checked}
+  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}</label>`;
+ }
+
+ questionBox.innerHTML=html;
+ renderPalette();
+}
+
+// SAVE
+function save(qid,ans){
+ answers=answers.filter(a=>a.q_id!==qid);
+ answers.push({q_id:qid,answer:ans});
+ renderPalette();
+}
+
+// PALETTE
+function renderPalette(){
+ let html="";
+ for(let i=0;i<questions.length;i++){
+  let qid=questions[i][0];
+  let cls=answers.some(a=>a.q_id==qid)?"answered":"";
+  if(i===current) cls+=" current";
+  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
+ }
+ palette.innerHTML=html;
+}
+
+// NAV
+function nextQ(){ if(current<questions.length-1){current++;showQ();}}
+function prevQ(){ if(current>0){current--;showQ();}}
+function goTo(i){current=i;showQ();}
+
 // SUBMIT
 function confirmSubmit(){
  if(submitted) return;
 
- if(confirm("Submit quiz?")){
-  submitted=true;
-  submitQuiz();
+ if(confirm("Submit Quiz?")){
+   submitted=true;
+   submitQuiz();
  }
 }
 
@@ -269,29 +223,19 @@ async function submitQuiz(){
   })
  });
 
- let text=await res.text();
- let data=JSON.parse(text);
-
- let percent=((data.score/15)*100).toFixed(2);
+ let data=await res.json();
 
  document.body.innerHTML=`
  <div style="display:flex;justify-content:center;align-items:center;height:100vh;">
-  <div style="background:white;padding:25px;border-radius:10px;">
+  <div>
    <h2>Submitted</h2>
    <h1>${data.score}/15</h1>
-   <p>${percent}%</p>
   </div>
  </div>`;
 }
 
-// TAB SWITCH
-document.addEventListener("visibilitychange",()=>{
- if(!quizStarted) return;
- if(document.hidden){
-  tabSwitch++;
-  alert("Tab switching detected");
- }
-});
+// START
+showLogin();
 </script>
 
 </body>
