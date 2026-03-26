@@ -27,6 +27,7 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 <div class="header">📘 Online Quiz</div>
 <div class="timer" id="timer"></div>
 
+<!-- LOGIN -->
 <div class="container" id="loginBox">
 
 <div class="card">
@@ -43,6 +44,7 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 
 </div>
 
+<!-- QUIZ -->
 <div id="quizBox" style="display:none;" class="container">
 
 <div class="card" id="timeInfo"></div>
@@ -61,15 +63,18 @@ button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;colo
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbzNKTAvrOl8_LpC8ai_U6yRGNmZiQBCVelVwxnHNZl1d8J2pWiMREfqNwvSMkfpnOh_/exec";
+const API="https://script.google.com/macros/s/AKfycbwwKHOVYRqRqGQY3eLccOTVN0qDlNT2ea-DK0gtReRJH8038Yc_8s25KHlDVsJfuSSw/exec";
 const KEY="QUIZ123";
 
 let studentId,email,questions=[];
 let answers=[],reviewList=[];
 let current=0,timeLeft=900,tabSwitch=0,ipAddr="";
 let quizStarted=false;
-let sessionId = localStorage.getItem("session") || "";
 let submitted=false;
+
+// SESSION FIX
+let sessionId = localStorage.getItem("session");
+if(sessionId === null) sessionId = "";
 
 // LOAD IP
 async function loadInfo(){
@@ -88,6 +93,7 @@ loadInfo();
 
 // LOGIN
 async function login(){
+
  studentId=id.value.trim();
  let code=document.getElementById("code").value.trim();
 
@@ -108,9 +114,10 @@ async function login(){
  if(data.status==="fail") return alert("Invalid Login");
  if(data.status==="blocked") return alert("Already submitted");
  if(data.status==="already_logged") return alert("Already logged in another device");
- if(data.status==="not_started") return alert("Quiz not started yet");
+ if(data.status==="not_started") return alert("Quiz not started");
  if(data.status==="ended") return alert("Quiz ended");
 
+ // SAVE SESSION
  sessionId = data.session;
  localStorage.setItem("session", sessionId);
 
@@ -129,6 +136,7 @@ async function login(){
 
  quizStarted=true;
 
+ // SHOW TIME
  let startTime = new Date(data.start);
  let endTime = new Date(data.end);
 
@@ -140,7 +148,7 @@ async function login(){
  loadQuestions();
 }
 
-// QUESTIONS
+// LOAD QUESTIONS
 async function loadQuestions(){
  let res=await fetch(API,{
   method:"POST",
@@ -177,8 +185,8 @@ function showQ(){
  let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
 
  for(let j=2;j<=5;j++){
-  let checked = answers.some(a => 
-    String(a.q_id) === String(q[0]) && 
+  let checked = answers.some(a =>
+    String(a.q_id) === String(q[0]) &&
     String(a.answer) === String(q[j])
   ) ? "checked" : "";
 
@@ -191,7 +199,7 @@ function showQ(){
  renderPalette();
 }
 
-// SAVE
+// SAVE (OPTIMIZED)
 function save(qid,ans){
  answers=answers.filter(a=>a.q_id!==qid);
  answers.push({q_id:qid,answer:ans});
@@ -215,14 +223,14 @@ function save(qid,ans){
  renderPalette();
 }
 
-// REVIEW
+// MARK REVIEW
 function markReview(){
  let qid=questions[current][0];
  if(!reviewList.includes(qid)) reviewList.push(qid);
  renderPalette();
 }
 
-// NAV
+// NAVIGATION
 function nextQ(){ if(current<questions.length-1){current++;showQ();}}
 function prevQ(){ if(current>0){current--;showQ();}}
 function goTo(i){ current=i; showQ(); }
@@ -269,14 +277,18 @@ async function submitQuiz(){
     })
   });
 
-  let data=await res.json();
+  let text = await res.text();
+  let data = JSON.parse(text);
 
   if(!data || data.score===undefined){
     alert("Submission failed");
+    console.log(text);
     return;
   }
 
   let percent=((data.score/15)*100).toFixed(2);
+
+  localStorage.removeItem("session");
 
   document.body.innerHTML=`
   <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#f4f6f9;">
@@ -290,12 +302,13 @@ async function submitQuiz(){
     </div>
   </div>`;
  }
- catch(err){
+ catch(e){
   alert("Server error");
+  console.error(e);
  }
 }
 
-// TAB SWITCH FIXED
+// TAB SWITCH (ONLY DURING QUIZ)
 document.addEventListener("visibilitychange",()=>{
  if(!quizStarted) return;
 
