@@ -2,51 +2,40 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Quiz</title>
+<title>Quiz</title>
 
 <style>
-body {margin:0;font-family:Arial;background:#f4f6f9;}
-.header {background:#007bff;color:white;padding:12px;text-align:center;}
-.timer {background:#fff3cd;padding:8px;text-align:center;font-weight:bold;}
-.container {padding:10px;}
-.card {background:white;padding:15px;border-radius:10px;margin-bottom:10px;}
-.option {display:block;padding:12px;margin:6px 0;background:#eef1f5;border-radius:8px;}
-.palette {display:grid;grid-template-columns:repeat(5,1fr);gap:5px;}
-.palette div {padding:10px;text-align:center;border-radius:6px;background:#ccc;}
-.answered {background:#28a745!important;color:white;}
-.review {background:#ffc107!important;}
-.current {border:2px solid black;}
-button {padding:12px;width:48%;margin:5px 1%;border:none;background:#007bff;color:white;border-radius:6px;}
-.full {width:100%;background:red;}
+body {font-family:Arial;background:#f4f6f9;margin:0}
+.header {background:#007bff;color:white;padding:10px;text-align:center}
+.timer {background:#fff3cd;padding:8px;text-align:center;font-weight:bold}
+.card {background:white;padding:15px;margin:10px;border-radius:10px}
+button {padding:10px;width:100%;margin-top:10px}
+.option {display:block;padding:10px;margin:5px 0;background:#eee;border-radius:6px}
 </style>
 </head>
 
 <body>
 
-<div class="header">📘 Online Quiz</div>
+<div class="header">Online Quiz</div>
 <div class="timer" id="timer"></div>
-
 <div id="app"></div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwvZpPtWcvCbU3iVQ6P9es0g8ZNKgbLDEBBmwM82YtyuyohGB4oWz5fMICfOgciqrDt/exec";
+
+const API="https://script.google.com/macros/s/AKfycbzpj1VcM2W7NS2SNK4vCn-OMtuBR4_UZqLXozJ72WJSykuNFMvTy2rdYxcU8Gpj44lK/exec";
 const KEY="QUIZ123";
 
-let studentId,email,questions=[];
-let answers=[],reviewList=[];
-let current=0,timeLeft=0,tabSwitch=0;
-let sessionId = localStorage.getItem("session") || "";
+let studentId,email,questions=[],answers=[];
+let current=0,timeLeft=0,sessionId="";
 let submitted=false;
 
-// LOGIN SCREEN
+// LOGIN UI
 function showLogin(){
- document.getElementById("app").innerHTML = `
- <div class="container">
-   <div class="card">
-     <input id="id" placeholder="System ID"><br>
-     <input id="code" placeholder="Access Code"><br>
-     <button onclick="login()">Start Quiz</button>
-   </div>
+ app.innerHTML=`
+ <div class="card">
+  <input id="id" placeholder="ID"><br><br>
+  <input id="code" placeholder="Code"><br><br>
+  <button onclick="login()">Start</button>
  </div>`;
 }
 
@@ -57,76 +46,42 @@ async function login(){
 
  let res=await fetch(API,{
   method:"POST",
-  body:JSON.stringify({
-    action:"login",
-    id:studentId,
-    code,
-    session:sessionId,
-    key:KEY
-  })
+  body:JSON.stringify({action:"login",id:studentId,code,key:KEY})
  });
 
  let data=await res.json();
 
- if(data.status==="fail") return alert("Invalid Login");
- if(data.status==="already_logged") return alert("Already logged in");
- if(data.status==="not_started") return alert("Quiz not started");
+ if(data.status==="not_started"){
+  alert("Starts at: "+new Date(data.start).toLocaleString('en-IN'));
+  return;
+ }
+
  if(data.status==="ended") return alert("Quiz ended");
+ if(data.status==="fail") return alert("Invalid");
 
- sessionId = data.session;
- localStorage.setItem("session", sessionId);
-
+ sessionId=data.session;
  email=data.email;
- timeLeft=data.time;
 
- showInstructions(data);
-}
-
-// INSTRUCTION SCREEN (3 MIN)
-function showInstructions(data){
-
- let t=30;
-
- document.getElementById("app").innerHTML = `
- <div class="container">
-  <div class="card">
-   <h3>Instructions</h3>
-   <p>Read all questions carefully.</p>
-   <p>No tab switching allowed.</p>
-   <h2 id="insTimer"></h2>
-  </div>
- </div>`;
-
- let interval=setInterval(()=>{
-  t--;
-  insTimer.innerText="Starting in "+t+" sec";
-
-  if(t<=0){
-    clearInterval(interval);
-    startQuiz(data);
-  }
- },1000);
+ startQuiz(data);
 }
 
 // START QUIZ
 async function startQuiz(data){
 
- document.getElementById("app").innerHTML = `
- <div class="container">
-  <div class="card" id="timeInfo"></div>
-  <div class="palette" id="palette"></div>
-  <div class="card" id="questionBox"></div>
-  <button onclick="prevQ()">Prev</button>
-  <button onclick="nextQ()">Next</button>
-  <button class="full" onclick="confirmSubmit()">Submit</button>
- </div>`;
-
  let startTime=new Date(data.start);
  let endTime=new Date(data.end);
 
- timeInfo.innerHTML=`
- Start: ${startTime.toLocaleTimeString()}<br>
- End: ${endTime.toLocaleTimeString()}
+ let now=new Date().getTime();
+ timeLeft=Math.floor((endTime.getTime()-now)/1000);
+
+ app.innerHTML=`
+ <div class="card">
+ Start: ${startTime.toLocaleString('en-IN')}<br>
+ End: ${endTime.toLocaleString('en-IN')}
+ </div>
+ <div class="card" id="qbox"></div>
+ <button onclick="next()">Next</button>
+ <button onclick="submitQuiz()">Submit</button>
  `;
 
  let res=await fetch(API,{
@@ -135,10 +90,36 @@ async function startQuiz(data){
  });
 
  questions=await res.json();
-
- renderPalette();
  showQ();
  startTimer();
+}
+
+// SHOW QUESTION
+function showQ(){
+ let q=questions[current];
+ let html=`<b>${q[1]}</b><br>`;
+
+ for(let i=2;i<=5;i++){
+  html+=`<label class="option">
+  <input type="radio" onclick="save('${q[0]}','${q[i]}')"> ${q[i]}
+  </label>`;
+ }
+
+ qbox.innerHTML=html;
+}
+
+// SAVE
+function save(qid,ans){
+ answers=answers.filter(a=>a.q_id!==qid);
+ answers.push({q_id:qid,answer:ans});
+}
+
+// NEXT
+function next(){
+ if(current<questions.length-1){
+  current++;
+  showQ();
+ }
 }
 
 // TIMER
@@ -149,67 +130,17 @@ function startTimer(){
   let m=Math.floor(timeLeft/60);
   let s=timeLeft%60;
 
-  timer.innerText=`⏳ ${m}:${s<10?'0'+s:s}`;
+  timer.innerText=`Time: ${m}:${s<10?'0'+s:s}`;
 
-  if(timeLeft<=0){
-    submitQuiz();
-  }
+  if(timeLeft<=0) submitQuiz();
  },1000);
 }
 
-// QUESTION
-function showQ(){
- let q=questions[current];
-
- let html=`<b>Q${current+1}. ${q[1]}</b><br><br>`;
-
- for(let j=2;j<=5;j++){
-  let checked=answers.some(a=>a.q_id==q[0] && a.answer==q[j])?"checked":"";
-
-  html+=`<label class="option">
-  <input type="radio" name="q${current}" ${checked}
-  onclick="save('${q[0]}','${q[j]}')"> ${q[j]}</label>`;
- }
-
- questionBox.innerHTML=html;
- renderPalette();
-}
-
-// SAVE
-function save(qid,ans){
- answers=answers.filter(a=>a.q_id!==qid);
- answers.push({q_id:qid,answer:ans});
- renderPalette();
-}
-
-// PALETTE
-function renderPalette(){
- let html="";
- for(let i=0;i<questions.length;i++){
-  let qid=questions[i][0];
-  let cls=answers.some(a=>a.q_id==qid)?"answered":"";
-  if(i===current) cls+=" current";
-  html+=`<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
- }
- palette.innerHTML=html;
-}
-
-// NAV
-function nextQ(){ if(current<questions.length-1){current++;showQ();}}
-function prevQ(){ if(current>0){current--;showQ();}}
-function goTo(i){current=i;showQ();}
-
 // SUBMIT
-function confirmSubmit(){
- if(submitted) return;
-
- if(confirm("Submit Quiz?")){
-   submitted=true;
-   submitQuiz();
- }
-}
-
 async function submitQuiz(){
+
+ if(submitted) return;
+ submitted=true;
 
  let res=await fetch(API,{
   method:"POST",
@@ -218,24 +149,18 @@ async function submitQuiz(){
     student_id:studentId,
     email:email,
     answers,
-    tab_switch:tabSwitch,
+    tab_switch:0,
     key:KEY
   })
  });
 
  let data=await res.json();
 
- document.body.innerHTML=`
- <div style="display:flex;justify-content:center;align-items:center;height:100vh;">
-  <div>
-   <h2>Submitted</h2>
-   <h1>${data.score}/15</h1>
-  </div>
- </div>`;
+ document.body.innerHTML=`<h1 align="center">Score: ${data.score}</h1>`;
 }
 
-// START
 showLogin();
+
 </script>
 
 </body>
