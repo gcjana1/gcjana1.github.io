@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 <title>CSE472 and CSP472 CA Marks</title>
@@ -61,24 +61,25 @@ background:#fff8e1;
 padding:10px;
 border-radius:5px;
 }
-  .marks-badge{
-    font-size:22px;
-    font-weight:bold;
-    padding:8px 14px;
-    border-radius:20px;
-    color:white;
+
+.marks-badge{
+font-size:22px;
+font-weight:bold;
+padding:8px 14px;
+border-radius:20px;
+color:white;
 }
 
 .good{
-    background:#28a745;
+background:#28a745;
 }
 
 .average{
-    background:#007bff;
+background:#007bff;
 }
 
 .low{
-    background:#dc3545;
+background:#dc3545;
 }
 
 </style>
@@ -96,11 +97,9 @@ border-radius:5px;
 <option value="lab">Lab Marks</option>
 </select>
 
-
 <select id="component">
 <option value="">Select Component</option>
 </select>
-
 
 <input type="text" id="systemId" placeholder="Enter SYSTEM ID">
 
@@ -126,8 +125,10 @@ comp.innerHTML="<option value=''>Select Component</option>";
 
 if(type=="theory"){
 
-comp.innerHTML+=`<option value="Assignmnet-1 Marks (20)">Assignment-1</option>`;
-comp.innerHTML+=`<option value="Assessment-1 Marks(20)">Assessment-1</option>`;
+comp.innerHTML+=`<option value="Assignment-1 Marks (20)">Assignment-1</option>`;
+comp.innerHTML+=`<option value="Assignment-2 Marks (20)">Assignment-2</option>`;
+comp.innerHTML+=`<option value="Assessment-1 Marks (20)">Assessment-1</option>`;
+comp.innerHTML+=`<option value="Assessment-2 Marks (20)">Assessment-2</option>`;
 
 }
 
@@ -139,8 +140,6 @@ comp.innerHTML+=`<option value="CE (30)">Lab CE (30)</option>`;
 }
 
 }
-
-
 
 function getMarks(){
 
@@ -157,73 +156,56 @@ return;
 var sheetURL="";
 
 if(type=="theory"){
-
 sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json";
-
 }
 
 if(type=="lab"){
-
 sheetURL="https://docs.google.com/spreadsheets/d/1a0W4vwBtbDDVphS9MJutiWC12_DJpa0WxrBOBHaMiXY/gviz/tq?tqx=out:json";
-
 }
 
-
 fetch(sheetURL)
-
 .then(response=>response.text())
-
 .then(text=>{
 
 var json=JSON.parse(text.substr(47).slice(0,-2));
-
 var rows=json.table.rows;
-
 var found=null;
 
 rows.forEach(r=>{
-
 if(r.c[0] && r.c[0].v==id){
-
 found=r;
-
 }
-
 });
 
 if(!found){
-
 resultDiv.innerHTML="<div class='error'>No record found!</div>";
 return;
-
 }
 
 var name=found.c[1]?found.c[1].v:"";
+var submissionLink = found.c[6] ? found.c[6].v : "";
 
 var marks="";
 
-if(component=="Assignmnet-1 Marks (20)") marks=found.c[2]?.v;
-if(component=="Assessment-1 Marks(20)") marks=found.c[3]?.v;
+if(component=="Assignment-1 Marks (20)") marks=found.c[2]?.v;
+if(component=="Assignment-2 Marks (20)") marks=found.c[3]?.v;
+if(component=="Assessment-1 Marks (20)") marks=found.c[4]?.v;
+if(component=="Assessment-2 Marks (20)") marks=found.c[5]?.v;
 
 if(component=="CA (30)") marks=found.c[2]?.v;
 if(component=="CE (30)") marks=found.c[3]?.v;
 
-
 if(marks === undefined || marks === null || marks === ""){
-
 resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
 return;
-
 }
 
 var maxMarks = 20;
-
 if(component.includes("(30)")) maxMarks = 30;
 
 var percent = (marks / maxMarks) * 100;
 
 var gradeClass = "average";
-
 if(percent >= 75) gradeClass = "good";
 else if(percent < 50) gradeClass = "low";
 
@@ -239,15 +221,20 @@ resultDiv.innerHTML = `
 ${marks} / ${maxMarks}
 </span>
 
+<br><br>
+
+${submissionLink ? `
+<a href="${submissionLink}" target="_blank">
+<button style="background:#28a745;">View Submission</button>
+</a>
+` : `<span style="color:#888;">Submission link not available</span>`}
+
 </div>
 `;
 
 })
-
 .catch(error=>{
-
 resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
-
 });
 
 }
