@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CSHC3102 and CSHC3502 CA Marks</title>
+<title>CSHC3102 and CSHC3502 CA Marks | Dr. GC Jana</title>
 
 <style>
 
@@ -61,25 +61,18 @@ background:#fff8e1;
 padding:10px;
 border-radius:5px;
 }
-  .marks-badge{
-    font-size:22px;
-    font-weight:bold;
-    padding:8px 14px;
-    border-radius:20px;
-    color:white;
+
+.marks-badge{
+font-size:22px;
+font-weight:bold;
+padding:8px 14px;
+border-radius:20px;
+color:white;
 }
 
-.good{
-    background:#28a745;
-}
-
-.average{
-    background:#007bff;
-}
-
-.low{
-    background:#dc3545;
-}
+.good{background:#28a745;}
+.average{background:#007bff;}
+.low{background:#dc3545;}
 
 </style>
 </head>
@@ -88,7 +81,7 @@ border-radius:5px;
 
 <div class="container">
 
-<h2>Check Your CSHC3102 & CSHC3502 CA Marks </h2>
+<h2>Check Your CSHC3102 & CSHC3502 CA Marks</h2>
 
 <select id="courseType" onchange="updateComponents()">
 <option value="">Select Type</option>
@@ -96,11 +89,9 @@ border-radius:5px;
 <option value="lab">Lab Marks</option>
 </select>
 
-
 <select id="component">
 <option value="">Select Component</option>
 </select>
-
 
 <input type="text" id="systemId" placeholder="Enter SYSTEM ID">
 
@@ -109,8 +100,7 @@ border-radius:5px;
 <div id="result"></div>
 
 <div class="note">
-<b>Note:</b> The marks displayed here are for reference only.  
-Please refer to the University Academic Portal for final marks as per official weightage.
+<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage.
 </div>
 
 </div>
@@ -125,22 +115,18 @@ var comp=document.getElementById("component");
 comp.innerHTML="<option value=''>Select Component</option>";
 
 if(type=="theory"){
-
-comp.innerHTML+=`<option value="Assignmnet-1 Marks (20)">Assignment-1</option>`;
-comp.innerHTML+=`<option value="Assessment-1 Marks(20)">Assessment-1</option>`;
-
+comp.innerHTML+=`<option value="A1">Assignment-1</option>`;
+comp.innerHTML+=`<option value="A2">Assignment-2</option>`;
+comp.innerHTML+=`<option value="T1">Assessment-1</option>`;
+comp.innerHTML+=`<option value="T2">Assessment-2</option>`;
 }
 
 if(type=="lab"){
-
-comp.innerHTML+=`<option value="CA (30)">Lab CA (30)</option>`;
-comp.innerHTML+=`<option value="CE (30)">Lab CE (30)</option>`;
-
+comp.innerHTML+=`<option value="CA">Lab CA (30)</option>`;
+comp.innerHTML+=`<option value="CE">Lab CE (30)</option>`;
 }
 
 }
-
-
 
 function getMarks(){
 
@@ -150,104 +136,118 @@ var type=document.getElementById("courseType").value;
 var resultDiv=document.getElementById("result");
 
 if(id==""||component==""||type==""){
-resultDiv.innerHTML="<div class='error'>Please select type, component and enter SYSTEM ID.</div>";
+resultDiv.innerHTML="<div class='error'>Please select all fields.</div>";
 return;
 }
 
 var sheetURL="";
 
 if(type=="theory"){
-
 sheetURL="https://docs.google.com/spreadsheets/d/1cHDgHCYbeQeAv-MwZLJLjBLT_Ww40baZy9Bhd06pZpE/gviz/tq?tqx=out:json";
-
 }
 
 if(type=="lab"){
-
 sheetURL="https://docs.google.com/spreadsheets/d/1Uc89ClOj8C4DnKd7y52HuWN3DSVWs_z5n31BeJwhVFM/gviz/tq?tqx=out:json";
-
 }
 
-
 fetch(sheetURL)
-
 .then(response=>response.text())
-
 .then(text=>{
 
 var json=JSON.parse(text.substr(47).slice(0,-2));
-
 var rows=json.table.rows;
-
 var found=null;
 
 rows.forEach(r=>{
-
 if(r.c[0] && r.c[0].v==id){
-
 found=r;
-
 }
-
 });
 
 if(!found){
-
 resultDiv.innerHTML="<div class='error'>No record found!</div>";
 return;
-
 }
 
-var name=found.c[1]?found.c[1].v:"";
+var name=found.c[1]?.v || "";
+var submissionLink = found.c[6]?.v || "";
 
 var marks="";
+var componentName="";
+var showLink=false;
 
-if(component=="Assignmnet-1 Marks (20)") marks=found.c[2]?.v;
-if(component=="Assessment-1 Marks(20)") marks=found.c[3]?.v;
+// ✅ Correct Mapping
 
-if(component=="CA (30)") marks=found.c[2]?.v;
-if(component=="CE (30)") marks=found.c[3]?.v;
-
-
-if(marks === undefined || marks === null || marks === ""){
-
-resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
-return;
-
+if(component=="A1"){
+marks=found.c[2]?.v;
+componentName="Assignment-1";
 }
 
-var maxMarks = 20;
+if(component=="T1"){
+marks=found.c[3]?.v;
+componentName="Assessment-1";
+}
 
-if(component.includes("(30)")) maxMarks = 30;
+if(component=="A2"){
+marks=found.c[4]?.v;
+componentName="Assignment-2";
+showLink=true;
+}
+
+if(component=="T2"){
+marks=found.c[5]?.v;
+componentName="Assessment-2";
+}
+
+// Lab mapping (if same structure)
+if(component=="CA"){
+marks=found.c[2]?.v;
+componentName="Lab CA";
+}
+
+if(component=="CE"){
+marks=found.c[3]?.v;
+componentName="Lab CE";
+}
+
+if(marks==null){
+resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
+return;
+}
+
+var maxMarks = component.includes("CA") || component.includes("CE") ? 30 : 20;
 
 var percent = (marks / maxMarks) * 100;
 
-var gradeClass = "average";
-
-if(percent >= 75) gradeClass = "good";
-else if(percent < 50) gradeClass = "low";
+var gradeClass="average";
+if(percent>=75) gradeClass="good";
+else if(percent<50) gradeClass="low";
 
 resultDiv.innerHTML = `
 <div class="result-card">
 
 <b>SYSTEM ID:</b> ${id}<br><br>
-
 <b>STUDENT NAME:</b> ${name}<br><br>
 
-<b>${component}:</b> 
+<b>${componentName}:</b> 
 <span class="marks-badge ${gradeClass}">
 ${marks} / ${maxMarks}
 </span>
+
+<br><br>
+
+${(showLink && submissionLink) ? `
+<a href="${submissionLink}" target="_blank">
+<button style="background:#28a745;">View Submission</button>
+</a>
+` : ``}
 
 </div>
 `;
 
 })
-
 .catch(error=>{
-
 resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
-
 });
 
 }
