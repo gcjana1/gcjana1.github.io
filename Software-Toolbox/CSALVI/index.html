@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSALVI:An Interactive CS Algorithms Visualizer | Dr. GC Jana</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h2>🚀 CSALVI:CS Algorithms Visualizer</h2>
+  <select id="algoSelect"></select>
+  <select id="langSelect">
+    <option value="python">Python</option>
+    <option value="cpp">C++</option>
+  </select>
+  <button onclick="start()">▶ Run</button>
+  <button onclick="reset()">⟲ Reset</button>
+</header>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="left">
+    <input id="arrayInput" placeholder="Enter array: 5,3,8,1">
+    <div id="bars"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <h3>📊 Complexity</h3>
+    <div id="complexity"></div>
+
+    <h3>🧠 Why Complexity?</h3>
+    <div id="explain"></div>
+
+    <h3>⚙ Operations</h3>
+    <div id="ops">0</div>
+
+    <h3>💻 Code</h3>
+    <pre id="code"></pre>
+  </div>
+
+</div>
+
+<script src="algorithms.js"></script>
+<script src="visualizer.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
