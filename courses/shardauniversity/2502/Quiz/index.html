@@ -392,7 +392,16 @@ function startInstructionCountdown(){
     secs--;
     el.textContent=secs;
     bar.style.width=(secs/INSTRUCTION_SECONDS*100)+'%';
-    if(secs<=0){clearInterval(iv);startQuiz();}
+    if(secs<=0){
+    clearInterval(iv);
+    const now2 = new Date();
+    if(now2 >= slotEnd){
+      alert('The exam slot has ended. Please contact your instructor.');
+      showScreen('login-screen');
+      return;
+    }
+    startQuiz();
+  }
   },1000);
 }
 
@@ -402,8 +411,9 @@ function startQuiz(){
   renderQuestion();
   showScreen('quiz-screen');
   const now=new Date();
-  const slotSecsLeft=Math.floor((slotEnd-now)/1000);
-  secsLeft=Math.min(30*60, slotSecsLeft);
+// AFTER (fixed):
+  const slotSecsLeft = Math.floor((slotEnd - now) / 1000);
+  secsLeft = Math.min(30 * 60, Math.max(60, slotSecsLeft)); // guarantee at least 60s
   startTimer();
 }
 
