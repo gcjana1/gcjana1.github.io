@@ -262,14 +262,25 @@ function showScreen(id){
   else document.body.classList.remove('quiz-active');
 }
 
-async function api(action, payload={}){
-  const body = {...payload, action};
-  if(sessionToken) body.sessionToken = sessionToken;
+async function api(action, payload = {}) {
+  const body = { ...payload, action };
+  if (sessionToken) body.sessionToken = sessionToken;
+
   const r = await fetch(APPS_SCRIPT_URL, {
-    method:'POST',
+    method: 'POST',
+    redirect: 'follow',                         // ← CRITICAL for Apps Script
+    headers: { 'Content-Type': 'text/plain' },  // ← avoids CORS preflight
     body: JSON.stringify(body)
   });
-  return r.json();
+
+  if (!r.ok) throw new Error('Network response was not ok');
+  const text = await r.text();
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    console.error('Raw response:', text);
+    throw new Error('Invalid JSON from server');
+  }
 }
 
 // ── LOGIN ──
@@ -282,6 +293,13 @@ async function doLogin(){
   btn.disabled=true; btn.textContent='Verifying...';
   try{
     const res = await api('login',{systemId:sid, accessCode:code});
+
+    if(!res){                                                      // ✅ INSIDE try, BEFORE res.success
+      err.textContent='No response from server. Check your Apps Script URL.';
+      btn.disabled=false; btn.textContent='Login & Continue';
+      return;
+    }
+
     if(res.success){
       studentData  = res.student;
       sessionToken = res.sessionToken;
@@ -294,10 +312,10 @@ async function doLogin(){
       btn.disabled=false; btn.textContent='Login & Continue';
     }
   } catch(e){
-    err.textContent = 'Network error. Please try again.';
+    err.textContent = 'Network error: ' + e.message;              // ✅ shows actual error
     btn.disabled=false; btn.textContent='Login & Continue';
   }
-}
+}                                                                  // ✅ nothing after closing brace
 
 document.getElementById('access-code').addEventListener('keydown', e=>{if(e.key==='Enter')doLogin()});
 
