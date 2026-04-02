@@ -8,8 +8,6 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Segoe UI',sans-serif;background:#f0f2f5;min-height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none}
   body.quiz-active{align-items:flex-start;padding:0}
-
-  /* Screens */
   .screen{display:none;width:100%}
   .screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}
   #quiz-screen.active{align-items:stretch;justify-content:flex-start;padding:0;background:#f0f2f5}
@@ -26,6 +24,18 @@
   .btn-primary:hover{background:#4338ca}
   .btn-primary:disabled{background:#9ca3af;cursor:not-allowed}
   .error-msg{color:#dc2626;font-size:13px;margin-top:.75rem;text-align:center;min-height:18px}
+
+  /* Waiting screen */
+  .wait-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:460px;box-shadow:0 4px 24px rgba(0,0,0,.08);text-align:center}
+  .wait-card h2{font-size:20px;font-weight:600;color:#1a1a2e;margin-bottom:.4rem}
+  .wait-card p.wsub{font-size:14px;color:#6b7280;margin-bottom:1.5rem}
+  .slot-info{background:#f0f2f5;border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#374151;line-height:2;text-align:left}
+  .slot-info strong{color:#1a1a2e}
+  .wait-timer-label{font-size:13px;color:#6b7280;margin-bottom:.3rem}
+  .wait-timer{font-size:52px;font-weight:700;color:#4f46e5;font-variant-numeric:tabular-nums;line-height:1.1;letter-spacing:2px}
+  .wait-bar{height:6px;background:#e5e7eb;border-radius:3px;margin-top:1.25rem;overflow:hidden}
+  .wait-bar-fill{height:100%;background:#4f46e5;border-radius:3px;transition:width 1s linear}
+  .wait-note{font-size:12px;color:#9ca3af;margin-top:1rem;line-height:1.5}
 
   /* Instruction screen */
   .instr-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:560px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
@@ -59,26 +69,21 @@
   .opt-item label{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;background:#fff;border:2px solid #e5e7eb;border-radius:10px;cursor:pointer;transition:border .15s,background .15s;font-size:15px;color:#374151}
   .opt-item label:hover{border-color:#a5b4fc;background:#faf9ff}
   .opt-item input[type=radio]{display:none}
-  .opt-item input[type=radio]:checked + label{border-color:#4f46e5;background:#eef2ff;color:#1a1a2e;font-weight:500}
+  .opt-item input[type=radio]:checked+label{border-color:#4f46e5;background:#eef2ff;color:#1a1a2e;font-weight:500}
   .opt-dot{width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border .15s,background .15s}
-  .opt-item input[type=radio]:checked + label .opt-dot{border-color:#4f46e5;background:#4f46e5}
+  .opt-item input[type=radio]:checked+label .opt-dot{border-color:#4f46e5;background:#4f46e5}
   .opt-dot-inner{width:8px;height:8px;border-radius:50%;background:#fff;display:none}
-  .opt-item input[type=radio]:checked + label .opt-dot-inner{display:block}
+  .opt-item input[type=radio]:checked+label .opt-dot-inner{display:block}
 
-  /* Quiz navigation */
+  /* Quiz nav */
   .quiz-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;z-index:100}
-  .nav-status{font-size:13px;color:#6b7280}
-  .nav-status span{color:#4f46e5;font-weight:600}
   .btn-nav{padding:.6rem 1.25rem;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:background .2s}
-  .btn-prev{background:#f3f4f6;color:#374151}
-  .btn-prev:hover{background:#e5e7eb}
-  .btn-next{background:#4f46e5;color:#fff}
-  .btn-next:hover{background:#4338ca}
-  .btn-submit{background:#16a34a;color:#fff}
-  .btn-submit:hover{background:#15803d}
-
-  /* Palette nav */
+  .btn-prev{background:#f3f4f6;color:#374151}.btn-prev:hover{background:#e5e7eb}
+  .btn-next{background:#4f46e5;color:#fff}.btn-next:hover{background:#4338ca}
+  .btn-submit{background:#16a34a;color:#fff}.btn-submit:hover{background:#15803d}
   .palette-toggle{background:none;border:1.5px solid #4f46e5;color:#4f46e5;border-radius:8px;padding:.5rem .85rem;font-size:13px;font-weight:600;cursor:pointer}
+
+  /* Palette */
   .palette-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:flex-end;justify-content:center}
   .palette-overlay.open{display:flex}
   .palette-panel{background:#fff;border-radius:16px 16px 0 0;padding:1.25rem;width:100%;max-width:560px}
@@ -89,7 +94,7 @@
   .pq-btn.current{border-color:#f59e0b;box-shadow:0 0 0 2px #fde68a}
   .palette-close{width:100%;margin-top:1rem;padding:.65rem;background:#f3f4f6;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;color:#374151}
 
-  /* Result screen */
+  /* Result */
   .result-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:480px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08)}
   .result-card h2{font-size:22px;font-weight:700;color:#1a1a2e;margin-bottom:.5rem}
   .score-circle{width:120px;height:120px;border-radius:50%;border:8px solid #4f46e5;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1.25rem auto}
@@ -101,10 +106,10 @@
   .rdet .rlbl{font-size:12px;color:#6b7280}
   .result-msg{font-size:14px;color:#6b7280;line-height:1.6;margin-top:.75rem}
 
-  /* Auto-submit banner */
+  /* Banner */
   .banner{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:.65rem 1rem;font-size:13px;color:#92400e;margin-bottom:1rem;display:none}
 
-  /* Saving indicator */
+  /* Save status */
   .saving-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px;animation:pulse 1.5s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   .save-status{font-size:11px;color:#6b7280;display:flex;align-items:center}
@@ -112,22 +117,21 @@
   @media(max-width:480px){
     .quiz-header{flex-wrap:wrap;gap:.5rem}
     .palette-grid{grid-template-columns:repeat(6,1fr)}
+    .wait-timer{font-size:38px}
   }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ CONFIG ═══════════════════ -->
+<!-- CONFIG -->
 <script>
-  // ⚙️ REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT URL
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhXKAmZ43dDjSp73Lnr7zRTT6jn7lepDXzXdLBJG2EMyD8ncB-kwBIznjSTaT4xLRy/exec";
-
-  const QUIZ_DURATION_MINUTES = 30;
-  const TOTAL_QUESTIONS = 20;
-  const INSTRUCTION_SECONDS = 30;
+  // ⚙️ REPLACE WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+  const APPS_SCRIPT_URL     = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+  const TOTAL_QUESTIONS      = 20;
+  const INSTRUCTION_SECONDS  = 30;
 </script>
 
-<!-- ═══════════════════ LOGIN SCREEN ═══════════════════ -->
+<!-- LOGIN SCREEN -->
 <div id="login-screen" class="screen active">
   <div class="login-card">
     <h1>📝 Online Quiz Portal</h1>
@@ -145,16 +149,33 @@
   </div>
 </div>
 
-<!-- ═══════════════════ INSTRUCTION SCREEN ═══════════════════ -->
+<!-- WAITING SCREEN -->
+<div id="wait-screen" class="screen">
+  <div class="wait-card">
+    <h2>⏳ Exam Not Started Yet</h2>
+    <p class="wsub">You are logged in successfully. Please wait for your exam slot to open.</p>
+    <div class="slot-info">
+      <div>👤 Student: <strong id="w-name">—</strong></div>
+      <div>🟢 Slot opens at: <strong id="w-start">—</strong></div>
+      <div>🔴 Slot ends at: <strong id="w-end">—</strong></div>
+    </div>
+    <div class="wait-timer-label">Exam begins in</div>
+    <div class="wait-timer" id="wait-timer">00:00:00</div>
+    <div class="wait-bar"><div class="wait-bar-fill" id="wait-bar-fill" style="width:100%"></div></div>
+    <p class="wait-note">This page will automatically proceed when the exam slot opens.<br>Do not close or refresh this tab.</p>
+  </div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
 <div id="instr-screen" class="screen">
   <div class="instr-card">
     <h2>📋 Quiz Instructions</h2>
     <ul>
-      <li><span class="icon">⏱️</span><span>You have <strong>30 minutes</strong> to complete <strong>20 questions</strong>. The quiz auto-submits when time runs out.</span></li>
+      <li><span class="icon">⏱️</span><span>You have <strong>30 minutes</strong> to complete <strong>20 questions</strong>. The quiz auto-submits when time runs out or the slot ends.</span></li>
       <li><span class="icon">🔀</span><span>Questions are <strong>randomly assigned</strong> and unique to you.</span></li>
       <li><span class="icon">💾</span><span>Your answers are <strong>saved automatically</strong> in real time. You can change answers before submission.</span></li>
       <li><span class="icon">🚫</span><span><strong>Copy-paste is disabled.</strong> Right-clicking is not allowed during the quiz.</span></li>
-      <li><span class="icon">🔒</span><span>Only <strong>one active session</strong> is allowed per student. Logging in elsewhere will invalidate your current session.</span></li>
+      <li><span class="icon">🔒</span><span>Only <strong>one active session</strong> is allowed per student at a time.</span></li>
       <li><span class="icon">✅</span><span>Use the <strong>question palette</strong> to navigate and track answered questions.</span></li>
     </ul>
     <div class="countdown-wrap">
@@ -165,12 +186,15 @@
   </div>
 </div>
 
-<!-- ═══════════════════ QUIZ SCREEN ═══════════════════ -->
+<!-- QUIZ SCREEN -->
 <div id="quiz-screen" class="screen">
   <div class="quiz-header">
     <div class="hinfo">
       <div>Student: <strong id="hdr-name">—</strong></div>
-      <div class="save-status"><span class="saving-dot" id="save-dot" style="display:none"></span><span id="save-lbl"></span></div>
+      <div class="save-status">
+        <span class="saving-dot" id="save-dot" style="display:none"></span>
+        <span id="save-lbl"></span>
+      </div>
     </div>
     <div class="timer-box" id="timer-box">
       <div>
@@ -180,18 +204,16 @@
     </div>
   </div>
   <div class="progress-bar"><div class="progress-fill" id="quiz-progress" style="width:0%"></div></div>
-
   <div class="quiz-body">
-    <div class="banner" id="auto-banner">⚠️ Time is almost up! The quiz will auto-submit in <span id="auto-secs"></span> seconds.</div>
+    <div class="banner" id="auto-banner">⚠️ Time is almost up! Auto-submitting in <span id="auto-secs"></span> seconds.</div>
     <div class="q-counter" id="q-counter">Question 1 of 20</div>
-    <div class="q-text" id="q-text">Loading question...</div>
+    <div class="q-text" id="q-text">Loading...</div>
     <ul class="options-list" id="options-list"></ul>
   </div>
-
   <div class="quiz-nav">
     <div style="display:flex;gap:.6rem;align-items:center">
       <button class="palette-toggle" onclick="openPalette()">📋 <span id="answered-count">0</span>/20</button>
-      <div class="nav-status">Q <span id="nav-cur">1</span>/20</div>
+      <span style="font-size:13px;color:#6b7280">Q <span id="nav-cur">1</span>/20</span>
     </div>
     <div style="display:flex;gap:.6rem">
       <button class="btn-nav btn-prev" id="btn-prev" onclick="goPrev()">← Prev</button>
@@ -201,8 +223,8 @@
   </div>
 </div>
 
-<!-- Question Palette Overlay -->
-<div class="palette-overlay" id="palette-overlay" onclick="closePalette(e)">
+<!-- Palette Overlay -->
+<div class="palette-overlay" id="palette-overlay">
   <div class="palette-panel" onclick="event.stopPropagation()">
     <h3>Question Palette</h3>
     <div class="palette-grid" id="palette-grid"></div>
@@ -215,7 +237,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════ RESULT SCREEN ═══════════════════ -->
+<!-- RESULT SCREEN -->
 <div id="result-screen" class="screen">
   <div class="result-card">
     <h2>🎉 Quiz Submitted!</h2>
@@ -232,20 +254,8 @@
   </div>
 </div>
 
-<!-- ═══════════════════ APP SCRIPT ═══════════════════ -->
 <script>
-// ── State ──
-let studentData = null;   // {systemId, name, sessionToken}
-let questions   = [];     // array of question objects assigned to this student
-let answers     = {};     // {qIndex: optionLetter}
-let currentQ    = 0;
-let quizTimer   = null;
-let secsLeft    = QUIZ_DURATION_MINUTES * 60;
-let sessionToken= null;
-let saveQueue   = {};
-let saving      = false;
-
-// ── Disable copy-paste / right-click ──
+// Disable copy/paste/right-click
 document.addEventListener('copy',  e=>e.preventDefault());
 document.addEventListener('cut',   e=>e.preventDefault());
 document.addEventListener('paste', e=>e.preventDefault());
@@ -254,33 +264,38 @@ document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey)&&['c','x','v','a','u'].includes(e.key.toLowerCase())) e.preventDefault();
 });
 
-// ── Helpers ──
+// State
+let studentData  = null;
+let questions    = [];
+let answers      = {};
+let currentQ     = 0;
+let quizTimer    = null;
+let secsLeft     = 0;
+let sessionToken = null;
+let saveQueue    = {};
+let saving       = false;
+let slotStart    = null;
+let slotEnd      = null;
+let waitInterval = null;
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='quiz-screen') document.body.classList.add('quiz-active');
-  else document.body.classList.remove('quiz-active');
+  document.body.classList.toggle('quiz-active', id==='quiz-screen');
 }
 
-async function api(action, payload = {}) {
-  const body = { ...payload, action };
-  if (sessionToken) body.sessionToken = sessionToken;
-
-  const r = await fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    redirect: 'follow',                         // ← CRITICAL for Apps Script
-    headers: { 'Content-Type': 'text/plain' },  // ← avoids CORS preflight
-    body: JSON.stringify(body)
+async function api(action, payload={}){
+  const body={...payload,action};
+  if(sessionToken) body.sessionToken=sessionToken;
+  const r=await fetch(APPS_SCRIPT_URL,{
+    method:'POST', redirect:'follow',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify(body)
   });
-
-  if (!r.ok) throw new Error('Network response was not ok');
-  const text = await r.text();
-  try {
-    return JSON.parse(text);
-  } catch (e) {
-    console.error('Raw response:', text);
-    throw new Error('Invalid JSON from server');
-  }
+  if(!r.ok) throw new Error('Server error: '+r.status);
+  const text=await r.text();
+  try{ return JSON.parse(text); }
+  catch(e){ console.error('Raw:',text); throw new Error('Invalid server response'); }
 }
 
 // ── LOGIN ──
@@ -289,46 +304,94 @@ async function doLogin(){
   const code = document.getElementById('access-code').value.trim();
   const err  = document.getElementById('login-error');
   const btn  = document.getElementById('login-btn');
-  if(!sid||!code){err.textContent='Please fill in both fields.';return;}
+  if(!sid||!code){ err.textContent='Please fill in both fields.'; return; }
   btn.disabled=true; btn.textContent='Verifying...';
   try{
     const res = await api('login',{systemId:sid, accessCode:code});
-
-    if(!res){                                                      // ✅ INSIDE try, BEFORE res.success
+    if(!res){
       err.textContent='No response from server. Check your Apps Script URL.';
-      btn.disabled=false; btn.textContent='Login & Continue';
-      return;
+      btn.disabled=false; btn.textContent='Login & Continue'; return;
     }
-
     if(res.success){
       studentData  = res.student;
       sessionToken = res.sessionToken;
       questions    = res.questions;
+      slotStart    = new Date(res.slotStart);
+      slotEnd      = new Date(res.slotEnd);
       document.getElementById('hdr-name').textContent = studentData.name;
-      startInstructionCountdown();
-      showScreen('instr-screen');
+      checkSlotAndProceed();
     } else {
       err.textContent = res.message || 'Invalid credentials.';
       btn.disabled=false; btn.textContent='Login & Continue';
     }
   } catch(e){
-    err.textContent = 'Network error: ' + e.message;              // ✅ shows actual error
+    err.textContent='Network error: '+e.message;
     btn.disabled=false; btn.textContent='Login & Continue';
   }
-}                                                                  // ✅ nothing after closing brace
+}
+document.getElementById('access-code').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-document.getElementById('access-code').addEventListener('keydown', e=>{if(e.key==='Enter')doLogin()});
+// ── SLOT CHECK ──
+function checkSlotAndProceed(){
+  const now=new Date();
+  if(now>=slotEnd){
+    document.getElementById('login-error').textContent='The exam slot has ended. You can no longer attempt this quiz.';
+    document.getElementById('login-btn').disabled=false;
+    document.getElementById('login-btn').textContent='Login & Continue';
+    return;
+  }
+  if(now<slotStart){
+    showWaitingScreen();
+  } else {
+    startInstructionCountdown();
+    showScreen('instr-screen');
+  }
+}
+
+// ── WAITING SCREEN ──
+function showWaitingScreen(){
+  document.getElementById('w-name').textContent  = studentData.name;
+  document.getElementById('w-start').textContent = fmtDateTime(slotStart);
+  document.getElementById('w-end').textContent   = fmtDateTime(slotEnd);
+  showScreen('wait-screen');
+  const totalWaitMs = slotStart - new Date();
+  waitInterval = setInterval(()=>{
+    const now  = new Date();
+    const diff = slotStart - now;
+    if(diff<=0){
+      clearInterval(waitInterval);
+      document.getElementById('wait-timer').textContent='00:00:00';
+      startInstructionCountdown();
+      showScreen('instr-screen');
+      return;
+    }
+    const h=Math.floor(diff/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    document.getElementById('wait-timer').textContent=
+      pad(h)+':'+pad(m)+':'+pad(s);
+    const elapsed=totalWaitMs-diff;
+    document.getElementById('wait-bar-fill').style.width=
+      Math.max(0,100-(elapsed/totalWaitMs*100))+'%';
+  },1000);
+}
+
+function pad(n){return String(n).padStart(2,'0');}
+function fmtDateTime(d){
+  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})+
+         ' | '+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+}
 
 // ── INSTRUCTION COUNTDOWN ──
 function startInstructionCountdown(){
-  let secs = INSTRUCTION_SECONDS;
-  const el  = document.getElementById('instr-countdown');
-  const bar = document.getElementById('instr-bar');
+  let secs=INSTRUCTION_SECONDS;
+  const el=document.getElementById('instr-countdown');
+  const bar=document.getElementById('instr-bar');
   bar.style.width='100%';
-  const iv = setInterval(()=>{
+  const iv=setInterval(()=>{
     secs--;
-    el.textContent = secs;
-    bar.style.width = (secs/INSTRUCTION_SECONDS*100)+'%';
+    el.textContent=secs;
+    bar.style.width=(secs/INSTRUCTION_SECONDS*100)+'%';
     if(secs<=0){clearInterval(iv);startQuiz();}
   },1000);
 }
@@ -338,49 +401,47 @@ function startQuiz(){
   buildPalette();
   renderQuestion();
   showScreen('quiz-screen');
+  const now=new Date();
+  const slotSecsLeft=Math.floor((slotEnd-now)/1000);
+  secsLeft=Math.min(30*60, slotSecsLeft);
   startTimer();
 }
 
 // ── TIMER ──
 function startTimer(){
   updateTimerDisplay();
-  quizTimer = setInterval(()=>{
+  quizTimer=setInterval(()=>{
     secsLeft--;
     updateTimerDisplay();
-    if(secsLeft===120){
-      document.getElementById('auto-banner').style.display='block';
-    }
-    if(secsLeft<=120){
-      document.getElementById('auto-secs').textContent=secsLeft;
-    }
-    if(secsLeft<=300){
-      document.getElementById('timer-box').classList.add('warning');
-    }
+    // Wall-clock check against slot end
+    const wallLeft=Math.floor((slotEnd-new Date())/1000);
+    if(wallLeft<=0){clearInterval(quizTimer);autoSubmit();return;}
+    const effective=Math.min(secsLeft,wallLeft);
+    if(effective===120) document.getElementById('auto-banner').style.display='block';
+    if(effective<=120)  document.getElementById('auto-secs').textContent=effective;
+    if(effective<=300)  document.getElementById('timer-box').classList.add('warning');
     if(secsLeft<=0){clearInterval(quizTimer);autoSubmit();}
   },1000);
 }
 
 function updateTimerDisplay(){
-  const m=Math.floor(secsLeft/60).toString().padStart(2,'0');
-  const s=(secsLeft%60).toString().padStart(2,'0');
-  document.getElementById('timer-val').textContent=`${m}:${s}`;
+  const s=Math.max(0,secsLeft);
+  document.getElementById('timer-val').textContent=pad(Math.floor(s/60))+':'+pad(s%60);
 }
 
 // ── RENDER QUESTION ──
 function renderQuestion(){
-  const q = questions[currentQ];
+  const q=questions[currentQ];
   document.getElementById('q-counter').textContent=`Question ${currentQ+1} of ${TOTAL_QUESTIONS}`;
   document.getElementById('nav-cur').textContent=currentQ+1;
   document.getElementById('q-text').textContent=q.question;
   document.getElementById('quiz-progress').style.width=((currentQ+1)/TOTAL_QUESTIONS*100)+'%';
-
-  const opts = ['A','B','C','D'];
-  const ul   = document.getElementById('options-list');
+  const ul=document.getElementById('options-list');
   ul.innerHTML='';
-  opts.forEach(o=>{
-    const li  = document.createElement('li');
+  ['A','B','C','D'].forEach(o=>{
+    const li=document.createElement('li');
     li.className='opt-item';
-    const chk = answers[currentQ]===o ? 'checked' : '';
+    const chk=answers[currentQ]===o?'checked':'';
     li.innerHTML=`
       <input type="radio" name="opt" id="opt${o}" value="${o}" ${chk}>
       <label for="opt${o}">
@@ -390,11 +451,10 @@ function renderQuestion(){
     li.querySelector('input').addEventListener('change',()=>selectAnswer(o));
     ul.appendChild(li);
   });
-
-  document.getElementById('btn-prev').style.display = currentQ===0?'none':'';
-  const isLast = currentQ===TOTAL_QUESTIONS-1;
-  document.getElementById('btn-next').style.display   = isLast?'none':'';
-  document.getElementById('btn-submit').style.display = isLast?'':'none';
+  const isLast=currentQ===TOTAL_QUESTIONS-1;
+  document.getElementById('btn-prev').style.display=currentQ===0?'none':'';
+  document.getElementById('btn-next').style.display=isLast?'none':'';
+  document.getElementById('btn-submit').style.display=isLast?'':'none';
   updatePalette();
 }
 
@@ -404,7 +464,6 @@ function selectAnswer(opt){
   updatePalette();
   scheduleSave();
 }
-
 function goNext(){if(currentQ<TOTAL_QUESTIONS-1){currentQ++;renderQuestion();}}
 function goPrev(){if(currentQ>0){currentQ--;renderQuestion();}}
 
@@ -414,16 +473,13 @@ function buildPalette(){
   g.innerHTML='';
   for(let i=0;i<TOTAL_QUESTIONS;i++){
     const b=document.createElement('button');
-    b.className='pq-btn';
-    b.id=`pb${i}`;
-    b.textContent=i+1;
+    b.className='pq-btn';b.id=`pb${i}`;b.textContent=i+1;
     b.onclick=()=>{currentQ=i;renderQuestion();closePalette();};
     g.appendChild(b);
   }
 }
 function updatePalette(){
-  const ac=Object.keys(answers).length;
-  document.getElementById('answered-count').textContent=ac;
+  document.getElementById('answered-count').textContent=Object.keys(answers).length;
   for(let i=0;i<TOTAL_QUESTIONS;i++){
     const b=document.getElementById(`pb${i}`);
     if(!b)continue;
@@ -432,32 +488,24 @@ function updatePalette(){
 }
 function openPalette(){document.getElementById('palette-overlay').classList.add('open');}
 function closePalette(){document.getElementById('palette-overlay').classList.remove('open');}
+document.getElementById('palette-overlay').addEventListener('click',closePalette);
 
 // ── REAL-TIME SAVE ──
 let saveTimer=null;
-function scheduleSave(){
-  clearTimeout(saveTimer);
-  saveTimer=setTimeout(flushSave,1500);
-}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(flushSave,1500);}
 async function flushSave(){
   if(!Object.keys(saveQueue).length||saving)return;
   saving=true;
   const dot=document.getElementById('save-dot');
   const lbl=document.getElementById('save-lbl');
-  dot.style.display='inline-block';
-  lbl.textContent='Saving...';
-  const snap={...saveQueue};
-  saveQueue={};
+  dot.style.display='inline-block';lbl.textContent='Saving...';
+  const snap={...saveQueue};saveQueue={};
   try{
-    await api('saveAnswers',{
-      systemId:studentData.systemId,
-      answers:snap,
-      questionIds:snap
-    });
+    await api('saveAnswers',{systemId:studentData.systemId,answers:snap});
     lbl.textContent='Saved ✓';
     setTimeout(()=>{dot.style.display='none';lbl.textContent='';},2000);
-  } catch(e){
-    Object.assign(saveQueue,snap); // re-queue
+  }catch(e){
+    Object.assign(saveQueue,snap);
     lbl.textContent='Save failed, retrying...';
     setTimeout(flushSave,3000);
   }
@@ -466,34 +514,20 @@ async function flushSave(){
 
 // ── SUBMIT ──
 function confirmSubmit(){
-  const unanswered=TOTAL_QUESTIONS-Object.keys(answers).length;
-  const msg = unanswered>0
-    ? `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`
-    : 'Are you sure you want to submit your quiz?';
-  if(confirm(msg)) submitQuiz();
+  const u=TOTAL_QUESTIONS-Object.keys(answers).length;
+  if(confirm(u>0?`You have ${u} unanswered question(s). Submit anyway?`:'Submit your quiz now?'))
+    submitQuiz();
 }
-
-async function autoSubmit(){
-  await submitQuiz(true);
-}
-
+async function autoSubmit(){await submitQuiz(true);}
 async function submitQuiz(auto=false){
-  clearInterval(quizTimer);
-  clearTimeout(saveTimer);
+  clearInterval(quizTimer);clearTimeout(saveTimer);
   const btn=document.getElementById('btn-submit');
-  if(btn) btn.disabled=true;
+  if(btn)btn.disabled=true;
   try{
-    const res=await api('submitQuiz',{
-      systemId:studentData.systemId,
-      answers,
-      autoSubmit:auto
-    });
+    const res=await api('submitQuiz',{systemId:studentData.systemId,answers,autoSubmit:auto});
     showResult(res);
-  } catch(e){
-    alert('Submission error. Please contact your instructor.');
-  }
+  }catch(e){alert('Submission error. Please contact your instructor.');}
 }
-
 function showResult(res){
   showScreen('result-screen');
   document.getElementById('res-score').textContent=res.score;
@@ -501,11 +535,10 @@ function showResult(res){
   document.getElementById('res-wrong').textContent=res.wrong;
   document.getElementById('res-skip').textContent=res.skipped;
   const pct=Math.round(res.score/TOTAL_QUESTIONS*100);
-  let msg='';
-  if(pct>=80)      msg='Excellent work! 🎯 You did a great job.';
-  else if(pct>=60) msg='Good effort! Keep practicing to improve further.';
-  else             msg='Keep working hard — you\'ll do better next time! 💪';
-  document.getElementById('res-msg').textContent=msg;
+  document.getElementById('res-msg').textContent=
+    pct>=80?'Excellent work! 🎯 You did a great job.':
+    pct>=60?'Good effort! Keep practicing to improve.':
+    "Keep working hard — you'll do better next time! 💪";
 }
 </script>
 </body>
