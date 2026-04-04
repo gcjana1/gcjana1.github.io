@@ -1,1 +1,121 @@
-PHD650-Assignment. 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assignment Submission Portal</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.container {
+    background: white;
+    width: 420px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #219150;
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+}
+</style>
+
+<script>
+function showMessage() {
+    document.getElementById("form-container").style.display = "none";
+    document.getElementById("success").style.display = "block";
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+Assignment Submission Portal (PHD650)
+</div>
+
+<div class="container" id="form-container">
+
+<div class="form-title">Submit Your Assignment</div>
+
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSdwf6NG0sqDYfbhv3r-r5898DzdUFT5AomS-GcMtzMXbwrn8g/formResponse"
+      method="POST"
+      target="hidden_iframe"
+      onsubmit="showMessage()">
+
+<input type="text" name="entry.692143995" placeholder="Student Name" class="form-input" required>
+
+<input type="text" name="entry.2041742792" placeholder="System ID" class="form-input" required>
+
+<input type="tel" name="entry.2004649233" placeholder="Mobile Number" class="form-input" required>
+
+<label><b>Upload Assignment (PDF)</b></label>
+<input type="file" name="entry.986319747" class="form-input" accept="application/pdf" required>
+
+<button type="submit" class="submit-btn">Submit Assignment</button>
+
+</form>
+
+</div>
+
+<div class="container success-message" id="success">
+✅ Your assignment has been submitted successfully!
+<br><br>
+You may close this page.
+</div>
+
+<!-- Hidden iframe to avoid redirect -->
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+</body>
+</html>
