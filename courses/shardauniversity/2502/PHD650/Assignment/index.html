@@ -70,7 +70,27 @@ body {
 </style>
 
 <script>
-function showMessage() {
+function redirectToForm() {
+
+    let name = document.getElementById("name").value.trim();
+    let systemid = document.getElementById("systemid").value.trim();
+    let mobile = document.getElementById("mobile").value.trim();
+
+    if(name === "" || systemid === "" || mobile === "") {
+        alert("Please fill all fields!");
+        return;
+    }
+
+    // Google Form prefilled URL
+    let formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdwf6NG0sqDYfbhv3r-r5898DzdUFT5AomS-GcMtzMXbwrn8g/viewform?" +
+        "entry.692143995=" + encodeURIComponent(name) +
+        "&entry.2041742792=" + encodeURIComponent(systemid) +
+        "&entry.2004649233=" + encodeURIComponent(mobile);
+
+    // Open Google Form in new tab
+    window.open(formURL, "_blank");
+
+    // Show success message
     document.getElementById("form-container").style.display = "none";
     document.getElementById("success").style.display = "block";
 }
@@ -88,34 +108,30 @@ Assignment Submission Portal (PHD650)
 
 <div class="form-title">Submit Your Assignment</div>
 
-<form action="https://docs.google.com/forms/d/e/1FAIpQLSdwf6NG0sqDYfbhv3r-r5898DzdUFT5AomS-GcMtzMXbwrn8g/formResponse"
-      method="POST"
-      target="hidden_iframe"
-      onsubmit="showMessage()">
+<form onsubmit="redirectToForm(); return false;">
 
-<input type="text" name="entry.692143995" placeholder="Student Name" class="form-input" required>
+<input type="text" id="name" placeholder="Student Name" class="form-input" required>
 
-<input type="text" name="entry.2041742792" placeholder="System ID" class="form-input" required>
+<input type="text" id="systemid" placeholder="System ID" class="form-input" required>
 
-<input type="tel" name="entry.2004649233" placeholder="Mobile Number" class="form-input" required>
+<input type="tel" id="mobile" placeholder="Mobile Number" class="form-input" required>
 
 <label><b>Upload Assignment (PDF)</b></label>
-<input type="file" name="entry.986319747" class="form-input" accept="application/pdf" required>
+<p style="font-size:13px;color:#555;">
+You will be redirected to Google Form to upload your PDF.
+</p>
 
-<button type="submit" class="submit-btn">Submit Assignment</button>
+<button type="submit" class="submit-btn">Proceed to Upload</button>
 
 </form>
 
 </div>
 
 <div class="container success-message" id="success">
-✅ Your assignment has been submitted successfully!
-<br><br>
-You may close this page.
+✅ Your details have been recorded!<br><br>
+👉 Please complete PDF upload in the opened Google Form.<br><br>
+You may close this page after submission.
 </div>
-
-<!-- Hidden iframe to avoid redirect -->
-<iframe name="hidden_iframe" style="display:none;"></iframe>
 
 </body>
 </html>
