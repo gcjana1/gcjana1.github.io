@@ -4,136 +4,171 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Quiz Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --primary:#3b5bdb;
+    --primary-dark:#2f4ac0;
+    --primary-light:#eef2ff;
+    --accent:#f03e3e;
+    --success:#2f9e44;
+    --warn:#e67700;
+    --txt:#1c1c2e;
+    --sub:#5c5f7a;
+    --border:#e2e4ee;
+    --shadow:0 4px 28px rgba(59,91,219,.10);
+    --radius:14px;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',sans-serif;background:#f0f2f5;min-height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;color:var(--txt)}
   body.quiz-active{align-items:flex-start;padding:0}
+
+  /* ── Screens ── */
   .screen{display:none;width:100%}
   .screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}
-  #quiz-screen.active{align-items:stretch;justify-content:flex-start;padding:0;background:#f0f2f5}
+  #quiz-screen.active{align-items:stretch;justify-content:flex-start;padding:0;background:var(--bg)}
 
-  /* Login */
-  .login-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-  .login-card h1{font-size:22px;font-weight:600;color:#1a1a2e;margin-bottom:.25rem;text-align:center}
-  .login-card p.sub{font-size:14px;color:#6b7280;text-align:center;margin-bottom:1.75rem}
+  /* ── Cards ── */
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:2.5rem 2rem;width:100%;max-width:440px}
+  .card h1,.card h2{font-size:21px;font-weight:700;color:var(--txt);text-align:center;margin-bottom:.25rem}
+  .card p.sub{font-size:13.5px;color:var(--sub);text-align:center;margin-bottom:1.75rem}
+
+  /* ── Fields ── */
   .field{margin-bottom:1rem}
-  .field label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:.4rem}
-  .field input{width:100%;padding:.65rem .9rem;border:1px solid #d1d5db;border-radius:8px;font-size:15px;outline:none;transition:border .2s}
-  .field input:focus{border-color:#4f46e5}
-  .btn-primary{width:100%;padding:.75rem;background:#4f46e5;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:.5rem;transition:background .2s}
-  .btn-primary:hover{background:#4338ca}
-  .btn-primary:disabled{background:#9ca3af;cursor:not-allowed}
-  .error-msg{color:#dc2626;font-size:13px;margin-top:.75rem;text-align:center;min-height:18px}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--sub);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em}
+  .field input{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:9px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s,box-shadow .2s;background:#fafbff;color:var(--txt)}
+  .field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,91,219,.12)}
 
-  /* Waiting screen */
-  .wait-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:460px;box-shadow:0 4px 24px rgba(0,0,0,.08);text-align:center}
-  .wait-card h2{font-size:20px;font-weight:600;color:#1a1a2e;margin-bottom:.4rem}
-  .wait-card p.wsub{font-size:14px;color:#6b7280;margin-bottom:1.5rem}
-  .slot-info{background:#f0f2f5;border-radius:10px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#374151;line-height:2;text-align:left}
-  .slot-info strong{color:#1a1a2e}
-  .wait-timer-label{font-size:13px;color:#6b7280;margin-bottom:.3rem}
-  .wait-timer{font-size:52px;font-weight:700;color:#4f46e5;font-variant-numeric:tabular-nums;line-height:1.1;letter-spacing:2px}
-  .wait-bar{height:6px;background:#e5e7eb;border-radius:3px;margin-top:1.25rem;overflow:hidden}
-  .wait-bar-fill{height:100%;background:#4f46e5;border-radius:3px;transition:width 1s linear}
-  .wait-note{font-size:12px;color:#9ca3af;margin-top:1rem;line-height:1.5}
+  /* ── Buttons ── */
+  .btn-primary{width:100%;padding:.8rem;background:var(--primary);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .2s,transform .1s;font-family:'DM Sans',sans-serif;letter-spacing:.02em}
+  .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+  .btn-primary:active{transform:translateY(0)}
+  .btn-primary:disabled{background:#a0aec0;cursor:not-allowed;transform:none}
+  .error-msg{color:var(--accent);font-size:13px;margin-top:.75rem;text-align:center;min-height:18px;font-weight:500}
 
-  /* Instruction screen */
-  .instr-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:560px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-  .instr-card h2{font-size:20px;font-weight:600;color:#1a1a2e;margin-bottom:1.25rem;text-align:center}
-  .instr-card ul{list-style:none;padding:0}
-  .instr-card ul li{padding:.55rem 0;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;display:flex;gap:.6rem;align-items:flex-start}
-  .instr-card ul li:last-child{border-bottom:none}
-  .icon{font-size:16px;flex-shrink:0;margin-top:1px}
-  .countdown-wrap{text-align:center;margin:1.5rem 0 .5rem}
-  .countdown-wrap p{font-size:13px;color:#6b7280;margin-bottom:.3rem}
-  .countdown-num{font-size:48px;font-weight:700;color:#4f46e5;line-height:1}
-  .start-bar{height:6px;background:#e5e7eb;border-radius:3px;margin-top:1.25rem;overflow:hidden}
-  .start-bar-fill{height:100%;background:#4f46e5;width:100%;transition:width 1s linear;border-radius:3px}
+  /* ── Wait Screen ── */
+  .wait-card{max-width:480px}
+  .slot-info{background:var(--primary-light);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1.5rem;font-size:13.5px;color:var(--txt);line-height:2.1}
+  .slot-info strong{color:var(--primary);font-weight:700}
+  .wait-timer-label{font-size:12px;font-weight:600;color:var(--sub);text-align:center;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.2rem}
+  .wait-timer{font-size:52px;font-weight:700;color:var(--primary);font-family:'DM Mono',monospace;text-align:center;letter-spacing:3px;line-height:1.1}
+  .wait-bar{height:6px;background:var(--border);border-radius:3px;margin-top:1.25rem;overflow:hidden}
+  .wait-bar-fill{height:100%;background:var(--primary);border-radius:3px;transition:width 1s linear}
+  .wait-note{font-size:12px;color:#9ca3af;margin-top:.9rem;line-height:1.55;text-align:center}
 
-  /* Quiz header */
-  .quiz-header{background:#1a1a2e;color:#fff;padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-  .quiz-header .hinfo{font-size:13px;color:#a5b4fc}
-  .quiz-header .hinfo strong{color:#fff;font-size:14px}
-  .timer-box{display:flex;align-items:center;gap:.5rem;background:#4f46e5;padding:.4rem .9rem;border-radius:8px}
-  .timer-box .tlabel{font-size:11px;color:#c7d2fe}
-  .timer-box .tval{font-size:18px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;min-width:60px;text-align:center}
-  .timer-box.warning{background:#dc2626}
-  .progress-bar{height:4px;background:#e5e7eb}
-  .progress-fill{height:100%;background:#4f46e5;transition:width .3s}
+  /* ── Instruction Screen ── */
+  .instr-card{max-width:580px}
+  .instr-list{list-style:none;padding:0;margin-bottom:.5rem}
+  .instr-list li{padding:.55rem 0;font-size:13.5px;color:var(--sub);border-bottom:1px solid var(--border);display:flex;gap:.75rem;align-items:flex-start;line-height:1.5}
+  .instr-list li:last-child{border-bottom:none}
+  .instr-list li span.ico{font-size:16px;flex-shrink:0;margin-top:1px}
+  .instr-list li strong{color:var(--txt)}
+  .countdown-wrap{text-align:center;margin:1.5rem 0 .25rem}
+  .countdown-wrap p{font-size:12px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
+  .countdown-num{font-size:50px;font-weight:700;color:var(--primary);font-family:'DM Mono',monospace;line-height:1}
+  .start-bar{height:5px;background:var(--border);border-radius:3px;margin-top:1.25rem;overflow:hidden}
+  .start-bar-fill{height:100%;background:var(--primary);width:100%;transition:width 1s linear;border-radius:3px}
 
-  /* Quiz body */
-  .quiz-body{max-width:800px;margin:0 auto;padding:1.5rem 1rem 6rem;width:100%}
-  .q-counter{font-size:13px;color:#6b7280;margin-bottom:.35rem}
-  .q-text{font-size:17px;font-weight:500;color:#1a1a2e;margin-bottom:1.25rem;line-height:1.55}
-  .options-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
-  .opt-item label{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;background:#fff;border:2px solid #e5e7eb;border-radius:10px;cursor:pointer;transition:border .15s,background .15s;font-size:15px;color:#374151}
-  .opt-item label:hover{border-color:#a5b4fc;background:#faf9ff}
+  /* ── Quiz Header ── */
+  .quiz-header{background:#1c1c2e;color:#fff;padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:.5rem}
+  .hinfo{font-size:12.5px;color:#a0aec0;line-height:1.7}
+  .hinfo strong{color:#fff;font-size:13.5px}
+  .timer-box{display:flex;align-items:center;gap:.4rem;background:var(--primary);padding:.45rem 1rem;border-radius:9px;flex-shrink:0;transition:background .3s}
+  .timer-box .tlabel{font-size:10px;color:#c3cfff;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+  .timer-box .tval{font-size:19px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;min-width:58px;text-align:center}
+  .timer-box.warning{background:var(--accent)}
+  .progress-bar{height:3px;background:rgba(255,255,255,.1);background:#e2e4ee}
+  .progress-fill{height:100%;background:var(--primary);transition:width .3s}
+
+  /* ── Quiz Body ── */
+  .quiz-body{max-width:780px;margin:0 auto;padding:1.5rem 1rem 7rem;width:100%}
+  .q-counter{font-size:12px;font-weight:700;color:var(--sub);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.06em}
+  .q-text{font-size:17px;font-weight:600;color:var(--txt);margin-bottom:1.4rem;line-height:1.6}
+  .options-list{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+  .opt-item label{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.1rem;background:var(--card);border:2px solid var(--border);border-radius:11px;cursor:pointer;transition:border .15s,background .15s,box-shadow .15s;font-size:15px;color:var(--sub)}
+  .opt-item label:hover{border-color:#a5b4fc;background:#f8f9ff;box-shadow:0 2px 12px rgba(59,91,219,.07)}
   .opt-item input[type=radio]{display:none}
-  .opt-item input[type=radio]:checked+label{border-color:#4f46e5;background:#eef2ff;color:#1a1a2e;font-weight:500}
-  .opt-dot{width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border .15s,background .15s}
-  .opt-item input[type=radio]:checked+label .opt-dot{border-color:#4f46e5;background:#4f46e5}
-  .opt-dot-inner{width:8px;height:8px;border-radius:50%;background:#fff;display:none}
-  .opt-item input[type=radio]:checked+label .opt-dot-inner{display:block}
+  .opt-item input[type=radio]:checked+label{border-color:var(--primary);background:var(--primary-light);color:var(--txt);font-weight:600}
+  .opt-key{width:28px;height:28px;border-radius:7px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--sub);transition:all .15s;background:#fafbff}
+  .opt-item input[type=radio]:checked+label .opt-key{border-color:var(--primary);background:var(--primary);color:#fff}
 
-  /* Quiz nav */
-  .quiz-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;z-index:100}
-  .btn-nav{padding:.6rem 1.25rem;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:background .2s}
-  .btn-prev{background:#f3f4f6;color:#374151}.btn-prev:hover{background:#e5e7eb}
-  .btn-next{background:#4f46e5;color:#fff}.btn-next:hover{background:#4338ca}
-  .btn-submit{background:#16a34a;color:#fff}.btn-submit:hover{background:#15803d}
-  .palette-toggle{background:none;border:1.5px solid #4f46e5;color:#4f46e5;border-radius:8px;padding:.5rem .85rem;font-size:13px;font-weight:600;cursor:pointer}
+  /* ── Quiz Nav ── */
+  .quiz-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1.5px solid var(--border);padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;z-index:100;gap:.5rem}
+  .btn-nav{padding:.6rem 1.2rem;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;border:none;transition:background .2s,transform .1s;font-family:'DM Sans',sans-serif}
+  .btn-nav:active{transform:scale(.97)}
+  .btn-prev{background:#f1f3f9;color:var(--sub)}.btn-prev:hover{background:#e2e4ee}
+  .btn-next{background:var(--primary);color:#fff}.btn-next:hover{background:var(--primary-dark)}
+  .btn-submit{background:var(--success);color:#fff}.btn-submit:hover{background:#267d38}
+  .btn-submit:disabled{background:#a0aec0;cursor:not-allowed}
+  .palette-toggle{background:none;border:1.5px solid var(--primary);color:var(--primary);border-radius:8px;padding:.5rem .9rem;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
 
-  /* Palette */
-  .palette-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:flex-end;justify-content:center}
+  /* ── Palette ── */
+  .palette-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:flex-end;justify-content:center}
   .palette-overlay.open{display:flex}
-  .palette-panel{background:#fff;border-radius:16px 16px 0 0;padding:1.25rem;width:100%;max-width:560px}
-  .palette-panel h3{font-size:16px;font-weight:600;margin-bottom:1rem;color:#1a1a2e}
+  .palette-panel{background:var(--card);border-radius:18px 18px 0 0;padding:1.4rem;width:100%;max-width:580px}
+  .palette-panel h3{font-size:16px;font-weight:700;margin-bottom:1rem;color:var(--txt)}
   .palette-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
-  .pq-btn{aspect-ratio:1;border-radius:8px;border:2px solid #e5e7eb;background:#f9fafb;font-size:12px;font-weight:600;cursor:pointer;color:#374151;display:flex;align-items:center;justify-content:center}
-  .pq-btn.answered{background:#4f46e5;border-color:#4f46e5;color:#fff}
-  .pq-btn.current{border-color:#f59e0b;box-shadow:0 0 0 2px #fde68a}
-  .palette-close{width:100%;margin-top:1rem;padding:.65rem;background:#f3f4f6;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;color:#374151}
+  .pq-btn{aspect-ratio:1;border-radius:8px;border:2px solid var(--border);background:#f9fafb;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--sub);display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Mono',monospace}
+  .pq-btn.answered{background:var(--primary);border-color:var(--primary);color:#fff}
+  .pq-btn.current{border-color:#f59e0b;box-shadow:0 0 0 3px #fde68a}
+  .palette-legend{display:flex;gap:1rem;margin-top:.75rem;font-size:12px;color:var(--sub);flex-wrap:wrap}
+  .legend-dot{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-right:4px}
+  .palette-close{width:100%;margin-top:.9rem;padding:.65rem;background:#f1f3f9;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;color:var(--sub);font-family:'DM Sans',sans-serif}
 
-  /* Result */
-  .result-card{background:#fff;border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:480px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08)}
-  .result-card h2{font-size:22px;font-weight:700;color:#1a1a2e;margin-bottom:.5rem}
-  .score-circle{width:120px;height:120px;border-radius:50%;border:8px solid #4f46e5;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1.25rem auto}
-  .score-num{font-size:30px;font-weight:700;color:#4f46e5}
-  .score-lbl{font-size:12px;color:#6b7280}
-  .result-details{display:flex;gap:1rem;justify-content:center;margin:1rem 0}
-  .rdet{background:#f3f4f6;border-radius:10px;padding:.75rem 1.25rem;text-align:center}
-  .rdet .rval{font-size:20px;font-weight:700;color:#1a1a2e}
-  .rdet .rlbl{font-size:12px;color:#6b7280}
-  .result-msg{font-size:14px;color:#6b7280;line-height:1.6;margin-top:.75rem}
+  /* ── Banner ── */
+  .banner{background:#fff3bf;border:1.5px solid #f59e0b;border-radius:9px;padding:.7rem 1rem;font-size:13px;color:#92400e;margin-bottom:1rem;display:none;font-weight:500}
 
-  /* Banner */
-  .banner{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:.65rem 1rem;font-size:13px;color:#92400e;margin-bottom:1rem;display:none}
+  /* ── Tab Switch Warning ── */
+  .tab-warning{position:fixed;top:0;left:0;right:0;background:var(--accent);color:#fff;text-align:center;padding:.65rem 1rem;font-size:13px;font-weight:600;z-index:999;transform:translateY(-100%);transition:transform .3s}
+  .tab-warning.show{transform:translateY(0)}
 
-  /* Save status */
-  .saving-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px;animation:pulse 1.5s infinite}
+  /* ── Save Status ── */
+  .saving-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px;animation:pulse 1.5s infinite;vertical-align:middle}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .save-status{font-size:11px;color:#6b7280;display:flex;align-items:center}
+  .save-status{font-size:11px;color:#a0aec0;display:flex;align-items:center}
 
-  @media(max-width:480px){
-    .quiz-header{flex-wrap:wrap;gap:.5rem}
+  /* ── Result Screen ── */
+  .result-card{max-width:500px;text-align:center}
+  .result-card h2{font-size:22px;font-weight:700;margin-bottom:.4rem}
+  .score-ring{position:relative;width:130px;height:130px;margin:1.4rem auto}
+  .score-ring svg{width:130px;height:130px;transform:rotate(-90deg)}
+  .score-ring circle{fill:none;stroke-width:10;stroke-linecap:round}
+  .ring-bg{stroke:#e2e4ee}
+  .ring-fill{stroke:var(--primary);stroke-dasharray:345;stroke-dashoffset:345;transition:stroke-dashoffset 1.5s ease}
+  .score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .score-num{font-size:32px;font-weight:800;color:var(--primary);font-family:'DM Mono',monospace;line-height:1}
+  .score-lbl{font-size:11.5px;color:var(--sub);font-weight:600;margin-top:2px}
+  .result-stats{display:flex;gap:.85rem;justify-content:center;margin:1.1rem 0}
+  .rstat{background:var(--bg);border-radius:10px;padding:.75rem 1.1rem;flex:1;max-width:120px}
+  .rstat .rv{font-size:22px;font-weight:800;font-family:'DM Mono',monospace}
+  .rstat .rl{font-size:11px;color:var(--sub);font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+  .result-msg{font-size:13.5px;color:var(--sub);line-height:1.65;margin-top:.5rem;padding:.85rem;background:var(--bg);border-radius:9px}
+  .tab-switch-result{font-size:12.5px;color:var(--accent);font-weight:600;margin-top:.65rem;display:none}
+
+  @media(max-width:500px){
+    .quiz-header{flex-wrap:wrap}
     .palette-grid{grid-template-columns:repeat(6,1fr)}
     .wait-timer{font-size:38px}
+    .result-stats{gap:.5rem}
+    .card{padding:2rem 1.25rem}
   }
 </style>
 </head>
 <body>
 
-<!-- CONFIG -->
+<!-- ══ CONFIG ═══════════════════════════════════════════════════════════════ -->
 <script>
-  // ⚙️ REPLACE WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
-  const APPS_SCRIPT_URL     = "https://script.google.com/macros/s/AKfycbwpyPwspcq26wQZcDl1DWj-1fXztE-ndYEJI3KaFIa8CpEgsuAhfqi-xm7g4ahE9XEH/exec";
-  const TOTAL_QUESTIONS      = 20;
-  const INSTRUCTION_SECONDS  = 30;
+  const APPS_SCRIPT_URL    = "https://script.google.com/macros/s/AKfycbwpyPwspcq26wQZcDl1DWj-1fXztE-ndYEJI3KaFIa8CpEgsuAhfqi-xm7g4ahE9XEH/exec";
+  const TOTAL_QUESTIONS    = 20;
+  const INSTRUCTION_SECS   = 30;
+  const QUIZ_DURATION_SECS = 30 * 60;  // 30 minutes
 </script>
 
-<!-- LOGIN SCREEN -->
+<!-- ══ LOGIN ═════════════════════════════════════════════════════════════════ -->
 <div id="login-screen" class="screen active">
-  <div class="login-card">
+  <div class="card">
     <h1>📝 Online Quiz Portal</h1>
     <p class="sub">Enter your credentials to begin</p>
     <div class="field">
@@ -149,34 +184,35 @@
   </div>
 </div>
 
-<!-- WAITING SCREEN -->
+<!-- ══ WAITING ════════════════════════════════════════════════════════════════ -->
 <div id="wait-screen" class="screen">
-  <div class="wait-card">
+  <div class="card wait-card">
     <h2>⏳ Exam Not Started Yet</h2>
-    <p class="wsub">You are logged in successfully. Please wait for your exam slot to open.</p>
+    <p class="sub">Logged in. Please wait for your exam slot to open.</p>
     <div class="slot-info">
       <div>👤 Student: <strong id="w-name">—</strong></div>
-      <div>🟢 Slot opens at: <strong id="w-start">—</strong></div>
-      <div>🔴 Slot ends at: <strong id="w-end">—</strong></div>
+      <div>🟢 Slot opens: <strong id="w-start">—</strong></div>
+      <div>🔴 Slot ends: <strong id="w-end">—</strong></div>
     </div>
     <div class="wait-timer-label">Exam begins in</div>
     <div class="wait-timer" id="wait-timer">00:00:00</div>
     <div class="wait-bar"><div class="wait-bar-fill" id="wait-bar-fill" style="width:100%"></div></div>
-    <p class="wait-note">This page will automatically proceed when the exam slot opens.<br>Do not close or refresh this tab.</p>
+    <p class="wait-note">This page auto-proceeds when the slot opens.<br>Do not close or refresh this tab.</p>
   </div>
 </div>
 
-<!-- INSTRUCTION SCREEN -->
+<!-- ══ INSTRUCTIONS ═══════════════════════════════════════════════════════════ -->
 <div id="instr-screen" class="screen">
-  <div class="instr-card">
+  <div class="card instr-card">
     <h2>📋 Quiz Instructions</h2>
-    <ul>
-      <li><span class="icon">⏱️</span><span>You have <strong>30 minutes</strong> to complete <strong>20 questions</strong>. The quiz auto-submits when time runs out or the slot ends.</span></li>
-      <li><span class="icon">🔀</span><span>Questions are <strong>randomly assigned</strong> and unique to you.</span></li>
-      <li><span class="icon">💾</span><span>Your answers are <strong>saved automatically</strong> in real time. You can change answers before submission.</span></li>
-      <li><span class="icon">🚫</span><span><strong>Copy-paste is disabled.</strong> Right-clicking is not allowed during the quiz.</span></li>
-      <li><span class="icon">🔒</span><span>Only <strong>one active session</strong> is allowed per student at a time.</span></li>
-      <li><span class="icon">✅</span><span>Use the <strong>question palette</strong> to navigate and track answered questions.</span></li>
+    <ul class="instr-list">
+      <li><span class="ico">⏱️</span><span>You have <strong>30 minutes</strong> to complete <strong>20 questions</strong>. Auto-submits when time runs out.</span></li>
+      <li><span class="ico">🔀</span><span>Questions and <strong>option order are randomised</strong> uniquely for each student.</span></li>
+      <li><span class="ico">💾</span><span>Answers are <strong>saved automatically</strong> in real time. You may change any answer before submitting.</span></li>
+      <li><span class="ico">🚫</span><span><strong>Copy, paste and right-click are disabled</strong> during the quiz.</span></li>
+      <li><span class="ico">🔒</span><span>Only <strong>one active session</strong> is allowed per student at a time.</span></li>
+      <li><span class="ico">👁️</span><span><strong>Tab-switching is tracked.</strong> Each switch is logged and shown in your result.</span></li>
+      <li><span class="ico">✅</span><span>Use the <strong>question palette</strong> to navigate and track answered questions.</span></li>
     </ul>
     <div class="countdown-wrap">
       <p>Quiz starts in</p>
@@ -186,8 +222,9 @@
   </div>
 </div>
 
-<!-- QUIZ SCREEN -->
+<!-- ══ QUIZ ════════════════════════════════════════════════════════════════════ -->
 <div id="quiz-screen" class="screen">
+  <div class="tab-warning" id="tab-warning">⚠️ Tab switch detected! This has been recorded.</div>
   <div class="quiz-header">
     <div class="hinfo">
       <div>Student: <strong id="hdr-name">—</strong></div>
@@ -198,7 +235,7 @@
     </div>
     <div class="timer-box" id="timer-box">
       <div>
-        <div class="tlabel">Time Remaining</div>
+        <div class="tlabel">Time Left</div>
         <div class="tval" id="timer-val">30:00</div>
       </div>
     </div>
@@ -211,113 +248,192 @@
     <ul class="options-list" id="options-list"></ul>
   </div>
   <div class="quiz-nav">
-    <div style="display:flex;gap:.6rem;align-items:center">
+    <div style="display:flex;gap:.5rem;align-items:center">
       <button class="palette-toggle" onclick="openPalette()">📋 <span id="answered-count">0</span>/20</button>
-      <span style="font-size:13px;color:#6b7280">Q <span id="nav-cur">1</span>/20</span>
+      <span style="font-size:12.5px;color:var(--sub)">Q<span id="nav-cur">1</span>/20</span>
     </div>
-    <div style="display:flex;gap:.6rem">
+    <div style="display:flex;gap:.5rem">
       <button class="btn-nav btn-prev" id="btn-prev" onclick="goPrev()">← Prev</button>
       <button class="btn-nav btn-next" id="btn-next" onclick="goNext()">Next →</button>
-      <button class="btn-nav btn-submit" id="btn-submit" style="display:none" onclick="confirmSubmit()">Submit Quiz</button>
+      <button class="btn-nav btn-submit" id="btn-submit" style="display:none" onclick="confirmSubmit()">Submit ✓</button>
     </div>
   </div>
 </div>
 
-<!-- Palette Overlay -->
+<!-- ══ PALETTE OVERLAY ════════════════════════════════════════════════════════ -->
 <div class="palette-overlay" id="palette-overlay">
   <div class="palette-panel" onclick="event.stopPropagation()">
     <h3>Question Palette</h3>
     <div class="palette-grid" id="palette-grid"></div>
-    <div style="display:flex;gap:1rem;margin-top:.75rem;font-size:12px;color:#6b7280">
-      <span><span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:#4f46e5;vertical-align:middle;margin-right:4px"></span>Answered</span>
-      <span><span style="display:inline-block;width:14px;height:14px;border-radius:4px;border:2px solid #f59e0b;vertical-align:middle;margin-right:4px"></span>Current</span>
-      <span><span style="display:inline-block;width:14px;height:14px;border-radius:4px;border:2px solid #d1d5db;background:#f9fafb;vertical-align:middle;margin-right:4px"></span>Unanswered</span>
+    <div class="palette-legend">
+      <span><span class="legend-dot" style="background:var(--primary)"></span>Answered</span>
+      <span><span class="legend-dot" style="border:2px solid #f59e0b;background:#fff"></span>Current</span>
+      <span><span class="legend-dot" style="border:2px solid #d1d5db;background:#f9fafb"></span>Unanswered</span>
     </div>
     <button class="palette-close" onclick="closePalette()">Close</button>
   </div>
 </div>
 
-<!-- RESULT SCREEN -->
+<!-- ══ RESULT ═════════════════════════════════════════════════════════════════ -->
 <div id="result-screen" class="screen">
-  <div class="result-card">
+  <div class="card result-card">
     <h2>🎉 Quiz Submitted!</h2>
-    <div class="score-circle">
-      <div class="score-num" id="res-score">—</div>
-      <div class="score-lbl">out of 20</div>
+    <div class="score-ring">
+      <svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring-bg" cx="65" cy="65" r="55"/>
+        <circle class="ring-fill" id="ring-fill" cx="65" cy="65" r="55"/>
+      </svg>
+      <div class="score-inner">
+        <div class="score-num" id="res-score">—</div>
+        <div class="score-lbl">out of 20</div>
+      </div>
     </div>
-    <div class="result-details">
-      <div class="rdet"><div class="rval" id="res-correct" style="color:#16a34a">—</div><div class="rlbl">Correct</div></div>
-      <div class="rdet"><div class="rval" id="res-wrong" style="color:#dc2626">—</div><div class="rlbl">Wrong</div></div>
-      <div class="rdet"><div class="rval" id="res-skip" style="color:#f59e0b">—</div><div class="rlbl">Skipped</div></div>
+    <div class="result-stats">
+      <div class="rstat"><div class="rv" id="res-correct" style="color:var(--success)">—</div><div class="rl">Correct</div></div>
+      <div class="rstat"><div class="rv" id="res-wrong" style="color:var(--accent)">—</div><div class="rl">Wrong</div></div>
+      <div class="rstat"><div class="rv" id="res-skip" style="color:var(--warn)">—</div><div class="rl">Skipped</div></div>
     </div>
     <p class="result-msg" id="res-msg"></p>
+    <p class="tab-switch-result" id="tab-switch-result"></p>
   </div>
 </div>
 
+<!-- ══ SCRIPT ═════════════════════════════════════════════════════════════════ -->
 <script>
-// Disable copy/paste/right-click
-document.addEventListener('copy',  e=>e.preventDefault());
-document.addEventListener('cut',   e=>e.preventDefault());
-document.addEventListener('paste', e=>e.preventDefault());
-document.addEventListener('contextmenu', e=>e.preventDefault());
-document.addEventListener('keydown', e=>{
-  if((e.ctrlKey||e.metaKey)&&['c','x','v','a','u'].includes(e.key.toLowerCase())) e.preventDefault();
+// ── Security: disable copy/paste/right-click ─────────────────────────────────
+document.addEventListener('copy',       e => e.preventDefault());
+document.addEventListener('cut',        e => e.preventDefault());
+document.addEventListener('paste',      e => e.preventDefault());
+document.addEventListener('contextmenu',e => e.preventDefault());
+document.addEventListener('keydown',    e => {
+  if ((e.ctrlKey||e.metaKey) && ['c','x','v','a','u'].includes(e.key.toLowerCase()))
+    e.preventDefault();
 });
 
-// State
-let studentData  = null;
-let questions    = [];
-let answers      = {};
-let currentQ     = 0;
-let quizTimer    = null;
-let secsLeft     = 0;
-let sessionToken = null;
-let saveQueue    = {};
-let saving       = false;
-let slotStart    = null;
-let slotEnd      = null;
-let waitInterval = null;
+// ── State ────────────────────────────────────────────────────────────────────
+let studentData   = null;
+let rawQuestions  = [];        // original questions from server
+let questions     = [];        // per-student shuffled questions (with shuffled options)
+let optionMaps    = [];        // maps display index → original key, per question
+let answers       = {};        // { questionIndex: 'A'|'B'|'C'|'D' }  (original keys)
+let currentQ      = 0;
+let quizTimer     = null;
+let secsLeft      = 0;
+let sessionToken  = null;
+let saveQueue     = {};
+let saving        = false;
+let slotStart     = null;
+let slotEnd       = null;
+let waitInterval  = null;
+let tabSwitches   = 0;
+let quizStarted   = false;
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const pad = n => String(n).padStart(2,'0');
+function fmtDateTime(d){
+  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})
+    +' | '+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+}
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.body.classList.toggle('quiz-active', id==='quiz-screen');
 }
 
+// ── API ───────────────────────────────────────────────────────────────────────
 async function api(action, payload={}){
-  const body={...payload,action};
-  if(sessionToken) body.sessionToken=sessionToken;
-  const r=await fetch(APPS_SCRIPT_URL,{
+  const body = {...payload, action};
+  if(sessionToken) body.sessionToken = sessionToken;
+  const r = await fetch(APPS_SCRIPT_URL,{
     method:'POST', redirect:'follow',
     headers:{'Content-Type':'text/plain'},
     body:JSON.stringify(body)
   });
   if(!r.ok) throw new Error('Server error: '+r.status);
-  const text=await r.text();
+  const text = await r.text();
   try{ return JSON.parse(text); }
   catch(e){ console.error('Raw:',text); throw new Error('Invalid server response'); }
 }
 
-// ── LOGIN ──
+// ── Seeded shuffle (per-student deterministic) ────────────────────────────────
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed>>>15, 1 | seed);
+    t = t + Math.imul(t ^ t>>>7, 61 | t) ^ t;
+    return ((t ^ t>>>14) >>> 0) / 4294967296;
+  };
+}
+function shuffleWithRng(arr, rng){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(rng()*( i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+// Create deterministic per-student seed from systemId
+function seedFromId(id){
+  let h=0;
+  for(const c of id){ h = (Math.imul(31,h)+c.charCodeAt(0))|0; }
+  return Math.abs(h);
+}
+
+function buildShuffledQuestions(rawQs, systemId){
+  const baseSeed = seedFromId(systemId);
+  const rngMain  = mulberry32(baseSeed);
+
+  // 1. Shuffle question order
+  const shuffledQs = shuffleWithRng(rawQs, rngMain);
+
+  const result   = [];
+  const maps     = [];
+
+  shuffledQs.forEach((q, qi) => {
+    // 2. Shuffle option order per question using a derived seed
+    const rngOpt = mulberry32(baseSeed ^ (qi * 2654435761));
+    const origKeys  = ['A','B','C','D'];
+    const shuffKeys = shuffleWithRng(origKeys, rngOpt);
+
+    // Build new question object with re-lettered options
+    const newQ = { question: q.question, correctAnswer: q.correctAnswer };
+    const map = {};  // newKey → origKey
+    shuffKeys.forEach((origKey, idx) => {
+      const newKey = origKeys[idx];
+      newQ['option'+newKey] = q['option'+origKey];
+      map[newKey] = origKey;
+    });
+    result.push(newQ);
+    maps.push(map);
+  });
+
+  return { questions: result, optionMaps: maps };
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
 async function doLogin(){
   const sid  = document.getElementById('system-id').value.trim();
   const code = document.getElementById('access-code').value.trim();
   const err  = document.getElementById('login-error');
   const btn  = document.getElementById('login-btn');
   if(!sid||!code){ err.textContent='Please fill in both fields.'; return; }
-  btn.disabled=true; btn.textContent='Verifying...';
+  btn.disabled=true; btn.textContent='Verifying…';
   try{
     const res = await api('login',{systemId:sid, accessCode:code});
-    if(!res){
-      err.textContent='No response from server. Check your Apps Script URL.';
-      btn.disabled=false; btn.textContent='Login & Continue'; return;
-    }
+    if(!res){ err.textContent='No response from server.'; btn.disabled=false; btn.textContent='Login & Continue'; return; }
     if(res.success){
       studentData  = res.student;
       sessionToken = res.sessionToken;
-      questions    = res.questions;
+      rawQuestions = res.questions;
       slotStart    = new Date(res.slotStart);
       slotEnd      = new Date(res.slotEnd);
+
+      // Build per-student shuffled questions
+      const built = buildShuffledQuestions(rawQuestions, sid);
+      questions   = built.questions;
+      optionMaps  = built.optionMaps;
+
       document.getElementById('hdr-name').textContent = studentData.name;
       checkSlotAndProceed();
     } else {
@@ -330,25 +446,22 @@ async function doLogin(){
   }
 }
 document.getElementById('access-code').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('system-id').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-// ── SLOT CHECK ──
+// ── SLOT CHECK ────────────────────────────────────────────────────────────────
 function checkSlotAndProceed(){
-  const now=new Date();
-  if(now>=slotEnd){
-    document.getElementById('login-error').textContent='The exam slot has ended. You can no longer attempt this quiz.';
+  const now = new Date();
+  if(now >= slotEnd){
+    document.getElementById('login-error').textContent='The exam slot has ended.';
     document.getElementById('login-btn').disabled=false;
     document.getElementById('login-btn').textContent='Login & Continue';
     return;
   }
-  if(now<slotStart){
-    showWaitingScreen();
-  } else {
-    startInstructionCountdown();
-    showScreen('instr-screen');
-  }
+  if(now < slotStart) showWaitingScreen();
+  else { startInstructionCountdown(); showScreen('instr-screen'); }
 }
 
-// ── WAITING SCREEN ──
+// ── WAITING SCREEN ────────────────────────────────────────────────────────────
 function showWaitingScreen(){
   document.getElementById('w-name').textContent  = studentData.name;
   document.getElementById('w-start').textContent = fmtDateTime(slotStart);
@@ -358,7 +471,7 @@ function showWaitingScreen(){
   waitInterval = setInterval(()=>{
     const now  = new Date();
     const diff = slotStart - now;
-    if(diff<=0){
+    if(diff <= 0){
       clearInterval(waitInterval);
       document.getElementById('wait-timer').textContent='00:00:00';
       startInstructionCountdown();
@@ -368,123 +481,140 @@ function showWaitingScreen(){
     const h=Math.floor(diff/3600000);
     const m=Math.floor((diff%3600000)/60000);
     const s=Math.floor((diff%60000)/1000);
-    document.getElementById('wait-timer').textContent=
-      pad(h)+':'+pad(m)+':'+pad(s);
+    document.getElementById('wait-timer').textContent=pad(h)+':'+pad(m)+':'+pad(s);
     const elapsed=totalWaitMs-diff;
-    document.getElementById('wait-bar-fill').style.width=
-      Math.max(0,100-(elapsed/totalWaitMs*100))+'%';
+    document.getElementById('wait-bar-fill').style.width=Math.max(0,100-(elapsed/totalWaitMs*100))+'%';
   },1000);
 }
 
-function pad(n){return String(n).padStart(2,'0');}
-function fmtDateTime(d){
-  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})+
-         ' | '+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-}
-
-// ── INSTRUCTION COUNTDOWN ──
+// ── INSTRUCTIONS COUNTDOWN ────────────────────────────────────────────────────
 function startInstructionCountdown(){
-  let secs=INSTRUCTION_SECONDS;
-  const el=document.getElementById('instr-countdown');
-  const bar=document.getElementById('instr-bar');
+  let secs = INSTRUCTION_SECS;
+  const el  = document.getElementById('instr-countdown');
+  const bar = document.getElementById('instr-bar');
   bar.style.width='100%';
-  const iv=setInterval(()=>{
+  const iv = setInterval(()=>{
     secs--;
-    el.textContent=secs;
-    bar.style.width=(secs/INSTRUCTION_SECONDS*100)+'%';
+    el.textContent = secs;
+    bar.style.width = (secs/INSTRUCTION_SECS*100)+'%';
     if(secs<=0){
-    clearInterval(iv);
-    const now2 = new Date();
-    if(now2 >= slotEnd){
-      alert('The exam slot has ended. Please contact your instructor.');
-      showScreen('login-screen');
-      return;
+      clearInterval(iv);
+      if(new Date()>=slotEnd){ alert('The exam slot has ended.'); showScreen('login-screen'); return; }
+      startQuiz();
     }
-    startQuiz();
-  }
   },1000);
 }
 
-// ── START QUIZ ──
+// ── TAB SWITCH TRACKING ───────────────────────────────────────────────────────
+function setupTabTracking(){
+  document.addEventListener('visibilitychange',()=>{
+    if(!quizStarted) return;
+    if(document.hidden){
+      tabSwitches++;
+      // Log to server non-blocking
+      api('logTabSwitch',{systemId:studentData.systemId, count:tabSwitches}).catch(()=>{});
+    } else {
+      // Show warning banner when they return
+      const w = document.getElementById('tab-warning');
+      w.textContent=`⚠️ Tab switch #${tabSwitches} recorded! Repeated switching may be flagged.`;
+      w.classList.add('show');
+      setTimeout(()=>w.classList.remove('show'),4000);
+    }
+  });
+
+  // Also track window blur (alt-tab, taskbar)
+  window.addEventListener('blur',()=>{
+    if(!quizStarted) return;
+    tabSwitches++;
+    api('logTabSwitch',{systemId:studentData.systemId, count:tabSwitches}).catch(()=>{});
+  });
+}
+
+// ── START QUIZ ────────────────────────────────────────────────────────────────
 function startQuiz(){
+  quizStarted = true;
+  setupTabTracking();
   buildPalette();
   renderQuestion();
   showScreen('quiz-screen');
-  const now=new Date();
-// AFTER (fixed):
-  const slotSecsLeft = Math.floor((slotEnd - now) / 1000);
-  secsLeft = Math.min(30 * 60, Math.max(60, slotSecsLeft)); // guarantee at least 60s
+  const now = new Date();
+  const slotSecsLeft = Math.floor((slotEnd - now)/1000);
+  secsLeft = Math.min(QUIZ_DURATION_SECS, Math.max(60, slotSecsLeft));
   startTimer();
 }
 
-// ── TIMER ──
+// ── TIMER ─────────────────────────────────────────────────────────────────────
 function startTimer(){
   updateTimerDisplay();
-  quizTimer=setInterval(()=>{
+  quizTimer = setInterval(()=>{
     secsLeft--;
     updateTimerDisplay();
-    // Wall-clock check against slot end
-    const wallLeft=Math.floor((slotEnd-new Date())/1000);
-    if(wallLeft<=0){clearInterval(quizTimer);autoSubmit();return;}
-    const effective=Math.min(secsLeft,wallLeft);
+    const wallLeft = Math.floor((slotEnd - new Date())/1000);
+    if(wallLeft<=0){ clearInterval(quizTimer); autoSubmit(); return; }
+    const effective = Math.min(secsLeft, wallLeft);
     if(effective===120) document.getElementById('auto-banner').style.display='block';
     if(effective<=120)  document.getElementById('auto-secs').textContent=effective;
     if(effective<=300)  document.getElementById('timer-box').classList.add('warning');
-    if(secsLeft<=0){clearInterval(quizTimer);autoSubmit();}
+    if(secsLeft<=0){ clearInterval(quizTimer); autoSubmit(); }
   },1000);
 }
-
 function updateTimerDisplay(){
-  const s=Math.max(0,secsLeft);
+  const s = Math.max(0,secsLeft);
   document.getElementById('timer-val').textContent=pad(Math.floor(s/60))+':'+pad(s%60);
 }
 
-// ── RENDER QUESTION ──
+// ── RENDER QUESTION ───────────────────────────────────────────────────────────
 function renderQuestion(){
-  const q=questions[currentQ];
+  const q = questions[currentQ];
   document.getElementById('q-counter').textContent=`Question ${currentQ+1} of ${TOTAL_QUESTIONS}`;
   document.getElementById('nav-cur').textContent=currentQ+1;
   document.getElementById('q-text').textContent=q.question;
   document.getElementById('quiz-progress').style.width=((currentQ+1)/TOTAL_QUESTIONS*100)+'%';
-  const ul=document.getElementById('options-list');
+
+  const ul = document.getElementById('options-list');
   ul.innerHTML='';
-  ['A','B','C','D'].forEach(o=>{
-    const li=document.createElement('li');
+  ['A','B','C','D'].forEach(displayKey=>{
+    const li  = document.createElement('li');
     li.className='opt-item';
-    const chk=answers[currentQ]===o?'checked':'';
+    // answers[currentQ] stores the DISPLAY key the student selected
+    const chk = answers[currentQ]===displayKey ? 'checked' : '';
     li.innerHTML=`
-      <input type="radio" name="opt" id="opt${o}" value="${o}" ${chk}>
-      <label for="opt${o}">
-        <div class="opt-dot"><div class="opt-dot-inner"></div></div>
-        <span><strong>${o}.</strong> ${q['option'+o]}</span>
+      <input type="radio" name="opt" id="opt${displayKey}" value="${displayKey}" ${chk}>
+      <label for="opt${displayKey}">
+        <div class="opt-key">${displayKey}</div>
+        <span>${q['option'+displayKey]}</span>
       </label>`;
-    li.querySelector('input').addEventListener('change',()=>selectAnswer(o));
+    li.querySelector('input').addEventListener('change',()=>selectAnswer(displayKey));
     ul.appendChild(li);
   });
-  const isLast=currentQ===TOTAL_QUESTIONS-1;
-  document.getElementById('btn-prev').style.display=currentQ===0?'none':'';
-  document.getElementById('btn-next').style.display=isLast?'none':'';
-  document.getElementById('btn-submit').style.display=isLast?'':'none';
+
+  const isLast = currentQ===TOTAL_QUESTIONS-1;
+  document.getElementById('btn-prev').style.display   = currentQ===0 ? 'none' : '';
+  document.getElementById('btn-next').style.display   = isLast ? 'none' : '';
+  document.getElementById('btn-submit').style.display = isLast ? '' : 'none';
   updatePalette();
 }
 
-function selectAnswer(opt){
-  answers[currentQ]=opt;
-  saveQueue[currentQ]=opt;
+function selectAnswer(displayKey){
+  answers[currentQ] = displayKey;
+  // Map display key → original key for saving
+  const origKey = optionMaps[currentQ][displayKey];
+  saveQueue[currentQ] = origKey;   // send original key to server for correct grading
   updatePalette();
   scheduleSave();
 }
-function goNext(){if(currentQ<TOTAL_QUESTIONS-1){currentQ++;renderQuestion();}}
-function goPrev(){if(currentQ>0){currentQ--;renderQuestion();}}
 
-// ── PALETTE ──
+function goNext(){ if(currentQ<TOTAL_QUESTIONS-1){ currentQ++; renderQuestion(); } }
+function goPrev(){ if(currentQ>0){ currentQ--; renderQuestion(); } }
+
+// ── PALETTE ───────────────────────────────────────────────────────────────────
 function buildPalette(){
-  const g=document.getElementById('palette-grid');
+  const g = document.getElementById('palette-grid');
   g.innerHTML='';
   for(let i=0;i<TOTAL_QUESTIONS;i++){
     const b=document.createElement('button');
-    b.className='pq-btn';b.id=`pb${i}`;b.textContent=i+1;
-    b.onclick=()=>{currentQ=i;renderQuestion();closePalette();};
+    b.className='pq-btn'; b.id=`pb${i}`; b.textContent=i+1;
+    b.onclick=()=>{ currentQ=i; renderQuestion(); closePalette(); };
     g.appendChild(b);
   }
 }
@@ -492,63 +622,103 @@ function updatePalette(){
   document.getElementById('answered-count').textContent=Object.keys(answers).length;
   for(let i=0;i<TOTAL_QUESTIONS;i++){
     const b=document.getElementById(`pb${i}`);
-    if(!b)continue;
+    if(!b) continue;
     b.className='pq-btn'+(answers[i]?' answered':'')+(i===currentQ?' current':'');
   }
 }
-function openPalette(){document.getElementById('palette-overlay').classList.add('open');}
-function closePalette(){document.getElementById('palette-overlay').classList.remove('open');}
-document.getElementById('palette-overlay').addEventListener('click',closePalette);
+function openPalette(){ document.getElementById('palette-overlay').classList.add('open'); }
+function closePalette(){ document.getElementById('palette-overlay').classList.remove('open'); }
+document.getElementById('palette-overlay').addEventListener('click', closePalette);
 
-// ── REAL-TIME SAVE ──
-let saveTimer=null;
-function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(flushSave,1500);}
+// ── REAL-TIME SAVE ────────────────────────────────────────────────────────────
+let saveTimer = null;
+function scheduleSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(flushSave,1500); }
 async function flushSave(){
-  if(!Object.keys(saveQueue).length||saving)return;
+  if(!Object.keys(saveQueue).length || saving) return;
   saving=true;
   const dot=document.getElementById('save-dot');
   const lbl=document.getElementById('save-lbl');
-  dot.style.display='inline-block';lbl.textContent='Saving...';
-  const snap={...saveQueue};saveQueue={};
+  dot.style.display='inline-block'; lbl.textContent='Saving…';
+  const snap={...saveQueue}; saveQueue={};
   try{
-    await api('saveAnswers',{systemId:studentData.systemId,answers:snap});
+    await api('saveAnswers',{systemId:studentData.systemId, answers:snap});
     lbl.textContent='Saved ✓';
-    setTimeout(()=>{dot.style.display='none';lbl.textContent='';},2000);
-  }catch(e){
-    Object.assign(saveQueue,snap);
-    lbl.textContent='Save failed, retrying...';
+    setTimeout(()=>{ dot.style.display='none'; lbl.textContent=''; },2000);
+  } catch(e){
+    Object.assign(saveQueue, snap);
+    lbl.textContent='Save failed, retrying…';
     setTimeout(flushSave,3000);
   }
   saving=false;
 }
 
-// ── SUBMIT ──
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
 function confirmSubmit(){
-  const u=TOTAL_QUESTIONS-Object.keys(answers).length;
-  if(confirm(u>0?`You have ${u} unanswered question(s). Submit anyway?`:'Submit your quiz now?'))
-    submitQuiz();
+  const u = TOTAL_QUESTIONS - Object.keys(answers).length;
+  const msg = u>0
+    ? `You have ${u} unanswered question(s). Submit anyway?`
+    : 'Submit your quiz now?';
+  if(confirm(msg)) submitQuiz();
 }
-async function autoSubmit(){await submitQuiz(true);}
+async function autoSubmit(){ await submitQuiz(true); }
+
 async function submitQuiz(auto=false){
-  clearInterval(quizTimer);clearTimeout(saveTimer);
+  clearInterval(quizTimer); clearTimeout(saveTimer);
+  quizStarted=false;
   const btn=document.getElementById('btn-submit');
-  if(btn)btn.disabled=true;
+  if(btn) btn.disabled=true;
+
+  // Convert display-key answers to original keys for final submission
+  const finalAnswers={};
+  for(const [qIdx, displayKey] of Object.entries(answers)){
+    finalAnswers[qIdx] = optionMaps[parseInt(qIdx)][displayKey];
+  }
+
   try{
-    const res=await api('submitQuiz',{systemId:studentData.systemId,answers,autoSubmit:auto});
+    const res = await api('submitQuiz',{
+      systemId:studentData.systemId,
+      answers:finalAnswers,
+      autoSubmit:auto,
+      tabSwitches:tabSwitches
+    });
     showResult(res);
-  }catch(e){alert('Submission error. Please contact your instructor.');}
+  } catch(e){
+    alert('Submission error. Please contact your instructor.\n'+e.message);
+  }
 }
+
+// ── RESULT ────────────────────────────────────────────────────────────────────
 function showResult(res){
   showScreen('result-screen');
-  document.getElementById('res-score').textContent=res.score;
-  document.getElementById('res-correct').textContent=res.correct;
-  document.getElementById('res-wrong').textContent=res.wrong;
-  document.getElementById('res-skip').textContent=res.skipped;
-  const pct=Math.round(res.score/TOTAL_QUESTIONS*100);
-  document.getElementById('res-msg').textContent=
-    pct>=80?'Excellent work! 🎯 You did a great job.':
-    pct>=60?'Good effort! Keep practicing to improve.':
-    "Keep working hard — you'll do better next time! 💪";
+
+  const score   = typeof res.score   === 'number' ? res.score   : parseInt(res.score)||0;
+  const correct = typeof res.correct === 'number' ? res.correct : parseInt(res.correct)||0;
+  const wrong   = typeof res.wrong   === 'number' ? res.wrong   : parseInt(res.wrong)||0;
+  const skipped = typeof res.skipped === 'number' ? res.skipped : parseInt(res.skipped)||0;
+
+  document.getElementById('res-score').textContent   = score;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent   = wrong;
+  document.getElementById('res-skip').textContent    = skipped;
+
+  const pct = Math.round(score/TOTAL_QUESTIONS*100);
+  document.getElementById('res-msg').textContent =
+    pct>=80 ? '🎯 Excellent work! You performed outstandingly.' :
+    pct>=60 ? '👍 Good effort! Keep practising to improve further.' :
+              '💪 Keep working hard — you\'ll do better next time!';
+
+  if(tabSwitches>0){
+    const el=document.getElementById('tab-switch-result');
+    el.style.display='block';
+    el.textContent=`⚠️ Tab/window switches detected: ${tabSwitches}`;
+  }
+
+  // Animate score ring (circumference = 2π × 55 ≈ 345.4)
+  const CIRC = 345.4;
+  const fill = document.getElementById('ring-fill');
+  requestAnimationFrame(()=>{
+    fill.style.strokeDashoffset = CIRC - (pct/100)*CIRC;
+  });
 }
 </script>
 </body>
