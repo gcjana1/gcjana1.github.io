@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
-<title>CSHC3102 and CSHC3502 CA Marks | Dr. GC Jana</title>
+<title>CSHC3102 and CSHC3502 Marks | Dr. GC Jana</title>
 
 <style>
-
 body{
 font-family: Arial;
 background:#f4f6f9;
@@ -73,7 +72,6 @@ color:white;
 .good{background:#28a745;}
 .average{background:#007bff;}
 .low{background:#dc3545;}
-
 </style>
 </head>
 
@@ -81,12 +79,13 @@ color:white;
 
 <div class="container">
 
-<h2>Check Your CSHC3102 & CSHC3502 CA Marks</h2>
+<h2>Check Your CSHC3102 & CSHC3502 Marks</h2>
 
 <select id="courseType" onchange="updateComponents()">
 <option value="">Select Type</option>
 <option value="theory">Theory CA</option>
 <option value="lab">Lab Marks</option>
+<option value="midsem">Mid Sem</option> <!-- ✅ NEW -->
 </select>
 
 <select id="component">
@@ -100,7 +99,7 @@ color:white;
 <div id="result"></div>
 
 <div class="note">
-<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage.
+<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage..
 </div>
 
 </div>
@@ -126,6 +125,10 @@ comp.innerHTML+=`<option value="CA">Lab CA (30)</option>`;
 comp.innerHTML+=`<option value="CE">Lab CE (30)</option>`;
 }
 
+if(type=="midsem"){
+comp.innerHTML+=`<option value="MID">Mid Sem Marks</option>`; // ✅ NEW
+}
+
 }
 
 function getMarks(){
@@ -142,7 +145,8 @@ return;
 
 var sheetURL="";
 
-if(type=="theory"){
+// ✅ SAME THEORY SHEET USED FOR MID SEM
+if(type=="theory" || type=="midsem"){
 sheetURL="https://docs.google.com/spreadsheets/d/1cHDgHCYbeQeAv-MwZLJLjBLT_Ww40baZy9Bhd06pZpE/gviz/tq?tqx=out:json";
 }
 
@@ -176,8 +180,7 @@ var marks="";
 var componentName="";
 var showLink=false;
 
-// ✅ Correct Mapping
-
+// ✅ THEORY
 if(component=="A1"){
 marks=found.c[2]?.v;
 componentName="Assignment-1";
@@ -199,7 +202,13 @@ marks=found.c[5]?.v;
 componentName="Assessment-2";
 }
 
-// Lab mapping (if same structure)
+// ✅ MID SEM (Column H = index 7)
+if(component=="MID"){
+marks=found.c[7]?.v;
+componentName="Mid Sem Exam";
+}
+
+// ✅ LAB
 if(component=="CA"){
 marks=found.c[2]?.v;
 componentName="Lab CA";
@@ -215,14 +224,22 @@ resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
 return;
 }
 
-var maxMarks = component.includes("CA") || component.includes("CE") ? 30 : 20;
+// ✅ MAX MARKS LOGIC
+var maxMarksMap = {
+A1:20, A2:20, T1:20, T2:20,
+CA:30, CE:30, MID:30
+};
 
+var maxMarks = maxMarksMap[component];
+
+// ✅ PERFORMANCE
 var percent = (marks / maxMarks) * 100;
 
 var gradeClass="average";
 if(percent>=75) gradeClass="good";
 else if(percent<50) gradeClass="low";
 
+// ✅ OUTPUT
 resultDiv.innerHTML = `
 <div class="result-card">
 
