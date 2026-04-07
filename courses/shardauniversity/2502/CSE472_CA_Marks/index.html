@@ -77,6 +77,7 @@ color:white;
 <option value="">Select Type</option>
 <option value="theory">Theory CA</option>
 <option value="lab">Lab Marks</option>
+<option value="midsem">Mid Sem</option>
 </select>
 
 <select id="component">
@@ -116,6 +117,9 @@ if(type=="lab"){
 comp.innerHTML+=`<option value="CA">Lab CA (30)</option>`;
 comp.innerHTML+=`<option value="CE">Lab CE (30)</option>`;
 }
+if(type=="midsem"){
+comp.innerHTML+=`<option value="MID">Mid Sem Marks</option>`;
+}
 
 }
 
@@ -139,6 +143,10 @@ sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHj
 
 if(type=="lab"){
 sheetURL="https://docs.google.com/spreadsheets/d/1a0W4vwBtbDDVphS9MJutiWC12_DJpa0WxrBOBHaMiXY/gviz/tq?tqx=out:json";
+}
+
+if(type=="theory" || type=="midsem"){
+sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json";
 }
 
 fetch(sheetURL)
@@ -200,12 +208,19 @@ marks=found.c[3]?.v;
 componentName="Lab CE";
 }
 
+if(component=="MID"){
+marks=found.c[7]?.v;   // Column H
+componentName="Mid Sem Exam";
+}
+
 if(marks==null){
 resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
 return;
 }
 
-var maxMarks = component.includes("CA") || component.includes("CE") ? 30 : 20;
+var maxMarks = 20;
+if(component=="CA" || component=="CE") maxMarks = 30;
+if(component=="MID") maxMarks = 30;
 
 var percent = (marks / maxMarks) * 100;
 
