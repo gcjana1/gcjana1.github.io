@@ -1,0 +1,453 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#3B82F6;--blue-l:#EFF6FF;--blue-d:#1D4ED8;
+  --orange:#F97316;--orange-l:#FFF7ED;--orange-d:#C2410C;
+  --green:#22C55E;--green-l:#F0FDF4;--green-d:#15803D;
+  --amber:#F59E0B;--amber-l:#FFFBEB;--amber-d:#B45309;
+  --purple:#8B5CF6;--purple-l:#F5F3FF;--purple-d:#6D28D9;
+  --r8:8px;--r12:12px
+}
+body{font-family:var(--font-sans)}
+#app{padding:14px 0;color:var(--color-text-primary)}
+
+.panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--r12);overflow:hidden;margin-bottom:12px}
+.panel-head{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-secondary);display:flex;align-items:center;gap:6px}
+.panel-head .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.panel-body{padding:12px 14px}
+
+.mode-tabs{display:flex;gap:0;border:0.5px solid var(--color-border-secondary);border-radius:var(--r8);overflow:hidden;margin-bottom:12px}
+.mode-tab{flex:1;padding:10px 8px;font-size:13px;font-weight:400;font-family:var(--font-sans);border:none;background:transparent;cursor:pointer;transition:all .2s;color:var(--color-text-secondary);text-align:center}
+.mode-tab.mm.on{background:var(--blue-l);color:var(--blue-d);font-weight:500}
+.mode-tab.ab.on{background:var(--orange-l);color:var(--orange-d);font-weight:500}
+.mode-tab:not(.on):hover{background:var(--color-background-secondary)}
+.tab-sep{width:0.5px;background:var(--color-border-secondary);flex-shrink:0}
+
+.tree-src-tabs{display:flex;gap:6px;margin-bottom:12px}
+.src-tab{flex:1;padding:9px 6px;font-size:12px;font-weight:500;font-family:var(--font-sans);border:0.5px solid var(--color-border-secondary);border-radius:var(--r8);background:transparent;cursor:pointer;transition:all .2s;color:var(--color-text-secondary);text-align:center}
+.src-tab.on{border-color:var(--purple);background:var(--purple-l);color:var(--purple-d)}
+.src-tab:not(.on):hover{background:var(--color-background-secondary)}
+
+.field-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.field-lbl{font-size:12px;color:var(--color-text-secondary);min-width:90px;flex-shrink:0}
+.field-row input[type=number],.field-row input[type=text],.field-row select{padding:7px 10px;font-size:13px;font-family:var(--font-sans);border:0.5px solid var(--color-border-secondary);border-radius:var(--r8);background:var(--color-background-primary);color:var(--color-text-primary);width:80px;outline:none}
+.field-row input:focus,.field-row select:focus{border-color:var(--purple)}
+
+.leaf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:6px;margin-top:8px}
+.leaf-inp{padding:7px 6px;font-size:13px;font-family:var(--font-sans);border:0.5px solid var(--color-border-secondary);border-radius:var(--r8);background:var(--color-background-primary);color:var(--color-text-primary);text-align:center;width:100%;outline:none}
+.leaf-inp:focus{border-color:var(--blue)}
+.leaf-lbl{font-size:10px;color:var(--color-text-tertiary);text-align:center;margin-bottom:2px}
+
+.build-btn{width:100%;padding:10px;font-size:13px;font-weight:500;font-family:var(--font-sans);border:none;border-radius:var(--r8);background:var(--purple);color:#fff;cursor:pointer;transition:all .15s;margin-top:8px}
+.build-btn:hover{background:var(--purple-d)}
+.build-btn:active{transform:scale(.98)}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.sc{background:var(--color-background-secondary);border-radius:var(--r8);padding:10px 12px;border:0.5px solid var(--color-border-tertiary)}
+.sc-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;color:var(--color-text-tertiary);margin-bottom:4px}
+.sc-val{font-size:20px;font-weight:500;line-height:1}
+.sc-val.amber{color:var(--amber-d)}
+
+.prog-wrap{height:3px;background:var(--color-background-secondary);border-radius:2px;margin-bottom:12px;overflow:hidden}
+.prog{height:100%;border-radius:2px;transition:width .3s;background:var(--blue)}
+.prog.ab{background:var(--orange)}
+
+.msg{min-height:38px;padding:9px 13px;border-radius:var(--r8);font-size:13px;line-height:1.6;margin-bottom:12px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);transition:all .25s}
+.msg.pruning{background:var(--orange-l);border-color:var(--orange);color:var(--orange-d)}
+.msg.done{background:var(--green-l);border-color:var(--green);color:var(--green-d)}
+.msg b{font-weight:500}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-bottom:12px}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.ld{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+
+.tree-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--r12);overflow:hidden;margin-bottom:12px}
+.tree-card svg{display:block;width:100%;height:auto}
+
+.ctrl-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.cbtn{display:flex;align-items:center;gap:5px;padding:8px 13px;font-size:13px;font-family:var(--font-sans);border:0.5px solid var(--color-border-secondary);border-radius:var(--r8);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;transition:all .15s;white-space:nowrap}
+.cbtn:hover{background:var(--color-background-secondary)}
+.cbtn:active{transform:scale(.97)}
+.cbtn.play{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cbtn.play:hover{background:var(--blue-d)}
+.cbtn.paused{background:#64748B;border-color:#64748B}
+.spd{display:flex;align-items:center;gap:8px;margin-left:auto}
+.spd span{font-size:12px;color:var(--color-text-tertiary)}
+.spd input{width:80px}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+.foot span{font-size:12px;color:var(--color-text-tertiary)}
+.prune-pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500;background:var(--orange-l);color:var(--orange-d);border:0.5px solid var(--orange)}
+
+.hint{font-size:11px;color:var(--color-text-tertiary);margin-top:6px;line-height:1.5}
+.err{font-size:12px;color:#DC2626;margin-top:6px}
+
+@media(max-width:520px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .sc-val{font-size:16px}
+  .spd{margin-left:0;width:100%}
+  .spd input{flex:1}
+  .field-lbl{min-width:70px}
+}
+</style>
+
+<div id="app">
+<h2 style="position:absolute;opacity:0;pointer-events:none">Minimax & Alpha-Beta Pruning Visualizer | Dr. GC Jana</h2>
+
+<div class="mode-tabs">
+  <button class="mode-tab mm on" id="tab-mm" onclick="setAlgo('mm')">Minimax</button>
+  <div class="tab-sep"></div>
+  <button class="mode-tab ab" id="tab-ab" onclick="setAlgo('ab')">Alpha-Beta Pruning</button>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <span class="dot" style="background:var(--purple)"></span>
+    Tree configuration
+  </div>
+  <div class="panel-body">
+    <div class="tree-src-tabs">
+      <button class="src-tab on" id="st-custom" onclick="setSrc('custom')">Custom tree</button>
+      <button class="src-tab" id="st-random" onclick="setSrc('random')">Random tree</button>
+      <button class="src-tab" id="st-preset" onclick="setSrc('preset')">Presets</button>
+    </div>
+
+    <div id="pane-custom">
+      <div class="field-row">
+        <span class="field-lbl">Depth</span>
+        <input type="number" id="c-depth" value="3" min="1" max="4" style="width:70px" oninput="updateLeafInputs()">
+        <span style="font-size:12px;color:var(--color-text-tertiary)">(1 – 4 levels)</span>
+      </div>
+      <div class="field-row">
+        <span class="field-lbl">Branching</span>
+        <input type="number" id="c-branch" value="3" min="2" max="4" style="width:70px" oninput="updateLeafInputs()">
+        <span style="font-size:12px;color:var(--color-text-tertiary)">(2 – 4 children)</span>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:4px;margin-bottom:6px">Leaf values <span id="leaf-count-lbl" style="color:var(--color-text-tertiary)"></span></div>
+      <div class="leaf-grid" id="leaf-grid"></div>
+      <div class="err" id="c-err" style="display:none"></div>
+      <button class="build-btn" onclick="buildCustom()">Build tree</button>
+    </div>
+
+    <div id="pane-random" style="display:none">
+      <div class="field-row">
+        <span class="field-lbl">Depth</span>
+        <input type="number" id="r-depth" value="3" min="1" max="4" style="width:70px">
+        <span style="font-size:12px;color:var(--color-text-tertiary)">(1 – 4)</span>
+      </div>
+      <div class="field-row">
+        <span class="field-lbl">Branching</span>
+        <input type="number" id="r-branch" value="3" min="2" max="4" style="width:70px">
+      </div>
+      <div class="field-row">
+        <span class="field-lbl">Value range</span>
+        <input type="number" id="r-min" value="1" min="-20" max="20" style="width:60px"> 
+        <span style="font-size:12px;color:var(--color-text-tertiary)">to</span>
+        <input type="number" id="r-max" value="9" min="-20" max="20" style="width:60px">
+      </div>
+      <button class="build-btn" onclick="buildRandom()">Generate random tree</button>
+      <div class="hint">A new tree with random leaf values will be generated each time.</div>
+    </div>
+
+    <div id="pane-preset" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button class="build-btn" style="margin-top:0;background:var(--blue)" onclick="loadPreset(0)">Classic (d=3, b=3)</button>
+        <button class="build-btn" style="margin-top:0;background:var(--blue)" onclick="loadPreset(1)">Shallow (d=2, b=4)</button>
+        <button class="build-btn" style="margin-top:0;background:var(--blue)" onclick="loadPreset(2)">Wide (d=3, b=4)</button>
+        <button class="build-btn" style="margin-top:0;background:var(--blue)" onclick="loadPreset(3)">Deep (d=4, b=2)</button>
+      </div>
+      <div class="hint" style="margin-top:8px">Presets use well-known leaf sequences that highlight pruning differences clearly.</div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="sc"><div class="sc-lbl">Visited</div><div class="sc-val" id="sv">0</div></div>
+  <div class="sc"><div class="sc-lbl">Pruned</div><div class="sc-val" id="sp">0</div></div>
+  <div class="sc"><div class="sc-lbl">Step</div><div class="sc-val" id="ss">—</div></div>
+  <div class="sc"><div class="sc-lbl">Result</div><div class="sc-val amber" id="sb">—</div></div>
+</div>
+
+<div class="prog-wrap"><div class="prog" id="prog" style="width:0%"></div></div>
+
+<div class="msg" id="msg">Configure your tree above and press <b>Build tree</b> to start.</div>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#EFF6FF;border:1.5px solid #3B82F6"></div>MAX node</div>
+  <div class="li"><div class="ld" style="background:#FFF7ED;border:1.5px solid #F97316"></div>MIN node</div>
+  <div class="li"><div class="ld" style="background:#F0FDF4;border:1.5px solid #22C55E"></div>Evaluating</div>
+  <div class="li"><div class="ld" style="background:#FFFBEB;border:1.5px solid #F59E0B"></div>Propagated</div>
+  <div class="li"><div class="ld" style="background:var(--color-background-secondary);border:1.5px dashed var(--color-border-secondary)"></div>Pruned</div>
+</div>
+
+<div class="tree-card">
+  <svg id="tree" viewBox="0 0 720 420" preserveAspectRatio="xMidYMid meet"></svg>
+</div>
+
+<div class="ctrl-bar">
+  <button class="cbtn" onclick="doReset()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8a6 6 0 1 1 1.5 4"/><path d="M2 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Reset
+  </button>
+  <button class="cbtn" onclick="doPrev()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Prev
+  </button>
+  <button class="cbtn" onclick="doNext()">
+    Next
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="cbtn play" id="bplay" onclick="togglePlay()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" id="play-ico"><path d="M5 3l9 5-9 5V3z"/></svg>
+    <span id="play-lbl">Play</span>
+  </button>
+  <div class="spd">
+    <span>Speed</span>
+    <input type="range" min="150" max="1600" value="800" step="50" oninput="spd=+this.value">
+  </div>
+</div>
+
+<div class="foot">
+  <span id="fstep">Step 0 / 0</span>
+  <span id="fprune" style="display:none" class="prune-pill">0 pruned</span>
+</div>
+</div>
+
+<script>
+const PRESETS=[
+  {d:3,b:3,vals:[3,5,2,9,0,7,4,6,1,8,3,5,2,7,4,6,3,8,1,5,2,7,4,6,3,9]},
+  {d:2,b:4,vals:[3,5,8,2,7,1,9,4,6,3,5,7,2,8,4,6]},
+  {d:3,b:4,vals:[3,5,2,9,0,7,4,6,1,8,3,5,2,7,4,6,3,8,1,5,2,7,4,6,3,9,1,4,7,2,6,8,3,5,9,1,4,6,2,7,5,8,3,9,6,1,4,7,2,5,8,3,6,9,1,4,7,2,5,8,3,6]},
+  {d:4,b:2,vals:[3,5,2,9,7,1,4,6,8,3,5,2,7,4,1,6]}
+];
+
+let algo='mm',src='custom',spd=800,playing=false,timer=null,idx=-1,steps=[],root=null;
+let currentLeafVals=[];
+
+function setAlgo(a){
+  algo=a;
+  document.getElementById('tab-mm').className='mode-tab mm'+(a==='mm'?' on':'');
+  document.getElementById('tab-ab').className='mode-tab ab'+(a==='ab'?' on':'');
+  document.getElementById('prog').className='prog '+(a==='ab'?'ab':'');
+  stopPlay();
+  if(root)rebuildSteps();
+}
+
+function setSrc(s){
+  src=s;
+  ['custom','random','preset'].forEach(k=>{
+    document.getElementById('st-'+k).className='src-tab'+(s===k?' on':'');
+    document.getElementById('pane-'+k).style.display=s===k?'block':'none';
+  });
+}
+
+function updateLeafInputs(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('c-depth').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('c-branch').value||3));
+  const count=Math.pow(b,d);
+  document.getElementById('leaf-count-lbl').textContent=`(${count} leaves)`;
+  const grid=document.getElementById('leaf-grid');
+  const existing=Array.from(grid.querySelectorAll('.leaf-inp')).map(i=>i.value);
+  grid.innerHTML='';
+  for(let i=0;i<count;i++){
+    const wrap=document.createElement('div');
+    const lbl=document.createElement('div');lbl.className='leaf-lbl';lbl.textContent='L'+(i+1);
+    const inp=document.createElement('input');inp.className='leaf-inp';inp.type='number';
+    inp.value=existing[i]!==undefined?existing[i]:(Math.floor(Math.random()*9)+1);
+    inp.setAttribute('min','-99');inp.setAttribute('max','99');
+    wrap.appendChild(lbl);wrap.appendChild(inp);grid.appendChild(wrap);
+  }
+}
+
+function buildCustom(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('c-depth').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('c-branch').value||3));
+  const inps=Array.from(document.getElementById('leaf-grid').querySelectorAll('.leaf-inp'));
+  const vals=inps.map(i=>parseInt(i.value));
+  const err=document.getElementById('c-err');
+  if(vals.some(isNaN)){err.textContent='All leaf values must be numbers.';err.style.display='block';return;}
+  err.style.display='none';
+  buildFromVals(d,b,vals);
+}
+
+function buildRandom(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('r-depth').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('r-branch').value||3));
+  const mn=+document.getElementById('r-min').value||1;
+  const mx=+document.getElementById('r-max').value||9;
+  const count=Math.pow(b,d);
+  const vals=Array.from({length:count},()=>Math.floor(Math.random()*(mx-mn+1))+mn);
+  buildFromVals(d,b,vals);
+}
+
+function loadPreset(i){
+  const p=PRESETS[i];buildFromVals(p.d,p.b,p.vals);
+}
+
+function buildFromVals(d,b,vals){
+  currentLeafVals=vals;
+  let id=0,li=0;
+  function mk(depth){
+    const n={id:id++,d:depth,isMax:depth%2===0,ch:[],val:null,st:'idle',out:null,pr:false,a:-Infinity,bv:Infinity};
+    if(depth===d){n.val=vals[li%vals.length];li++;return n;}
+    for(let i=0;i<b;i++)n.ch.push(mk(depth+1));
+    return n;
+  }
+  root=mk(0);
+  layoutTree();
+  rebuildSteps();
+}
+
+function layoutTree(){
+  function maxLeaves(n){return n.ch.length?n.ch.reduce((s,c)=>s+maxLeaves(c),0):1;}
+  const total=maxLeaves(root);
+  const W=700,pad=20,usable=W-2*pad;
+  function lay(n,x0,x1,depth){
+    n.y=30+depth*90;
+    if(!n.ch.length){n.x=(x0+x1)/2;return;}
+    const w=(x1-x0)/n.ch.length;
+    n.ch.forEach((c,i)=>lay(c,x0+i*w,x0+(i+1)*w,depth+1));
+    n.x=(n.ch[0].x+n.ch[n.ch.length-1].x)/2;
+  }
+  lay(root,pad,W-pad,0);
+  let maxD=0;
+  function getMaxD(n){maxD=Math.max(maxD,n.d);n.ch.forEach(getMaxD);}
+  getMaxD(root);
+  const svgH=Math.max(300,30+maxD*90+60);
+  document.getElementById('tree').setAttribute('viewBox',`0 0 ${W} ${svgH}`);
+}
+
+function rebuildSteps(){
+  function rst(n){n.st='idle';n.out=null;n.pr=false;n.a=-Infinity;n.bv=Infinity;n.ch.forEach(rst);}
+  rst(root);
+  const all={},st=[];
+  function col(n){all[n.id]=n;n.ch.forEach(col);}col(root);
+  function snap(msg,hid,type){
+    const s={};Object.keys(all).forEach(id=>{const n=all[id];s[id]={st:n.st,out:n.out,pr:n.pr,a:n.a,bv:n.bv};});
+    st.push({s,msg,hid,type:type||'normal'});
+  }
+  snap('Tree ready. Root is a <b>MAX</b> node — picks the highest value among children.',root.id,'normal');
+  function mm(n,a,bv){
+    n.st='active';n.a=a;n.bv=bv;
+    const aS=a===-Infinity?'−∞':a,bS=bv===Infinity?'+∞':bv;
+    snap(`Visiting <b>${n.isMax?'MAX':'MIN'}</b> node (depth ${n.d}). α=${aS}, β=${bS}`,n.id,'normal');
+    if(!n.ch.length){n.out=n.val;n.st='done';snap(`Leaf evaluated → value = <b>${n.val}</b>`,n.id,'normal');return n.val;}
+    let best=n.isMax?-Infinity:Infinity;
+    const useAB=algo==='ab';
+    for(let i=0;i<n.ch.length;i++){
+      const c=n.ch[i];if(c.pr)continue;
+      const v=mm(c,a,bv);
+      if(n.isMax){
+        if(v>best)best=v;
+        if(useAB){if(v>a)a=v;n.a=a;if(a>=bv){for(let j=i+1;j<n.ch.length;j++){n.ch[j].pr=true;n.ch[j].st='pruned';}snap(`<b>Pruning!</b> α(${a}) ≥ β(${bv}) — skip remaining`,n.id,'pruning');break;}}
+      }else{
+        if(v<best)best=v;
+        if(useAB){if(v<bv)bv=v;n.bv=bv;if(bv<=a){for(let j=i+1;j<n.ch.length;j++){n.ch[j].pr=true;n.ch[j].st='pruned';}snap(`<b>Pruning!</b> β(${bv}) ≤ α(${a}) — skip remaining`,n.id,'pruning');break;}}
+      }
+    }
+    n.out=best;n.st='done';
+    const done=n.d===0;
+    snap(`<b>${n.isMax?'MAX':'MIN'}</b> returns <b>${best}</b>${done?' — search complete!':''}`,n.id,done?'done':'normal');
+    return best;
+  }
+  mm(root,-Infinity,Infinity);
+  steps=st;idx=-1;stopPlay();render();
+}
+
+function calcStats(S){
+  if(!S)return{v:0,p:0,best:'—'};
+  let v=0,p=0;
+  Object.values(S).forEach(n=>{if(n.st==='done'||n.st==='active')v++;if(n.pr)p++;});
+  const rs=S[root.id];
+  return{v,p,best:rs&&rs.out!=null?rs.out:'—'};
+}
+
+function render(){
+  if(!root){document.getElementById('msg').innerHTML='Configure your tree above and press <b>Build tree</b> to start.';return;}
+  const step=idx>=0&&idx<steps.length?steps[idx]:null;
+  const S=step?step.s:null;
+  const hid=step?step.hid:-1;
+  const msg=step?step.msg:'Press <b>Play</b> or step through with <b>Next ›</b>';
+  const type=step?step.type:'normal';
+
+  const mb=document.getElementById('msg');
+  mb.innerHTML=msg;
+  mb.className='msg'+(type==='pruning'?' pruning':type==='done'?' done':'');
+
+  const tot=steps.length;
+  document.getElementById('prog').style.width=tot>0?((Math.max(0,idx+1)/tot)*100)+'%':'0%';
+  document.getElementById('fstep').textContent=`Step ${Math.max(0,idx+1)} / ${tot}`;
+
+  const{v,p,best}=calcStats(S);
+  document.getElementById('sv').textContent=v;
+  document.getElementById('sp').textContent=p;
+  document.getElementById('ss').textContent=idx<0?'—':`${idx+1}/${tot}`;
+  document.getElementById('sb').textContent=best;
+  const fp=document.getElementById('fprune');
+  if(algo==='ab'&&p>0){fp.textContent=`${p} subtree${p>1?'s':''} pruned`;fp.style.display='inline';}
+  else fp.style.display='none';
+
+  const svg=document.getElementById('tree');
+  let h='';
+  function edges(n){
+    n.ch.forEach(c=>{
+      const ns=S?S[c.id]:null;const pr=ns&&ns.pr;
+      h+=`<line x1="${n.x}" y1="${n.y+20}" x2="${c.x}" y2="${c.y-20}" stroke="${pr?'var(--color-border-tertiary)':'var(--color-border-secondary)'}" stroke-width="${pr?.7:1.4}" ${pr?'stroke-dasharray="4 3"':''}/>`;
+      edges(c);
+    });
+  }
+  edges(root);
+  function draw(n){
+    const ns=S?S[n.id]:null;
+    const st=ns?ns.st:'idle';const out=ns?ns.out:null;const pr=ns&&ns.pr;
+    const isLeaf=!n.ch.length;const isHi=n.id===hid;const R=isLeaf?13:17;
+    let fill,stroke,tf,sw=1;
+    if(pr){fill='var(--color-background-secondary)';stroke='var(--color-border-secondary)';tf='var(--color-text-tertiary)';sw=0.5;}
+    else if(st==='active'||isHi){fill='#F0FDF4';stroke='#22C55E';tf='#15803D';sw=2;}
+    else if(st==='done'&&out!==null){fill='#FFFBEB';stroke='#F59E0B';tf='#B45309';sw=1.5;}
+    else if(n.isMax){fill='#EFF6FF';stroke='#3B82F6';tf='#1D4ED8';}
+    else{fill='#FFF7ED';stroke='#F97316';tf='#C2410C';}
+    if(isLeaf){
+      h+=`<polygon points="${n.x},${n.y-R} ${n.x+R},${n.y} ${n.x},${n.y+R} ${n.x-R},${n.y}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+      h+=`<text x="${n.x}" y="${n.y}" text-anchor="middle" dominant-baseline="central" font-size="11" fill="${tf}" font-family="var(--font-sans)" font-weight="500">${out!=null?out:n.val!=null?n.val:''}</text>`;
+    }else{
+      h+=`<circle cx="${n.x}" cy="${n.y}" r="${R}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+      if(!pr){
+        const s=5.5,pc=st==='done'||isHi?tf:stroke;
+        if(n.isMax)h+=`<polygon points="${n.x},${n.y-s} ${n.x-s},${n.y+s} ${n.x+s},${n.y+s}" fill="${pc}" opacity="0.85"/>`;
+        else h+=`<polygon points="${n.x},${n.y+s} ${n.x-s},${n.y-s} ${n.x+s},${n.y-s}" fill="${pc}" opacity="0.85"/>`;
+      }
+      if(out!=null)h+=`<text x="${n.x}" y="${n.y+30}" text-anchor="middle" dominant-baseline="central" font-size="11" fill="${st==='done'?'#B45309':'var(--color-text-secondary)'}" font-family="var(--font-sans)" font-weight="500">${out}</text>`;
+      if(algo==='ab'&&ns&&st==='active'){
+        const aS=ns.a===-Infinity?'−∞':ns.a,bS=ns.bv===Infinity?'+∞':ns.bv;
+        h+=`<text x="${n.x+21}" y="${n.y-5}" font-size="9" fill="#1D4ED8" font-family="var(--font-sans)" font-weight="500">α=${aS}</text>`;
+        h+=`<text x="${n.x+21}" y="${n.y+6}" font-size="9" fill="#C2410C" font-family="var(--font-sans)" font-weight="500">β=${bS}</text>`;
+      }
+    }
+    n.ch.forEach(draw);
+  }
+  draw(root);
+  svg.innerHTML=h;
+}
+
+function doReset(){stopPlay();idx=-1;render();}
+function doNext(){stopPlay();if(idx<steps.length-1){idx++;render();}}
+function doPrev(){stopPlay();if(idx>0){idx--;render();}else{idx=-1;render();}}
+function togglePlay(){
+  if(playing){stopPlay();return;}
+  playing=true;
+  document.getElementById('bplay').className='cbtn play paused';
+  document.getElementById('play-ico').innerHTML='<rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/>';
+  document.getElementById('play-lbl').textContent='Pause';
+  (function tick(){if(idx<steps.length-1){idx++;render();timer=setTimeout(tick,spd);}else stopPlay();})();
+}
+function stopPlay(){
+  playing=false;clearTimeout(timer);
+  document.getElementById('bplay').className='cbtn play';
+  document.getElementById('play-ico').innerHTML='<path d="M5 3l9 5-9 5V3z"/>';
+  document.getElementById('play-lbl').textContent='Play';
+}
+
+updateLeafInputs();
+loadPreset(0);
+</script>
