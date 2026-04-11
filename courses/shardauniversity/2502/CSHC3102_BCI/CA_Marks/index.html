@@ -246,7 +246,7 @@ resultDiv.innerHTML = `
 <b>SYSTEM ID:</b> ${id}<br><br>
 <b>STUDENT NAME:</b> ${name}<br><br>
 
-<b>${componentName}:</b> 
+<b>${componentName} Marks:</b> 
 <span class="marks-badge ${gradeClass}">
 ${marks} / ${maxMarks}
 </span>
@@ -255,7 +255,7 @@ ${marks} / ${maxMarks}
 
 ${(showLink && submissionLink) ? `
 <a href="${submissionLink}" target="_blank">
-<button style="background:#28a745;">View Submission</button>
+<button style="background:#28a745;">View Graded Submission</button>
 </a>
 ` : ``}
 
