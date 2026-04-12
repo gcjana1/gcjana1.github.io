@@ -23,6 +23,7 @@ box-shadow:0px 0px 15px rgba(0,0,0,0.1);
 
 h2{
 margin-bottom:20px;
+color:#004aad;
 }
 
 input,select{
@@ -81,6 +82,11 @@ background:#007bff;
 background:#dc3545;
 }
 
+.view-btn{
+background:#28a745;
+margin-top:10px;
+}
+
 .note{
 margin-top:20px;
 font-size:14px;
@@ -103,6 +109,8 @@ border-radius:5px;
 <option value="">Select Component</option>
 <option value="Assignmnet-1 Marks (20)">Assignment-1</option>
 <option value="Assessment-1 Marks(20)">Assessment-1</option>
+<option value="Assignment-2 Marks (20)">Assignment-2</option>
+<option value="Assessment-2 Marks (20)">Assessment-2</option>
 </select>
 
 <input type="text" id="systemId" placeholder="Enter SYSTEM ID">
@@ -113,7 +121,7 @@ border-radius:5px;
 
 <div class="note">
 <b>Note:</b> The marks displayed here are for reference only.  
-Please refer to the University Academic Portal for final marks as per official weightage and evaluation policy of the University.
+Please refer to the University Academic Portal for final marks as per official policy.
 </div>
 
 </div>
@@ -156,12 +164,25 @@ return;
 var name=found.c[1] ? found.c[1].v : "";
 
 var marks="";
+var link="";
 
+// Assignment-1
 if(component=="Assignmnet-1 Marks (20)")
 marks=found.c[2] ? found.c[2].v : "";
 
+// Assessment-1
 if(component=="Assessment-1 Marks(20)")
 marks=found.c[3] ? found.c[3].v : "";
+
+// Assignment-2
+if(component=="Assignment-2 Marks (20)"){
+marks=found.c[4] ? found.c[4].v : "";
+link=found.c[6] ? found.c[6].v : ""; // checked copy link
+}
+
+// Assessment-2
+if(component=="Assessment-2 Marks (20)")
+marks=found.c[5] ? found.c[5].v : "";
 
 if(marks==="" && marks!==0){
 resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
@@ -176,6 +197,18 @@ var gradeClass="average";
 if(percent>=75) gradeClass="good";
 else if(percent<50) gradeClass="low";
 
+// Button for checked copy
+var buttonHTML="";
+
+if(component=="Assignment-2 Marks (20)" && link){
+buttonHTML=`
+<br>
+<a href="${link}" target="_blank">
+<button class="view-btn">View Checked Copy</button>
+</a>
+`;
+}
+
 resultDiv.innerHTML=`
 
 <div class="result-card">
@@ -188,6 +221,8 @@ resultDiv.innerHTML=`
 <span class="marks-badge ${gradeClass}">
 ${marks} / ${maxMarks}
 </span>
+
+${buttonHTML}
 
 </div>
 
