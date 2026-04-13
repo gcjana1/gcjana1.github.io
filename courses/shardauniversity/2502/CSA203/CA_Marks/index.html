@@ -120,7 +120,7 @@ border-radius:5px;
 <div id="result"></div>
 
 <div class="note">
-<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage and evaluation policy of the University.
+<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks.
 </div>
 
 </div>
@@ -176,12 +176,18 @@ marks=found.c[3] ? found.c[3].v : "";
 // Assignment-2
 if(component=="Assignment-2 Marks (20)"){
 marks=found.c[4] ? found.c[4].v : "";
-link=found.c[6] ? found.c[6].v : ""; // checked copy link
+link=found.c[6] ? found.c[6].v : "";
 }
 
 // Assessment-2
 if(component=="Assessment-2 Marks (20)")
 marks=found.c[5] ? found.c[5].v : "";
+
+// Handle "Absent"
+if(marks==="Absent"){
+resultDiv.innerHTML="<div class='error'>Student marked Absent</div>";
+return;
+}
 
 if(marks==="" && marks!==0){
 resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
@@ -196,13 +202,13 @@ var gradeClass="average";
 if(percent>=75) gradeClass="good";
 else if(percent<50) gradeClass="low";
 
-// Button for checked copy
+// Button
 var buttonHTML="";
 
-if(component=="Assignment-2 Marks (20)" && Assignment-2 Submission Link){
+if(component=="Assignment-2 Marks (20)" && link){
 buttonHTML=`
 <br>
-<a href="${Assignment-2 Submission Link}" target="_blank">
+<a href="${link}" target="_blank">
 <button class="view-btn">View Checked Copy</button>
 </a>
 `;
