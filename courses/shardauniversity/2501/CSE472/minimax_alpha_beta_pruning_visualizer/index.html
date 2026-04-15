@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minimax & Alpha-Beta Pruning Visualizer | Dr. GC Jana</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --b:#3B82F6;--bl:#EFF6FF;--bd:#1D4ED8;
+  --o:#F97316;--ol:#FFF7ED;--od:#C2410C;
+  --g:#22C55E;--gl:#F0FDF4;--gd:#15803D;
+  --am:#F59E0B;--aml:#FFFBEB;--amd:#B45309;
+  --pu:#8B5CF6;--pul:#F5F3FF;--pud:#6D28D9;
+  --r8:8px;--r12:12px;
+  --sidebar:280px;--info:260px;
+  --tp:#111827;--ts:#374151;--tt:#6B7280;
+  --bgp:#ffffff;--bgs:#F9FAFB;
+  --br:#E5E7EB;--brm:#D1D5DB
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;color:var(--tp);background:#f3f4f6}
+#shell{display:grid;grid-template-columns:var(--sidebar) 1fr var(--info);min-height:740px;border:1px solid var(--br);border-radius:var(--r12);overflow:hidden;background:var(--bgp);max-width:1400px;margin:16px auto;box-shadow:0 1px 4px rgba(0,0,0,.09)}
+
+.sidebar{grid-column:1;border-right:1px solid var(--br);display:flex;flex-direction:column;background:var(--bgs)}
+.sidebar-head{padding:18px 18px 14px;border-bottom:1px solid var(--br)}
+.sidebar-title{font-size:17px;font-weight:600;color:var(--tp);margin-bottom:3px}
+.sidebar-sub{font-size:13px;color:var(--tt)}
+.sidebar-body{flex:1;overflow-y:auto;padding:16px}
+.sidebar-body::-webkit-scrollbar{width:4px}
+.sidebar-body::-webkit-scrollbar-thumb{background:var(--brm);border-radius:2px}
+
+.section-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--tt);margin:16px 0 8px}
+.section-lbl:first-child{margin-top:0}
+
+.algo-btn{width:100%;padding:12px 14px;border-radius:var(--r8);border:1px solid var(--br);background:var(--bgp);color:var(--ts);font-size:14px;font-family:inherit;cursor:pointer;text-align:left;margin-bottom:7px;transition:all .15s;display:flex;align-items:center;gap:9px}
+.algo-btn .abadge{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.algo-btn:hover{border-color:var(--brm);color:var(--tp)}
+.algo-btn.on.mm{background:var(--bl);border-color:var(--b);color:var(--bd);font-weight:600}
+.algo-btn.on.ab{background:var(--ol);border-color:var(--o);color:var(--od);font-weight:600}
+
+.src-btn{width:100%;padding:10px 14px;border-radius:var(--r8);border:1px solid var(--br);background:transparent;color:var(--ts);font-size:14px;font-family:inherit;cursor:pointer;text-align:left;margin-bottom:6px;transition:all .15s}
+.src-btn:hover{background:var(--bgp)}
+.src-btn.on{background:var(--pul);border-color:var(--pu);color:var(--pud);font-weight:600}
+
+.field{margin-bottom:10px}
+.field label{display:block;font-size:13px;color:var(--ts);margin-bottom:5px;font-weight:500}
+.field input[type=number]{width:100%;padding:8px 10px;font-size:14px;font-family:inherit;border:1px solid var(--brm);border-radius:6px;background:var(--bgp);color:var(--tp);outline:none}
+.field input:focus{border-color:var(--pu)}
+
+.leaf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.leaf-box input{width:100%;padding:7px 4px;font-size:13px;font-family:inherit;border:1px solid var(--brm);border-radius:5px;background:var(--bgp);color:var(--tp);text-align:center;outline:none}
+.leaf-box input:focus{border-color:var(--b)}
+.leaf-box span{display:block;font-size:11px;color:var(--tt);text-align:center;margin-bottom:3px}
+
+.go-btn{width:100%;padding:11px;font-size:14px;font-weight:600;font-family:inherit;border:none;border-radius:var(--r8);cursor:pointer;transition:all .15s;margin-bottom:8px}
+.go-btn.build{background:var(--pu);color:#fff}
+.go-btn.build:hover{background:var(--pud)}
+.go-btn.rand{background:var(--b);color:#fff}
+.go-btn.rand:hover{background:var(--bd)}
+.go-btn:active{transform:scale(.98)}
+
+.preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.preset-btn{padding:10px 6px;font-size:13px;font-family:inherit;border:1px solid var(--brm);border-radius:6px;background:var(--bgp);color:var(--ts);cursor:pointer;transition:all .15s;text-align:center;line-height:1.4}
+.preset-btn small{display:block;font-size:11px;opacity:.6;margin-top:2px}
+.preset-btn:hover{background:var(--bl);border-color:var(--b);color:var(--bd)}
+.preset-btn:active{transform:scale(.97)}
+
+.divider{height:1px;background:var(--br);margin:14px 0}
+
+.ctrl-row{display:flex;gap:6px;margin-bottom:10px}
+.cbtn{flex:1;padding:9px 5px;font-size:13px;font-family:inherit;border:1px solid var(--brm);border-radius:6px;background:var(--bgp);color:var(--tp);cursor:pointer;transition:all .15s;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px}
+.cbtn:hover{background:var(--bgs)}
+.cbtn:active{transform:scale(.96)}
+.cbtn.play-btn{background:var(--b);color:#fff;border-color:var(--b);flex:2;font-size:14px;font-weight:600}
+.cbtn.play-btn:hover{background:var(--bd)}
+.cbtn.play-btn.paused{background:#64748B;border-color:#64748B}
+
+.spd-row{display:flex;align-items:center;gap:8px}
+.spd-row label{font-size:12px;color:var(--tt);white-space:nowrap;min-width:42px}
+.spd-row input[type=range]{flex:1;accent-color:var(--pu)}
+
+.canvas-col{grid-column:2;display:flex;flex-direction:column;background:var(--bgp)}
+.canvas-head{padding:14px 18px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.algo-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600}
+.algo-badge.mm{background:var(--bl);color:var(--bd);border:1px solid var(--b)}
+.algo-badge.ab{background:var(--ol);color:var(--od);border:1px solid var(--o)}
+.stats-mini{display:flex;gap:18px}
+.sm{text-align:center}
+.sm-v{font-size:20px;font-weight:600;line-height:1}
+.sm-l{font-size:11px;color:var(--tt);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.sm-v.am{color:var(--amd)}
+
+.msg-strip{padding:12px 18px;border-bottom:1px solid var(--br);font-size:14px;line-height:1.6;background:var(--bgs);transition:all .2s;min-height:44px}
+.msg-strip b{font-weight:600}
+.msg-strip.pruning{background:var(--ol);color:var(--od)}
+.msg-strip.done{background:var(--gl);color:var(--gd)}
+
+.prog-bar-wrap{height:3px;background:var(--br)}
+.prog-bar{height:100%;background:var(--b);transition:width .3s}
+.prog-bar.ab{background:var(--o)}
+
+.tree-area{flex:1;overflow:auto;padding:14px;display:flex;align-items:flex-start;justify-content:center}
+.tree-area svg{display:block;max-width:100%;height:auto}
+
+.canvas-foot{padding:10px 18px;border-top:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;background:var(--bgs);flex-wrap:wrap;gap:8px}
+.foot-step{font-size:13px;color:var(--tt)}
+.foot-legend{display:flex;gap:14px;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--tt)}
+.ld{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+
+.info-col{grid-column:3;border-left:1px solid var(--br);display:flex;flex-direction:column;background:var(--bgs)}
+.info-head{padding:14px 16px 12px;border-bottom:1px solid var(--br)}
+.info-tabs{display:flex;gap:5px}
+.itab{flex:1;padding:8px 4px;font-size:13px;font-family:inherit;border:1px solid var(--br);border-radius:6px;background:transparent;color:var(--tt);cursor:pointer;transition:all .15s;text-align:center}
+.itab.on{background:var(--bgp);color:var(--tp);font-weight:600;border-color:var(--brm)}
+.info-body{flex:1;overflow-y:auto;padding:16px}
+.info-body::-webkit-scrollbar{width:4px}
+.info-body::-webkit-scrollbar-thumb{background:var(--brm);border-radius:2px}
+
+.info-section{margin-bottom:18px}
+.info-h{font-size:14px;font-weight:600;color:var(--tp);margin-bottom:7px}
+.info-p{font-size:13px;color:var(--ts);line-height:1.7}
+.info-p b{font-weight:600;color:var(--tp)}
+
+.complexity-card{border-radius:var(--r8);border:1px solid var(--br);overflow:hidden;margin-bottom:10px}
+.cc-head{padding:9px 12px;font-size:13px;font-weight:600}
+.cc-head.mm{background:var(--bl);color:var(--bd)}
+.cc-head.ab{background:var(--ol);color:var(--od)}
+.cc-body{padding:10px 12px;background:var(--bgp)}
+.cc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--br);font-size:13px}
+.cc-row:last-child{border-bottom:none}
+.cc-key{color:var(--ts)}
+.cc-val{font-weight:600;font-family:monospace;font-size:13px}
+.cc-val.blue{color:var(--bd)}
+.cc-val.orange{color:var(--od)}
+.cc-val.green{color:var(--gd)}
+
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.cmp-card{border-radius:6px;padding:10px 11px;border:1px solid var(--br);background:var(--bgp)}
+.cmp-label{font-size:12px;font-weight:600;margin-bottom:7px}
+.cmp-label.mm{color:var(--bd)}
+.cmp-label.ab{color:var(--od)}
+.cmp-stat{font-size:22px;font-weight:700;line-height:1;margin-bottom:3px}
+.cmp-stat.mm{color:var(--bd)}
+.cmp-stat.ab{color:var(--od)}
+.cmp-sub{font-size:11px;color:var(--tt)}
+
+.savings-bar-wrap{margin-bottom:14px}
+.savings-lbl{font-size:13px;color:var(--ts);margin-bottom:6px}
+.bar-track{height:9px;background:var(--br);border-radius:5px;overflow:hidden}
+.bar-fill{height:100%;background:var(--gd);border-radius:5px;transition:width .4s}
+
+.step-log{max-height:220px;overflow-y:auto;border:1px solid var(--br);border-radius:var(--r8);background:var(--bgp)}
+.step-log::-webkit-scrollbar{width:4px}
+.step-log::-webkit-scrollbar-thumb{background:var(--brm);border-radius:2px}
+.log-item{padding:8px 11px;font-size:13px;color:var(--ts);border-bottom:1px solid var(--br);line-height:1.5;transition:background .2s}
+.log-item:last-child{border-bottom:none}
+.log-item.current{background:var(--bl);color:var(--bd)}
+.log-item.pruning{background:var(--ol);color:var(--od)}
+.log-item.done{background:var(--gl);color:var(--gd)}
+.log-item b{font-weight:600}
+.log-num{font-size:11px;opacity:.5;margin-right:5px}
+
+@media(max-width:1100px){:root{--sidebar:240px;--info:220px}}
+@media(max-width:800px){
+  #shell{grid-template-columns:1fr;grid-template-rows:auto auto auto;margin:8px}
+  .sidebar,.canvas-col,.info-col{grid-column:1}
+  .sidebar{border-right:none;border-bottom:1px solid var(--br)}
+  .info-col{border-left:none;border-top:1px solid var(--br)}
+}
+</style>
+</head>
+<body>
+
+<div id="shell">
+
+<div class="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-title">Minimax &amp; Alpha-Beta Pruning</div>
+    <div class="sidebar-sub">Interactive Visualizer</div>
+  </div>
+  <div class="sidebar-body">
+
+    <div class="section-lbl">Algorithm</div>
+    <button class="algo-btn mm on" id="btn-mm" onclick="setAlgo('mm')">
+      <span class="abadge" style="background:var(--b)"></span>Minimax
+    </button>
+    <button class="algo-btn ab" id="btn-ab" onclick="setAlgo('ab')">
+      <span class="abadge" style="background:var(--o)"></span>Alpha-Beta Pruning
+    </button>
+
+    <div class="divider"></div>
+    <div class="section-lbl">Tree source</div>
+    <button class="src-btn on" id="src-custom" onclick="setSrc('custom')">Custom input</button>
+    <button class="src-btn" id="src-random" onclick="setSrc('random')">Random generate</button>
+    <button class="src-btn" id="src-preset" onclick="setSrc('preset')">Presets</button>
+
+    <div id="pane-custom" style="margin-top:10px">
+      <div class="field"><label>Depth (1–4)</label><input type="number" id="c-d" value="3" min="1" max="4" oninput="refreshLeaves()"></div>
+      <div class="field"><label>Branch factor (2–4)</label><input type="number" id="c-b" value="3" min="2" max="4" oninput="refreshLeaves()"></div>
+      <div style="font-size:12px;color:var(--tt);margin-bottom:7px">Leaf values <span id="lc-lbl"></span></div>
+      <div class="leaf-grid" id="leaf-grid"></div>
+      <button class="go-btn build" onclick="doBuild()">Build tree</button>
+    </div>
+
+    <div id="pane-random" style="display:none;margin-top:10px">
+      <div class="field"><label>Depth (1–4)</label><input type="number" id="r-d" value="3" min="1" max="4"></div>
+      <div class="field"><label>Branch factor (2–4)</label><input type="number" id="r-b" value="3" min="2" max="4"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px">
+        <div class="field"><label>Min value</label><input type="number" id="r-min" value="1" min="-20" max="20"></div>
+        <div class="field"><label>Max value</label><input type="number" id="r-max" value="9" min="-20" max="20"></div>
+      </div>
+      <button class="go-btn rand" onclick="doRandom()">Generate</button>
+    </div>
+
+    <div id="pane-preset" style="display:none;margin-top:10px">
+      <div class="preset-grid">
+        <button class="preset-btn" onclick="loadPreset(0)">Classic<small>d=3, b=3</small></button>
+        <button class="preset-btn" onclick="loadPreset(1)">Shallow<small>d=2, b=4</small></button>
+        <button class="preset-btn" onclick="loadPreset(2)">Wide<small>d=3, b=4</small></button>
+        <button class="preset-btn" onclick="loadPreset(3)">Deep<small>d=4, b=2</small></button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-lbl">Playback</div>
+    <div class="ctrl-row">
+      <button class="cbtn" onclick="doReset()" title="Reset">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8a6 6 0 1 1 1.5 4"/><path d="M2 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="cbtn" onclick="doPrev()">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="cbtn" onclick="doNext()">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="cbtn play-btn" id="bplay" onclick="togglePlay()">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" id="pico"><path d="M5 3l9 5-9 5V3z"/></svg>
+        <span id="plbl">Play</span>
+      </button>
+    </div>
+    <div class="spd-row">
+      <label>Speed</label>
+      <input type="range" min="150" max="1600" value="800" step="50" oninput="spd=+this.value">
+    </div>
+
+  </div>
+</div>
+
+<div class="canvas-col">
+  <div class="canvas-head">
+    <span class="algo-badge mm" id="abadge">Minimax — visits all nodes</span>
+    <div class="stats-mini">
+      <div class="sm"><div class="sm-v" id="sv">0</div><div class="sm-l">Visited</div></div>
+      <div class="sm"><div class="sm-v" id="sp">0</div><div class="sm-l">Pruned</div></div>
+      <div class="sm"><div class="sm-v am" id="sb">—</div><div class="sm-l">Result</div></div>
+    </div>
+  </div>
+  <div class="prog-bar-wrap"><div class="prog-bar mm" id="prog" style="width:0%"></div></div>
+  <div class="msg-strip" id="msg">Build a tree to begin visualization.</div>
+  <div class="tree-area">
+    <svg id="tree" viewBox="0 0 700 380" preserveAspectRatio="xMidYMid meet" style="min-width:320px"></svg>
+  </div>
+  <div class="canvas-foot">
+    <span class="foot-step" id="fstep">Step — / —</span>
+    <div class="foot-legend">
+      <div class="li"><div class="ld" style="background:#EFF6FF;border:1.5px solid #3B82F6"></div>MAX</div>
+      <div class="li"><div class="ld" style="background:#FFF7ED;border:1.5px solid #F97316"></div>MIN</div>
+      <div class="li"><div class="ld" style="background:#F0FDF4;border:1.5px solid #22C55E"></div>Active</div>
+      <div class="li"><div class="ld" style="background:#FFFBEB;border:1.5px solid #F59E0B"></div>Done</div>
+      <div class="li"><div class="ld" style="background:#F9FAFB;border:1.5px dashed #9CA3AF"></div>Pruned</div>
+    </div>
+  </div>
+</div>
+
+<div class="info-col">
+  <div class="info-head">
+    <div class="info-tabs">
+      <button class="itab on" id="it-explain" onclick="setInfoTab('explain')">Explain</button>
+      <button class="itab" id="it-complex" onclick="setInfoTab('complex')">Complexity</button>
+      <button class="itab" id="it-log" onclick="setInfoTab('log')">Log</button>
+    </div>
+  </div>
+  <div class="info-body">
+
+    <div id="ip-explain">
+      <div class="info-section">
+        <div class="info-h" id="explain-title">Minimax algorithm</div>
+        <div class="info-p" id="explain-body">Minimax explores the <b>entire game tree</b>, alternating between maximizing and minimizing players. MAX nodes pick the highest value child; MIN nodes pick the lowest.</div>
+      </div>
+      <div class="info-section">
+        <div class="info-h">Current step</div>
+        <div class="info-p" id="step-detail">No step selected yet. Press Play or Next to begin.</div>
+      </div>
+      <div class="info-section">
+        <div class="info-h">Node types</div>
+        <div class="info-p">
+          <b style="color:var(--bd)">&#9650; MAX node</b> — selects child with the highest value.<br><br>
+          <b style="color:var(--od)">&#9661; MIN node</b> — selects child with the lowest value.<br><br>
+          <b>&#9670; Leaf node</b> — terminal node with a static heuristic value.
+        </div>
+      </div>
+      <div class="info-section" id="ab-explain-section" style="display:none">
+        <div class="info-h">Alpha-Beta bounds</div>
+        <div class="info-p">
+          <b style="color:var(--bd)">&#945; (alpha)</b> — best value MAX is guaranteed so far. Starts at &#8722;&#8734;.<br><br>
+          <b style="color:var(--od)">&#946; (beta)</b> — best value MIN is guaranteed so far. Starts at +&#8734;.<br><br>
+          When <b>&#945; &#8805; &#946;</b>, the remaining subtree cannot affect the final result and is <b>pruned</b>.
+        </div>
+      </div>
+    </div>
+
+    <div id="ip-complex" style="display:none">
+      <div class="info-section">
+        <div class="info-h">Time complexity</div>
+        <div class="complexity-card">
+          <div class="cc-head mm">Minimax</div>
+          <div class="cc-body">
+            <div class="cc-row"><span class="cc-key">Worst case</span><span class="cc-val blue" id="mm-worst">O(b^d)</span></div>
+            <div class="cc-row"><span class="cc-key">Nodes visited</span><span class="cc-val blue" id="mm-nodes">—</span></div>
+            <div class="cc-row"><span class="cc-key">Depth (d)</span><span class="cc-val" id="cx-d">—</span></div>
+            <div class="cc-row"><span class="cc-key">Branching (b)</span><span class="cc-val" id="cx-b">—</span></div>
+          </div>
+        </div>
+        <div class="complexity-card">
+          <div class="cc-head ab">Alpha-Beta Pruning</div>
+          <div class="cc-body">
+            <div class="cc-row"><span class="cc-key">Best case</span><span class="cc-val green">O(b^(d/2))</span></div>
+            <div class="cc-row"><span class="cc-key">Average case</span><span class="cc-val orange">O(b^(3d/4))</span></div>
+            <div class="cc-row"><span class="cc-key">Nodes visited</span><span class="cc-val orange" id="ab-nodes">—</span></div>
+            <div class="cc-row"><span class="cc-key">Nodes pruned</span><span class="cc-val green" id="ab-pruned">—</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="info-section">
+        <div class="info-h">This tree comparison</div>
+        <div class="compare-row">
+          <div class="cmp-card"><div class="cmp-label mm">Minimax</div><div class="cmp-stat mm" id="cmp-mm">—</div><div class="cmp-sub">nodes evaluated</div></div>
+          <div class="cmp-card"><div class="cmp-label ab">Alpha-Beta</div><div class="cmp-stat ab" id="cmp-ab">—</div><div class="cmp-sub">nodes evaluated</div></div>
+        </div>
+        <div class="savings-bar-wrap">
+          <div class="savings-lbl">Savings: <b id="savings-pct">—</b></div>
+          <div class="bar-track"><div class="bar-fill" id="savings-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="info-section">
+        <div class="info-h">Space complexity</div>
+        <div class="info-p"><b>Minimax:</b> O(b &times; d) — stores one path at a time.<br><br><b>Alpha-Beta:</b> O(b &times; d) — same space, fewer evaluations.</div>
+      </div>
+    </div>
+
+    <div id="ip-log" style="display:none">
+      <div class="info-h" style="margin-bottom:8px">Step history</div>
+      <div class="step-log" id="step-log"></div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+const PRESETS=[
+  {d:3,b:3,vals:[3,5,2,9,0,7,4,6,1,8,3,5,2,7,4,6,3,8,1,5,2,7,4,6,3,9]},
+  {d:2,b:4,vals:[3,5,8,2,7,1,9,4,6,3,5,7,2,8,4,6]},
+  {d:3,b:4,vals:[3,5,2,9,0,7,4,6,1,8,3,5,2,7,4,6,3,8,1,5,2,7,4,6,3,9,1,4,7,2,6,8,3,5,9,1,4,6,2,7,5,8,3,9,6,1,4,7,2,5,8,3,6,9,1,4,7,2,5,8,3,6]},
+  {d:4,b:2,vals:[3,5,2,9,7,1,4,6,8,3,5,2,7,4,1,6]}
+];
+let algo='mm',src='custom',spd=800,playing=false,timer=null,idx=-1,steps=[],mmSteps=[],abSteps=[],root=null,treeDepth=3,treeBranch=3,infoTab='explain';
+
+function setAlgo(a){
+  algo=a;
+  ['mm','ab'].forEach(x=>{document.getElementById('btn-'+x).className='algo-btn '+x+(a===x?' on':'');});
+  const badge=document.getElementById('abadge');
+  badge.className='algo-badge '+a;
+  badge.textContent=a==='mm'?'Minimax \u2014 visits all nodes':'Alpha-Beta \u2014 prunes branches';
+  document.getElementById('prog').className='prog-bar '+(a==='ab'?'ab':'mm');
+  document.getElementById('ab-explain-section').style.display=a==='ab'?'block':'none';
+  const et=document.getElementById('explain-title'),eb=document.getElementById('explain-body');
+  if(a==='mm'){et.textContent='Minimax algorithm';eb.innerHTML='Minimax explores the <b>entire game tree</b>, alternating between maximizing and minimizing players. MAX nodes pick the highest value child; MIN nodes pick the lowest.';}
+  else{et.textContent='Alpha-Beta pruning';eb.innerHTML='Alpha-Beta <b>prunes branches</b> that cannot affect the outcome. It maintains \u03b1 (best for MAX) and \u03b2 (best for MIN) bounds, skipping subtrees where \u03b1 \u2265 \u03b2.';}
+  stopPlay();
+  if(root){steps=a==='mm'?mmSteps:abSteps;idx=-1;render();}
+}
+
+function setSrc(s){
+  src=s;
+  ['custom','random','preset'].forEach(k=>{
+    document.getElementById('src-'+k).className='src-btn'+(s===k?' on':'');
+    document.getElementById('pane-'+k).style.display=s===k?'block':'none';
+  });
+}
+
+function setInfoTab(t){
+  infoTab=t;
+  ['explain','complex','log'].forEach(k=>{
+    document.getElementById('it-'+k).className='itab'+(t===k?' on':'');
+    document.getElementById('ip-'+k).style.display=t===k?'block':'none';
+  });
+}
+
+function refreshLeaves(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('c-d').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('c-b').value||3));
+  const count=Math.pow(b,d);
+  document.getElementById('lc-lbl').textContent='('+count+')';
+  const g=document.getElementById('leaf-grid');
+  const old=Array.from(g.querySelectorAll('input')).map(i=>i.value);
+  g.innerHTML='';
+  for(let i=0;i<count;i++){
+    const w=document.createElement('div');w.className='leaf-box';
+    const lbl=document.createElement('span');lbl.textContent='L'+(i+1);
+    const inp=document.createElement('input');inp.type='number';
+    inp.value=old[i]!==undefined&&old[i]!==''?old[i]:Math.floor(Math.random()*9)+1;
+    w.appendChild(lbl);w.appendChild(inp);g.appendChild(w);
+  }
+}
+
+function doBuild(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('c-d').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('c-b').value||3));
+  const vals=Array.from(document.getElementById('leaf-grid').querySelectorAll('input')).map(i=>parseInt(i.value)||0);
+  buildFromVals(d,b,vals);
+}
+
+function doRandom(){
+  const d=Math.max(1,Math.min(4,+document.getElementById('r-d').value||3));
+  const b=Math.max(2,Math.min(4,+document.getElementById('r-b').value||3));
+  const mn=+document.getElementById('r-min').value||1;
+  const mx=+document.getElementById('r-max').value||9;
+  const count=Math.pow(b,d);
+  const vals=Array.from({length:count},()=>Math.floor(Math.random()*(mx-mn+1))+mn);
+  buildFromVals(d,b,vals);
+}
+
+function loadPreset(i){const p=PRESETS[i];buildFromVals(p.d,p.b,p.vals);}
+
+function buildFromVals(d,b,vals){
+  treeDepth=d;treeBranch=b;
+  let id=0,li=0;
+  function mk(depth){
+    const n={id:id++,d:depth,isMax:depth%2===0,ch:[],val:null,st:'idle',out:null,pr:false,a:-Infinity,bv:Infinity};
+    if(depth===d){n.val=vals[li%vals.length];li++;return n;}
+    for(let i=0;i<b;i++)n.ch.push(mk(depth+1));
+    return n;
+  }
+  root=mk(0);layoutTree();
+  mmSteps=genSteps(root,false);abSteps=genSteps(root,true);
+  steps=algo==='mm'?mmSteps:abSteps;
+  idx=-1;stopPlay();updateComplexity();render();renderLog(-1);
+}
+
+function layoutTree(){
+  function lay(n,x0,x1,depth){
+    n.y=36+depth*96;
+    if(!n.ch.length){n.x=(x0+x1)/2;return;}
+    const w=(x1-x0)/n.ch.length;
+    n.ch.forEach((c,i)=>lay(c,x0+i*w,x0+(i+1)*w,depth+1));
+    n.x=(n.ch[0].x+n.ch[n.ch.length-1].x)/2;
+  }
+  lay(root,20,680,0);
+  let maxD=0;function gd(n){maxD=Math.max(maxD,n.d);n.ch.forEach(gd);}gd(root);
+  document.getElementById('tree').setAttribute('viewBox','0 0 700 '+Math.max(300,36+maxD*96+65));
+}
+
+function genSteps(root,ab){
+  const all={},st=[];
+  function col(n){all[n.id]=n;n.ch.forEach(col);}col(root);
+  function snap(msg,hid,type){
+    const s={};Object.keys(all).forEach(id=>{const n=all[id];s[id]={st:n.st,out:n.out,pr:n.pr,a:n.a,bv:n.bv};});
+    st.push({s,msg,hid,type:type||'normal'});
+  }
+  function rst(n){n.st='idle';n.out=null;n.pr=false;n.a=-Infinity;n.bv=Infinity;n.ch.forEach(rst);}
+  rst(root);
+  snap('Tree ready. Root is a <b>MAX</b> node.',root.id,'normal');
+  function mm(n,a,bv){
+    n.st='active';n.a=a;n.bv=bv;
+    const aS=a===-Infinity?'\u2212\u221e':a,bS=bv===Infinity?'+\u221e':bv;
+    snap('Entering <b>'+(n.isMax?'MAX':'MIN')+'</b> node (depth '+n.d+'). \u03b1='+aS+', \u03b2='+bS,n.id,'normal');
+    if(!n.ch.length){n.out=n.val;n.st='done';snap('Leaf node \u2192 value = <b>'+n.val+'</b>',n.id,'normal');return n.val;}
+    let best=n.isMax?-Infinity:Infinity;
+    for(let i=0;i<n.ch.length;i++){
+      const c=n.ch[i];if(c.pr)continue;
+      const v=mm(c,a,bv);
+      if(n.isMax){
+        if(v>best)best=v;
+        if(ab){if(v>a)a=v;n.a=a;if(a>=bv){for(let j=i+1;j<n.ch.length;j++){n.ch[j].pr=true;n.ch[j].st='pruned';}snap('<b>Pruning!</b> \u03b1('+a+') \u2265 \u03b2('+bv+') \u2014 skip remaining siblings',n.id,'pruning');break;}}
+      }else{
+        if(v<best)best=v;
+        if(ab){if(v<bv)bv=v;n.bv=bv;if(bv<=a){for(let j=i+1;j<n.ch.length;j++){n.ch[j].pr=true;n.ch[j].st='pruned';}snap('<b>Pruning!</b> \u03b2('+bv+') \u2264 \u03b1('+a+') \u2014 skip remaining siblings',n.id,'pruning');break;}}
+      }
+    }
+    n.out=best;n.st='done';
+    const done=n.d===0;
+    snap('<b>'+(n.isMax?'MAX':'MIN')+'</b> node returns <b>'+best+'</b>'+(done?' \u2014 Search complete!':''),n.id,done?'done':'normal');
+    return best;
+  }
+  mm(root,-Infinity,Infinity);return st;
+}
+
+function updateComplexity(){
+  if(!root)return;
+  const d=treeDepth,b=treeBranch;
+  document.getElementById('mm-worst').textContent='O('+b+'^'+d+') = '+Math.pow(b,d);
+  document.getElementById('cx-d').textContent=d;document.getElementById('cx-b').textContent=b;
+  let mmV=0,abV=0,abP=0;
+  const mmF=mmSteps[mmSteps.length-1];if(mmF)Object.values(mmF.s).forEach(n=>{if(n.st==='done')mmV++;});
+  const abF=abSteps[abSteps.length-1];if(abF)Object.values(abF.s).forEach(n=>{if(n.st==='done')abV++;if(n.pr)abP++;});
+  document.getElementById('mm-nodes').textContent=mmV||'—';
+  document.getElementById('ab-nodes').textContent=abV||'—';
+  document.getElementById('ab-pruned').textContent=abP||'—';
+  document.getElementById('cmp-mm').textContent=mmV||'—';
+  document.getElementById('cmp-ab').textContent=abV||'—';
+  if(mmV>0&&abV>0){
+    const pct=Math.round((1-abV/mmV)*100);
+    document.getElementById('savings-pct').textContent=pct+'% fewer nodes';
+    document.getElementById('savings-bar').style.width=Math.max(0,pct)+'%';
+  }
+}
+
+function calcStats(S){
+  if(!S)return{v:0,p:0,best:'\u2014'};
+  let v=0,p=0;
+  Object.values(S).forEach(n=>{if(n.st==='done'||n.st==='active')v++;if(n.pr)p++;});
+  const rs=S[root?root.id:0];
+  return{v,p,best:rs&&rs.out!=null?rs.out:'\u2014'};
+}
+
+function renderLog(curIdx){
+  const log=document.getElementById('step-log');log.innerHTML='';
+  steps.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='log-item'+(i===curIdx?' current':s.type==='pruning'?' pruning':s.type==='done'?' done':'');
+    d.innerHTML='<span class="log-num">'+(i+1)+'</span>'+s.msg;
+    log.appendChild(d);
+  });
+  if(curIdx>=0){const items=log.querySelectorAll('.log-item');if(items[curIdx])items[curIdx].scrollIntoView({block:'nearest'});}
+}
+
+function render(){
+  if(!root)return;
+  const step=idx>=0&&idx<steps.length?steps[idx]:null;
+  const S=step?step.s:null,hid=step?step.hid:-1,msg=step?step.msg:'Press <b>Play</b> or <b>Next</b> to begin.',type=step?step.type:'normal';
+  const mb=document.getElementById('msg');mb.innerHTML=msg;mb.className='msg-strip'+(type==='pruning'?' pruning':type==='done'?' done':'');
+  const tot=steps.length;
+  document.getElementById('prog').style.width=tot>0?((Math.max(0,idx+1)/tot)*100)+'%':'0%';
+  document.getElementById('fstep').textContent='Step '+(idx<0?0:idx+1)+' / '+tot;
+  const{v,p,best}=calcStats(S);
+  document.getElementById('sv').textContent=v;document.getElementById('sp').textContent=p;document.getElementById('sb').textContent=best;
+  const sd=document.getElementById('step-detail');
+  if(step){const plain=step.msg.replace(/<[^>]+>/g,'');sd.innerHTML=plain+(type==='pruning'?' This is a pruning event \u2014 the subtree is skipped.':type==='done'?' The optimal value has been found.':'');}
+  if(infoTab==='log')renderLog(idx);
+  const svg=document.getElementById('tree');let h='';
+  function edges(n){
+    n.ch.forEach(c=>{
+      const ns=S?S[c.id]:null,pr=ns&&ns.pr;
+      h+='<line x1="'+n.x+'" y1="'+(n.y+23)+'" x2="'+c.x+'" y2="'+(c.y-23)+'" stroke="'+(pr?'#E5E7EB':'#D1D5DB')+'" stroke-width="'+(pr?.7:1.5)+'"'+(pr?' stroke-dasharray="5 3"':'')+'/>';
+      edges(c);
+    });
+  }
+  edges(root);
+  function draw(n){
+    const ns=S?S[n.id]:null,st=ns?ns.st:'idle',out=ns?ns.out:null,pr=ns&&ns.pr;
+    const isLeaf=!n.ch.length,isHi=n.id===hid,R=isLeaf?15:20;
+    let fill,stroke,tf,sw=1.5;
+    if(pr){fill='#F9FAFB';stroke='#9CA3AF';tf='#9CA3AF';sw=0.8;}
+    else if(st==='active'||isHi){fill='#F0FDF4';stroke='#22C55E';tf='#15803D';sw=2.5;}
+    else if(st==='done'&&out!==null){fill='#FFFBEB';stroke='#F59E0B';tf='#B45309';sw=2;}
+    else if(n.isMax){fill='#EFF6FF';stroke='#3B82F6';tf='#1D4ED8';}
+    else{fill='#FFF7ED';stroke='#F97316';tf='#C2410C';}
+    if(isLeaf){
+      h+='<polygon points="'+n.x+','+(n.y-R)+' '+(n.x+R)+','+n.y+' '+n.x+','+(n.y+R)+' '+(n.x-R)+','+n.y+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'"/>';
+      h+='<text x="'+n.x+'" y="'+n.y+'" text-anchor="middle" dominant-baseline="central" font-size="14" fill="'+tf+'" font-family="-apple-system,sans-serif" font-weight="600">'+(out!=null?out:n.val!=null?n.val:'')+'</text>';
+    }else{
+      h+='<circle cx="'+n.x+'" cy="'+n.y+'" r="'+R+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'"/>';
+      if(!pr){
+        const s=7,pc=st==='done'||isHi?tf:stroke;
+        if(n.isMax)h+='<polygon points="'+n.x+','+(n.y-s)+' '+(n.x-s)+','+(n.y+s)+' '+(n.x+s)+','+(n.y+s)+'" fill="'+pc+'" opacity="0.9"/>';
+        else h+='<polygon points="'+n.x+','+(n.y+s)+' '+(n.x-s)+','+(n.y-s)+' '+(n.x+s)+','+(n.y-s)+'" fill="'+pc+'" opacity="0.9"/>';
+      }
+      if(out!=null)h+='<text x="'+n.x+'" y="'+(n.y+36)+'" text-anchor="middle" dominant-baseline="central" font-size="14" fill="'+(st==='done'?'#B45309':'#374151')+'" font-family="-apple-system,sans-serif" font-weight="600">'+out+'</text>';
+      if(algo==='ab'&&ns&&st==='active'){
+        const aS=ns.a===-Infinity?'\u2212\u221e':ns.a,bS=ns.bv===Infinity?'+\u221e':ns.bv;
+        h+='<text x="'+(n.x+25)+'" y="'+(n.y-5)+'" font-size="12" fill="#1D4ED8" font-family="-apple-system,sans-serif" font-weight="600">\u03b1='+aS+'</text>';
+        h+='<text x="'+(n.x+25)+'" y="'+(n.y+9)+'" font-size="12" fill="#C2410C" font-family="-apple-system,sans-serif" font-weight="600">\u03b2='+bS+'</text>';
+      }
+    }
+    n.ch.forEach(draw);
+  }
+  draw(root);svg.innerHTML=h;
+}
+
+function doReset(){stopPlay();idx=-1;render();}
+function doNext(){stopPlay();if(idx<steps.length-1){idx++;render();}}
+function doPrev(){stopPlay();if(idx>0){idx--;render();}else{idx=-1;render();}}
+function togglePlay(){
+  if(playing){stopPlay();return;}
+  playing=true;
+  document.getElementById('bplay').className='cbtn play-btn paused';
+  document.getElementById('pico').innerHTML='<rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/>';
+  document.getElementById('plbl').textContent='Pause';
+  (function tick(){if(idx<steps.length-1){idx++;render();timer=setTimeout(tick,spd);}else stopPlay();})();
+}
+function stopPlay(){
+  playing=false;clearTimeout(timer);
+  document.getElementById('bplay').className='cbtn play-btn';
+  document.getElementById('pico').innerHTML='<path d="M5 3l9 5-9 5V3z"/>';
+  document.getElementById('plbl').textContent='Play';
+}
+
+refreshLeaves();loadPreset(0);setInfoTab('explain');
+</script>
+</body>
+</html>
