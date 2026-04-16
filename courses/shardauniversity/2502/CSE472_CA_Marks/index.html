@@ -114,8 +114,8 @@ comp.innerHTML+=`<option value="T2">Assessment-2</option>`;
 }
 
 if(type=="lab"){
-comp.innerHTML+=`<option value="CA">Lab CA (30)</option>`;
-comp.innerHTML+=`<option value="CE">Lab CE (30)</option>`;
+comp.innerHTML+=`<option value="CA">Lab CA (60)</option>`;
+comp.innerHTML+=`<option value="CE">Lab CE (60)</option>`;
 }
 if(type=="midsem"){
 comp.innerHTML+=`<option value="MID">Mid Sem Marks</option>`;
@@ -219,7 +219,7 @@ return;
 }
 
 var maxMarks = 20;
-if(component=="CA" || component=="CE") maxMarks = 30;
+if(component=="CA" || component=="CE") maxMarks = 60;
 if(component=="MID") maxMarks = 30;
 
 var percent = (marks / maxMarks) * 100;
