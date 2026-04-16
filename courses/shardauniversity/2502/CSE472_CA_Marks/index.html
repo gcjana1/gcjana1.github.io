@@ -64,6 +64,38 @@ color:white;
 .good{background:#28a745;}
 .average{background:#007bff;}
 .low{background:#dc3545;}
+/* 🔴 ADD HERE */
+.course-buttons{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.btn-course, .btn-instructor{
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-course{
+    background:#004aad;
+    color:white;
+}
+.btn-course:hover{
+    background:#003080;
+}
+
+.btn-instructor{
+    background:#28a745;
+    color:white;
+}
+.btn-instructor:hover{
+    background:#1e7e34;
+}
 </style>
 </head>
 
@@ -94,6 +126,22 @@ color:white;
 <b>Note:</b> The marks displayed here are for reference only.  
 Please refer to the University Academic Portal for final marks as per official weightage.
 </div>
+
+<div class="course-buttons">
+
+<a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE472/#Course-Feedback" target="_blank">
+        <button class="btn-course">Course Feedback</button>
+</a>  
+<a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE472/" target="_blank">
+        <button class="btn-course">Course Page</button>
+</a>
+
+<a href="https://www.gcjana.in" target="_blank">
+        <button class="btn-instructor">Course Instructor</button>
+</a>
+
+</div>
+  
 
 </div>
 
@@ -214,7 +262,7 @@ componentName="Mid Sem Exam";
 }
 
 if(marks==null){
-resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
+resultDiv.innerHTML="<div class='error'>Marks not available, Contact to DR. Goapl Chandra Jana.</div>";
 return;
 }
 
