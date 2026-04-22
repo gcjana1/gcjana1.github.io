@@ -173,6 +173,7 @@ comp.innerHTML+=`<option value="T2">Assessment-2</option>`;
 if(type=="lab"){
 comp.innerHTML+=`<option value="CA">Lab CA (60)</option>`;
 comp.innerHTML+=`<option value="CE">Lab CE (60)</option>`;
+comp.innerHTML+=`<option value="LAB ESE">Lab ESE (40)</option>`;
 }
 if(type=="midsem"){
 comp.innerHTML+=`<option value="MID">Mid Sem Marks</option>`;
@@ -263,6 +264,10 @@ componentName="Lab CA";
 if(component=="CE"){
 marks=found.c[3]?.v;
 componentName="Lab CE";
+}
+if(component=="LAB ESE"){
+marks=found.c[4]?.v;
+componentName="Lab ESE";
 }
 
 if(component=="MID"){
