@@ -1,1 +1,326 @@
-CA marks.
+<!DOCTYPE html> 
+<html>
+<head>
+<title>PHD650 CA Marks</title>
+
+<style>
+body{
+font-family: Arial;
+background:#f4f6f9;
+text-align:center;
+padding:50px;
+}
+.container{
+background:white;
+padding:30px;
+width:480px;
+margin:auto;
+border-radius:10px;
+box-shadow:0px 0px 15px rgba(0,0,0,0.1);
+}
+input,select{
+padding:10px;
+width:90%;
+margin:10px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+button{
+padding:10px 25px;
+background:#004aad;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+}
+.result-card{
+margin-top:20px;
+padding:15px;
+background:#f1f7ff;
+border-radius:8px;
+text-align:left;
+}
+.error{
+margin-top:15px;
+color:red;
+font-weight:bold;
+}
+.note{
+margin-top:20px;
+font-size:14px;
+color:#555;
+background:#fff8e1;
+padding:10px;
+border-radius:5px;
+}
+.marks-badge{
+font-size:22px;
+font-weight:bold;
+padding:8px 14px;
+border-radius:20px;
+color:white;
+}
+.good{background:#28a745;}
+.average{background:#007bff;}
+.low{background:#dc3545;}
+/* 🔴 ADD HERE */
+.course-buttons{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.btn-course, .btn-instructor{
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-course{
+    background:#004aad;
+    color:white;
+}
+.btn-course:hover{
+    background:#003080;
+}
+
+.btn-instructor{
+    background:#28a745;
+    color:white;
+}
+.btn-instructor:hover{
+    background:#1e7e34;
+}
+/* 🔴 Course Feedback Button */
+.btn-feedback{
+    background:#ff9800;   /* Orange color */
+    color:white;
+}
+
+.btn-feedback:hover{
+    background:#e68900;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Check Your PHD650 CA Marks (Only for your Reference)</h2>
+
+<select id="courseType" onchange="updateComponents()">
+<option value="">Select Type</option>
+<option value="theory">Theory CA</option>
+<option value="lab">Lab Marks</option>
+<option value="midsem">Mid Sem</option>
+</select>
+
+<select id="component">
+<option value="">Select Component</option>
+</select>
+
+<input type="text" id="systemId" placeholder="Enter SYSTEM ID">
+
+<button onclick="getMarks()">Check</button>
+
+<div id="result"></div>
+
+<div class="note">
+<b>Note:</b> The marks displayed here are for reference only.  
+Please refer to the University Academic Portal for final marks as per official weightage.
+</div>
+
+<div class="course-buttons">
+
+<a href="https://www.gcjana.in/courses/shardauniversity/2502/PHD650/#Course-Feedback" target="_blank">
+        <button class="btn-feedback">Course Feedback</button>
+</a>  
+<a href="https://www.gcjana.in/courses/shardauniversity/2502/PHD650/" target="_blank">
+        <button class="btn-course">Course Page</button>
+</a>
+
+<a href="https://www.gcjana.in" target="_blank">
+        <button class="btn-instructor">Course Instructor</button>
+</a>
+
+</div>
+  
+
+</div>
+
+<script>
+
+function updateComponents(){
+
+var type=document.getElementById("courseType").value;
+var comp=document.getElementById("component");
+
+comp.innerHTML="<option value=''>Select Component</option>";
+
+if(type=="theory"){
+comp.innerHTML+=`<option value="A1">Assignment-1</option>`;
+comp.innerHTML+=`<option value="A2">Assignment-2</option>`;
+comp.innerHTML+=`<option value="T1">Assessment-1</option>`;
+comp.innerHTML+=`<option value="T2">Assessment-2</option>`;
+}
+
+if(type=="lab"){
+comp.innerHTML+=`<option value="CA">Lab CA (60)</option>`;
+comp.innerHTML+=`<option value="CE">Lab CE (60)</option>`;
+comp.innerHTML+=`<option value="LAB ESE">Lab ESE (40)</option>`;
+}
+if(type=="midsem"){
+comp.innerHTML+=`<option value="MID">Mid Sem Marks</option>`;
+}
+
+}
+
+function getMarks(){
+
+var id=document.getElementById("systemId").value.trim();
+var component=document.getElementById("component").value;
+var type=document.getElementById("courseType").value;
+var resultDiv=document.getElementById("result");
+
+if(id==""||component==""||type==""){
+resultDiv.innerHTML="<div class='error'>Please select all fields.</div>";
+return;
+}
+
+var sheetURL="";
+
+if(type=="theory"){
+sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json";
+}
+
+if(type=="lab"){
+sheetURL="https://docs.google.com/spreadsheets/d/1a0W4vwBtbDDVphS9MJutiWC12_DJpa0WxrBOBHaMiXY/gviz/tq?tqx=out:json";
+}
+
+if(type=="theory" || type=="midsem"){
+sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json";
+}
+
+fetch(sheetURL)
+.then(response=>response.text())
+.then(text=>{
+
+var json=JSON.parse(text.substr(47).slice(0,-2));
+var rows=json.table.rows;
+var found=null;
+
+rows.forEach(r=>{
+if(r.c[0] && r.c[0].v==id){
+found=r;
+}
+});
+
+if(!found){
+resultDiv.innerHTML="<div class='error'>No record found!</div>";
+return;
+}
+
+var name=found.c[1]?.v || "";
+var submissionLink = found.c[6]?.v || "";
+
+var marks="";
+var componentName="";
+var showLink=false;
+
+// 🔹 Correct Mapping (Based on your sheet)
+
+if(component=="A1"){
+marks=found.c[2]?.v;
+componentName="Assignment-1";
+}
+
+if(component=="T1"){
+marks=found.c[3]?.v;
+componentName="Assessment-1";
+}
+
+if(component=="A2"){
+marks=found.c[4]?.v;
+componentName="Assignment-2";
+showLink=true;
+}
+
+if(component=="T2"){
+marks=found.c[5]?.v;
+componentName="Assessment-2";
+}
+
+// Lab
+if(component=="CA"){
+marks=found.c[2]?.v;
+componentName="Lab CA";
+}
+if(component=="CE"){
+marks=found.c[3]?.v;
+componentName="Lab CE";
+}
+if(component=="LAB ESE"){
+marks=found.c[4]?.v;
+componentName="Lab ESE";
+}
+
+if(component=="MID"){
+marks=found.c[7]?.v;   // Column H
+componentName="Mid Sem Exam";
+}
+
+if(marks==null){
+resultDiv.innerHTML="<div class='error'>Marks not available, Contact to DR. Goapl Chandra Jana.</div>";
+return;
+}
+
+var maxMarks = 20;
+if(component=="CA" || component=="CE") maxMarks = 60;
+if(component=="LAB ESE") maxMarks = 40;
+if(component=="MID") maxMarks = 30;
+
+var percent = (marks / maxMarks) * 100;
+
+var gradeClass="average";
+if(percent>=75) gradeClass="good";
+else if(percent<50) gradeClass="low";
+
+resultDiv.innerHTML = `
+<div class="result-card">
+
+<b>SYSTEM ID:</b> ${id}<br><br>
+<b>STUDENT NAME:</b> ${name}<br><br>
+
+<b>${componentName} Marks:</b> 
+<span class="marks-badge ${gradeClass}">
+${marks} / ${maxMarks}
+</span>
+
+<br><br>
+
+${(showLink && submissionLink) ? `
+<a href="${submissionLink}" target="_blank">
+<button style="background:#28a745;">View Graded Submission</button>
+</a>
+` : ``}
+
+</div>
+`;
+
+})
+.catch(error=>{
+resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
+});
+
+}
+
+</script>
+
+</body>
+</html>
