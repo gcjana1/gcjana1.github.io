@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ================================================
+       COURSES ROOT
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ================================================
+       SHARDA UNIVERSITY — LANDING
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ================================================
+       CSE472 / CSP472 — ARTIFICIAL INTELLIGENCE (Theory & Lab)
+       Term 2501 (Odd Sem 2025) + Term 2502 (Even Sem 2026)
+       VERIFIED LIVE ✓
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- CSE472 interactive tools — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/A_Star_Algorithm_Visualizer/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/minimax_alpha_beta_pruning_visualizer/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CSE472 feedback form — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Course_Feedback_CSE472/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- CSE472 CA marks portal — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSE472_CA_Marks/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- CSE472 lecture note PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit_1_Lecture_1_Introduction_to_AI.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit_1_Lecture-2_Intelligent_Agent.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit_2_Lecture_1_Solving_Problems_By_Searching.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit_3_Lecture_1_knowledge_and_reasoning.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit-4_Lecture_1_Learning_Paradigms.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit-4_Lecture_2_ANN_SingleLayer_and_MultiLayer.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/Lecture_Notes/Unit-5_AI_Applications_Present_and_Future.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- CSE472 lab manual PDF -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2501/CSE472/AI_Lab_Manual.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- CSE472 assignment PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/Assignments/CSE472_CS_C_Assignment_1.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/Assignments/Assignment-2_CSE472.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ================================================
+       PHD650 — FUNDAMENTAL APPROACHES FOR RESEARCH
+       Term 2502 (Even Sem 2026)
+       VERIFIED LIVE ✓
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- PHD650 CA marks — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/CA_Marks/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- PHD650 feedback form — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/course_feedback/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- PHD650 lecture note PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Lecture_1_Time_and_Space_Complexity.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Lecture_2_P_NP_NP_Complete_and_NP_Hard_Problems.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Lecture_3_Greedy_and_DP_Approaches.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_2_Digital_Image_Processing_Techniques_and_Algorithm.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit3_Wireless_Mobile_Networks_Lecture_PPT.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_4_Lecture_1_Introduction_to_Artificial_Intelligence.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_4_Lecture_2_Intelligent_Agent.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_4_Lecture-3_Problem_Solving_Agent_Solving_Problems_By_Searching.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_4_Lecture_4_Minimax_Alpha_Beta_Pruning.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Introduction_to_Fuzzy_Logic.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Lecture_Notes/Unit_5_Lecture_2_Genetic_Algorithm_and_Its_Applications.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- PHD650 assignment PDF -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/PHD650/Assignment/PHD650_Fundamental_Approaches_for_Research_Assignment.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ================================================
+       CSA203 — CONCEPTS OF NEURAL NETWORKS
+       Term 2502 (Even Sem 2026)
+       VERIFIED LIVE ✓
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- CSA203 CA marks — VERIFIED LIVE ✓ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/CA_Marks/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- CSA203 lecture note PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Lecture_Notes/unit_1_Lecture_ppt_Introduction_to_ANN-compressed.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Lecture_Notes/unit_2_Lecture_ppt_Learning_Paradigms.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Lecture_Notes/unit_3_Lecture_ppt_Perceptron_Backpropagation.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Lecture_Notes/unit_4_Lecture_ppt_RBF_RNN.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Lecture_Notes/unit_5_Lecture_ppt_Unsupervised_Learning_Network_Paradigms.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- CSA203 assignment PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Assignments/CSA203_Concepts_of_Neural_Networks_Assignment_1.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/shardauniversity/2502/CSA203/Assignments/CSA203_Concepts_of_Neural_Networks_Assignment_2.pdf</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ================================================
+       GALGOTIAS UNIVERSITY — LANDING
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ================================================
+       R1UC503B — ADVANCED DATA STRUCTURES & ALGORITHMS
+       Odd Sem 2024 — VERIFIED LIVE ✓ (full content page)
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/</loc>
+    <lastmod>2025-01-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ADSA lecture PPT PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-1%20Time%20and%20Space%20Complexity.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Written%20Notes-Time%20Complexity%20Notes.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-2%20Array.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-3_Linked_Lists.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-4_Stacks%20and%20Applications.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-5_Recursion_Class-Note.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Lec-6_Queue.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Heap.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Tree.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Binary%20Search%20Tree%20(BST)%20Operations.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Graph-Data-Structures.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/BFS-DFS.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Dijkstra%27s%20Algorithm.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Floyd_Warshall_Algorithm.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Minimum%20Spanning%20Tree%20(MST).pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Greedy-Approaches.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/ppts/Huffman%20Coding.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ADSA assignment PDFs -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Assignment_Related_to_Time_and_Space_Complexity.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Coding_Assignment_for_Practice.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/ADSA%20Lab%20Assignment%20on%20Linked%20list.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/List_of_Lab_Experiments_related_to_the_stack.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Take_Home_Assignments_on_Queue.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Take_Home_Assignments_on_Hashing.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Take_Home_Assignments_on_Tree.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/Prims_and_kruskal_algorithm_Implementation.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/ADSA_LAB_Assignments_on_MST.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/ADSA%20Lab%20Assignments%20on%20Dynamic%20Programming.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/LAB%20Assignments%20related%20to%20Graph.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/LAB_Programming%20Practice%20to%20Perform%20CRT.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2024/assignments/lab-assignments/Lab_Assignments_on_Recursion.pdf</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- ================================================
+       R1UC601B — ADVANCED ALGORITHMIC PROBLEM SOLVING
+       Win Sem 2024 — VERIFIED LIVE ✓ ("Course Completed")
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/evensem2024/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ================================================
+       E2UC303B — DATA STRUCTURES
+       Sum Sem 2023 — VERIFIED LIVE ✓ ("Course Completed")
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/oddsem2023/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ================================================
+       BTCS3602 + E2UC403B — COMPILER DESIGN & DAA
+       Win Sem 2023 — VERIFIED LIVE ✓ ("Course Completed")
+       ================================================ -->
+  <url>
+    <loc>https://www.gcjana.in/courses/galgotiasuniversity/evensem2023/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
