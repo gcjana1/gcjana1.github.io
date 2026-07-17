@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CSA301 CA Marks (Only for Section - G) | Dr. GC Jana</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f4f6f9;
+text-align:center;
+padding:50px;
+}
+
+.container{
+background:white;
+padding:30px;
+width:480px;
+margin:auto;
+border-radius:10px;
+box-shadow:0px 0px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+margin-bottom:20px;
+color:#004aad;
+}
+
+input,select{
+padding:10px;
+width:90%;
+margin:10px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 25px;
+background:#004aad;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:#003080;
+}
+
+.result-card{
+margin-top:20px;
+padding:15px;
+background:#f1f7ff;
+border-radius:8px;
+text-align:left;
+}
+
+.error{
+margin-top:15px;
+color:red;
+font-weight:bold;
+}
+
+.marks-badge{
+font-size:22px;
+font-weight:bold;
+padding:8px 14px;
+border-radius:20px;
+color:white;
+}
+
+.good{
+background:#28a745;
+}
+
+.average{
+background:#007bff;
+}
+
+.low{
+background:#dc3545;
+}
+
+.view-btn{
+background:#28a745;
+margin-top:10px;
+}
+
+.note{
+margin-top:20px;
+font-size:14px;
+color:#555;
+background:#fff8e1;
+padding:10px;
+border-radius:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Check Your CSA301 CA Marks (Only for Section - G)</h2>
+
+<select id="component">
+<option value="">Select Component</option>
+<option value="Assignmnet-1 Marks (20)">Assignment-1</option>
+<option value="Assessment-1 Marks(20)">Assessment-1</option>
+<option value="Assignment-2 Marks (20)">Assignment-2</option>
+<option value="Assessment-2 Marks (20)">Assessment-2</option>
+</select>
+
+<input type="text" id="systemId" placeholder="Enter SYSTEM ID">
+
+<button onclick="getMarks()">Check</button>
+
+<div id="result"></div>
+
+<div class="note">
+<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage and evaluation policy of the University.
+</div>
+
+</div>
+
+<script>
+
+function getMarks(){
+
+var id=document.getElementById("systemId").value.trim();
+var component=document.getElementById("component").value;
+var resultDiv=document.getElementById("result");
+
+if(id=="" || component==""){
+resultDiv.innerHTML="<div class='error'>Please enter SYSTEM ID and select component.</div>";
+return;
+}
+
+fetch("https://docs.google.com/spreadsheets/d/1TbBGA_g-RfVjAi-upNhZbm7Ag2pqDgyu-KFgYOQ2qrc/gviz/tq?tqx=out:json")
+
+.then(response=>response.text())
+
+.then(text=>{
+
+var json=JSON.parse(text.substr(47).slice(0,-2));
+var rows=json.table.rows;
+
+var found=null;
+
+rows.forEach(r=>{
+if(r.c[0] && r.c[0].v==id){
+found=r;
+}
+});
+
+if(!found){
+resultDiv.innerHTML="<div class='error'>No record found!</div>";
+return;
+}
+
+var name=found.c[1] ? found.c[1].v : "";
+
+var marks="";
+var link="";
+
+// Assignment-1
+if(component=="Assignmnet-1 Marks (20)")
+marks=found.c[2] ? found.c[2].v : "";
+
+// Assessment-1
+if(component=="Assessment-1 Marks(20)")
+marks=found.c[3] ? found.c[3].v : "";
+
+// Assignment-2
+if(component=="Assignment-2 Marks (20)"){
+marks=found.c[4] ? found.c[4].v : "";
+link=found.c[6] ? found.c[6].v : "";
+}
+
+// Assessment-2
+if(component=="Assessment-2 Marks (20)")
+marks=found.c[5] ? found.c[5].v : "";
+
+// Handle "Absent"
+if(marks==="Absent"){
+resultDiv.innerHTML="<div class='error'>Student marked Absent</div>";
+return;
+}
+
+if(marks==="" && marks!==0){
+resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
+return;
+}
+
+var maxMarks=20;
+var percent=(marks/maxMarks)*100;
+
+var gradeClass="average";
+
+if(percent>=75) gradeClass="good";
+else if(percent<50) gradeClass="low";
+
+// Button
+var buttonHTML="";
+
+if(component=="Assignment-2 Marks (20)" && link){
+buttonHTML=`
+<br>
+<a href="${link}" target="_blank">
+<button class="view-btn">View Checked Copy</button>
+</a>
+`;
+}
+
+resultDiv.innerHTML=`
+
+<div class="result-card">
+
+<b>SYSTEM ID:</b> ${id}<br><br>
+
+<b>STUDENT NAME:</b> ${name}<br><br>
+
+<b>${component}:</b>
+<span class="marks-badge ${gradeClass}">
+${marks} / ${maxMarks}
+</span>
+
+${buttonHTML}
+
+</div>
+
+`;
+
+})
+
+.catch(error=>{
+resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
+});
+
+}
+
+</script>
+
+</body>
+</html>
