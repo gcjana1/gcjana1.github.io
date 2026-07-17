@@ -1,1 +1,1142 @@
-Soft Computing - CSA301
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. GC Jana | Soft Computing (CSAI3100)</title>
+	<meta name="description" content="Learn Soft Computing (CSAI3100) by Dr. GC Jana at Sharda University. Includes syllabus, lecture notes, assignments, fuzzy logic, fuzzy inference systems, genetic algorithms, swarm intelligence and multi-objective optimization resources.">
+	
+	<meta name="keywords" content="Soft Computing, CSAI3100, Fuzzy Logic, Fuzzy Sets, Fuzzy Inference System, Mamdani, Sugeno, ANFIS, Genetic Algorithm, Particle Swarm Optimization, Ant Colony Optimization, Multi-objective Optimization, NSGA-II, Sharda University, Dr GC Jana, AI course India">
+	
+	<meta name="author" content="Dr. Gopal Chandra Jana">
+	
+	<meta name="robots" content="index, follow">
+	
+	<link rel="canonical" href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/">
+	<meta property="og:title" content="Dr. GC Jana | Soft Computing (CSAI3100)">
+	<meta property="og:description" content="This course on Soft Computing (CSAI3100) covers key topics such as soft versus hard computing, fuzzy sets and membership functions, fuzzy relations and inference, defuzzification, Mamdani, Sugeno and Tsukamoto fuzzy models, neuro-fuzzy modelling (ANFIS), genetic algorithms, swarm optimization and multi-objective optimization problem solving. It is designed for students at Sharda University pursuing artificial intelligence and machine learning.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/">
+	<meta property="og:image" content="https://www.gcjana.in/logo.png">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f7;
+      color: #000;
+      line-height: 1.6;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #1a73e8;
+      color: #fff;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .top-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-menu a:hover,
+    .top-menu a.current {
+      text-decoration: underline;
+    }
+
+    .course-header {
+      position: fixed;
+      top: 55px;
+      width: 100%;
+      background-color: #1f3a63;
+      color: white;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      flex-wrap: wrap;
+    }
+
+    .course-info {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .course-info b {
+      font-size: 16px;
+    }
+
+    .course-nav {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .course-nav a {
+      padding: 8px 12px;
+      background-color: #284b80;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .course-nav a:hover,
+    .course-nav a.active {
+      background-color: #3e65a3;
+    }
+
+    /* 🔴 Blinking Announcement Button */
+    .announcement {
+      color: red;
+      font-weight: bold;
+      animation: blink 3s infinite; /* slower blink */
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid rgba(255,0,0,.25);
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    /* Pause scrolling when hovered */
+    .announcement-bar:hover .announcement-track {
+      animation-play-state: paused;
+    }
+
+
+    /* 📢 Sliding Announcement Ticker (starts collapsed) */
+    .announcement-bar {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 2px solid #e5e7eb;
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: bold;
+      color: red;
+      max-height: 0;               /* collapsed */
+      padding: 0 12px;             /* collapsed padding */
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      z-index: 998;
+    }
+
+    .announcement-bar.open {
+      max-height: 56px;            /* expanded height */
+      padding: 6px 12px;           /* restore padding */
+    }
+
+    .announcement-track {
+      display: inline-block;
+      animation: scroll 30s linear infinite;
+    }
+
+    .announcement-track span {
+      margin-right: 60px;
+    }
+
+    @keyframes scroll {
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* Style for announcements */
+      .announcement-item {
+        color: #0056b3;            /* nice blue shade */
+        font-weight: 500;          /* medium-bold */
+        font-size: 16px;           /* readable text */
+        padding: 0 20px;           /* spacing between items */
+        white-space: nowrap;       /* keep text in one line */
+        display: inline-block;
+      }
+      
+      .announcement-item b {
+        color: #d9534f;            /* important parts in red */
+        font-weight: 600;          /* make bolded text stand out */
+      }
+
+    .content {
+      margin-top: 180px; /* JS will update this for accuracy */
+      padding: 20px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: margin-top 0.3s ease;
+    }
+
+    .section-box {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #12263A;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .top-menu {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .course-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .course-nav {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .course-info {
+        margin-bottom: 10px;
+      }
+    }
+
+    html {
+      scroll-padding-top: 150px;
+    }
+
+      .syllabus-title {
+    font-size: 26px;
+    color: #1a73e8;
+    margin-bottom: 20px;
+    border-left: 6px solid #1a73e8;
+    padding-left: 10px;
+    font-weight: bold;
+  }
+
+  .syllabus-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .syllabus-list > li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f9fbfd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+  }
+
+  .syllabus-list > li:hover {
+    transform: translateX(5px);
+    background: #f1f6ff;
+  }
+
+  .unit-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-bottom: 8px;
+  }
+
+  .syllabus-list ul {
+    list-style: square;
+    padding-left: 20px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  .syllabus-list ul li {
+    margin: 5px 0;
+  }
+  .laptop-icon {
+    color: #1a73e8;   /* blue laptop icon */
+  }
+
+  .units-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .left-column,
+  .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .unit-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .unit-card h3 {
+    margin: 0 0 10px;
+    background: #1a73e8;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .unit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .unit-card ul li {
+    margin: 5px 0;
+  }
+  
+  .unit-card ul li a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: 500;
+  }
+  
+  .unit-card ul li a:hover {
+    color: #ff9800;
+  }
+  
+  .full-row {
+    margin-top: 15px;
+  }
+  
+  .full-row .unit-card {
+    width: 100%;
+  }
+  /* Blue header bar */
+  .assignments-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .assignments-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Common instructions card */
+  .common-instructions {
+    background: #f1f7ff;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  }
+  .common-instructions h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  .common-instructions ul {
+    margin: 8px 0 0 20px;
+    color: #444;
+  }
+
+  /* Assignment cards layout */
+  .assignment-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .assignment-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    width: 48%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .assignment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  .assignment-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #2c3e50;
+  }
+  .assignment-card p {
+    margin: 8px 0;
+    color: #333;
+  }
+  .instructions {
+    margin: 10px 0 15px;
+    padding-left: 20px;
+  }
+  .instructions li {
+    margin-bottom: 6px;
+    color: #444;
+  }
+  .pdf-link {
+    color: #0073e6;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .pdf-link:hover {
+    text-decoration: underline;
+  }
+  .submit-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #0073e6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover {
+    background: #005bb5;
+  }
+
+     .doubts-header {
+    background: #0073e6; color: white;
+    padding: 12px 20px; border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .doubts-header h2 { margin: 0; font-size: 22px; }
+
+  .doubts-card {
+    background: #f9f9f9; border-radius: 12px;
+    padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .form-input, .doubt-input {
+    width: 100%; margin-bottom: 10px;
+    padding: 10px; font-size: 15px;
+    border: 1px solid #ccc; border-radius: 8px;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus, .doubt-input:focus {
+    border-color: #0073e6;
+    box-shadow: 0 0 6px rgba(0,115,230,0.3);
+  }
+  .doubt-input { height: 100px; resize: none; }
+
+  .doubt-btn {
+    margin-top: 12px; padding: 10px 18px;
+    background: #0073e6; color: white;
+    border: none; border-radius: 8px;
+    font-size: 15px; font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .doubt-btn:hover { background: #005bb5; transform: scale(1.05); }
+
+
+
+
+
+
+/*Thanks Message*/
+  /* Blue header bar */
+  .thanks-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .thanks-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Card style */
+  .thanks-card {
+    background: linear-gradient(135deg, #f9f9f9, #eef6ff);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    text-align: center;
+  }
+  .thanks-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+  .thanks-card p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+</style>
+  
+</head>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Dr. GC Jana | Soft Computing (CSAI3100)",
+  "description": "Course on Soft Computing including Fuzzy Logic, Fuzzy Inference Systems, Neuro-Fuzzy Modelling (ANFIS), Genetic Algorithms, Swarm Optimization and Multi-objective Optimization.",
+  "provider": {
+    "@type": "Person",
+    "name": "Dr. Gopal Chandra Jana"
+  }
+}
+</script>
+
+<body>
+
+  <header>
+    <div class="site-title">Dr. GC Jana</div>
+    <div class="top-menu">
+      <a href="https://www.gcjana.in/">Home</a>
+      <a href="https://www.gcjana.in/publications.html">Publications</a>
+      <a href="https://www.gcjana.in/research.html">Research</a>
+      <a href="https://www.gcjana.in/courses.html" class="current">Courses</a>
+      <a href="https://www.gcjana.in/students/">Students</a>
+      <a href="https://www.gcjana.in/TalksandTutorials">Talks/Tutorials</a>
+      <a href="https://www.gcjana.in/External_Examiner">External Examiner</a>
+      <a href="https://www.gcjana.in/Software-Toolbox">Software/Toolbox</a>
+	  <a href="https://www.gcjana.in/opportunities/">Opportunities</a>
+    </div>
+  </header>
+
+  <div class="course-header">
+    <div class="course-info">
+      <b>Soft Computing | CSAI3100</b><br>
+      Offered by: Dr. Gopal Chandra Jana (Dr. GC Jana)<br>
+      Assistant Professor, Department of CSE, SoCSE, Sharda University<br>
+      Email: FirstName [dot] LastName {@} sharda.ac.in
+      Office: Cabin No. 1, 119A AI Lab, First Floor, Block-1 ()
+    </div>
+    <div class="course-nav">
+      <a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/">Course Home</a>
+      <a href="#syllabus-csai3100">Syllabus (CSAI3100)</a>
+      <a href="#self-learning">Self-Learning</a>
+      <a href="#Evaluations-Schemes">Evaluations Schemes</a>
+      <a href="#lectures">Lectures</a>
+      <a href="#assignments">Assignments</a>
+      <a href="#Post-doubts">Post Doubts</a>
+      <a href="#Important-Dates">Important Dates</a>
+      <a href="#Course-Feedback">Course Feedback</a>
+	  <a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/CA_Marks/" target="_blank">Check CA Marks</a>
+      <a href="#thanks-from-course-instructor">Thanks</a>
+      <!-- 🔴 Important Announcement Button -->
+      <span class="announcement" id="announcement-btn" title="Click to view all announcements">
+        Important Announcement
+      </span>
+    </div>
+  </div>
+
+  <!-- 📢 Sliding ticker (JS sets its top dynamically) -->
+  <div id="announcement-ticker" class="announcement-bar" aria-hidden="true">
+    <div class="announcement-track" role="marquee" aria-label="Latest announcements">
+        <span class="announcement-item">
+          📢 Welcome to <b>Soft Computing (CSAI3100)</b> — Semester V, CSE (AIML), Batch 2025-2029.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>75% Attendance </b> is mandatory for
+          <b>appearing in MSE and ESE</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Assessment-1</b> (Units 1 &amp; 2) schedule will be announced soon.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Self-Learning (SL) activities</b> carry 30 hours as per NEP 2020 — please refer to the Self-Learning section.
+        </span>
+
+      <!-- second copy -->
+        <span class="announcement-item">
+          📢 Welcome to <b>Soft Computing (CSAI3100)</b> — Semester V, CSE (AIML), Batch 2025-2029.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>75% Attendance </b> is mandatory for
+          <b>appearing in MSE and ESE</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Assessment-1</b> (Units 1 &amp; 2) schedule will be announced soon.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Self-Learning (SL) activities</b> carry 30 hours as per NEP 2020 — please refer to the Self-Learning section.
+        </span>
+    </div>
+  </div>
+
+  <div class="content" id="page-content">
+  <h1>Soft Computing (CSAI3100)</h1>
+<p style="text-align: justify;">
+This course on <b>Soft Computing (CSAI3100)</b> covers fundamental concepts of soft computing. The concepts of Fuzzy Logic (FL) are covered first, followed by Fuzzy Inference Systems, Artificial Neural Networks based Neuro-Fuzzy modelling and optimization techniques using Genetic Algorithm (GA), Swarm Intelligence and Multi-objective Optimization. Applications of Soft Computing techniques to solve a number of real life problems are covered to provide hands on practice. It is designed for students at Sharda University pursuing artificial intelligence and machine learning.
+</p>
+    <div id="syllabus-csai3100" class="section-box">
+    <h2 class="syllabus-title">📘 Syllabus (CSAI3100 - Theory)</h2>
+    <ul class="syllabus-list">
+      <li>
+        <div class="unit-title">Unit 1: Introduction to Soft Computing</div>
+        <ul>
+          <li>A. Concept of computing systems. What is Soft Computing?</li>
+          <li>B. "Soft" Computing versus "Hard" Computing.</li>
+          <li>C. Characteristics of Soft Computing, Some applications of Soft Computing techniques.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 2: Fuzzy Logic</div>
+        <ul>
+          <li>A. Introduction to Fuzzy logic, Fuzzy sets and membership functions.</li>
+          <li>B. Operations on Fuzzy sets, Fuzzy relations, rules, propositions, implications and inferences.</li>
+          <li>C. Defuzzification techniques, Fuzzy logic controller design, Some real life societal applications of Fuzzy logic.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 3: Fuzzy Inference System</div>
+        <ul>
+          <li>A. Fuzzy Inference Systems, Different Fuzzy Models: Mamdani Fuzzy Models, Sugeno Fuzzy Models.</li>
+          <li>B. Tsukamoto Fuzzy Models, Input Space Partitioning and Fuzzy Modeling.</li>
+          <li>C. Neuro Fuzzy Modelling: Adaptive Neuro-Fuzzy Inference Systems (ANFIS), Architecture, Hybrid Learning Algorithm, Learning Method that Cross-fertilize ANFIS and RBFN.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 4: Swarm and Evolutionary Algorithms</div>
+        <ul>
+          <li>A. Concept of "Genetics" and "Evolution" and its application to probabilistic search techniques.</li>
+          <li>B. Basic GA framework and different GA architectures, GA operators: Encoding, Crossover, Selection, Mutation, Solving single-objective optimization problems.</li>
+          <li>C. Swarm Optimization: Introduction to Ant Colony Optimization, Particle Swarm Optimization etc.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 5: Multi-objective Optimization Problem Solving</div>
+        <ul>
+          <li>A. Concept of multi-objective optimization problems (MOOPs) and issues of solving them.</li>
+          <li>B. Multi-Objective Evolutionary Algorithm (MOEA), Non-Pareto approaches to solve MOOPs, Pareto-based approaches to solve MOOPs, Some applications with MOEAs.</li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+
+    <div id="self-learning" class="section-box">
+    <h2 class="syllabus-title">🧑‍💻 Self-Learning (SL) Activities — Total: 30 Hours</h2>
+    <p class="lectures-intro">As per NEP 2020 guidelines, this course carries student-directed self-learning hours (L-T-P-SL: 3-0-0-3).</p>
+    <ul class="syllabus-list">
+      <li>
+        <div class="unit-title">1. Problem Solving / Coding using Python — 15 Hours</div>
+        <ul>
+          <li>Implement core SC algorithms from scratch: Fuzzy Logic Controller design (skfuzzy), GA (DEAP), PSO (pyswarms), NSGA-II (pymoo) on real or benchmark datasets.</li>
+          <li>5 coding exercises &times; 3 hours each.</li>
+          <li><b>Evaluation:</b> Based on coding solution submitted — correctness, algorithm performance, code quality and documentation of results.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">2. Technical Video-Based Learning — 15 Hours</div>
+        <ul>
+          <li>NPTEL 'Soft Computing' course (IIT Kharagpur) or equivalent — focused on FIS, GA and MOEAs as per units covered in class.</li>
+          <li>Video viewing = 5 hours; Report preparation &amp; Presentation = 10 hours.</li>
+          <li><b>Evaluation:</b> Report/presentation based on video learning outcomes — concept clarity, diagrams and Q&amp;A performance during viva-voce.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">3. Assignment Writing (Mathematical &amp; Numerical) — 10 Hours</div>
+        <ul>
+          <li>Derivations and worked numericals: fuzzification &amp; defuzzification, Mamdani FIS step-by-step, GA crossover/mutation trace, PSO velocity update, Pareto dominance ranking.</li>
+          <li>5 assignments &times; 2 hours each.</li>
+          <li><b>Evaluation:</b> Correctness of derivations, step-by-step working and coverage of assigned problem statements.</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">4. Real-World Case Study — 8 Hours</div>
+        <ul>
+          <li>Study a published application of soft computing (e.g., fuzzy medical diagnosis, GA-based network routing, PSO for power systems) and prepare an analytical report.</li>
+          <li>Literature study = 4 hours; Report preparation = 4 hours (or as adjusted by faculty).</li>
+          <li><b>Evaluation:</b> Depth of analysis, technical accuracy, referencing quality and presentation of findings.</li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+
+	<div id="Evaluations-Schemes" class="section-box" style="margin-top:30px; font-family:Arial, sans-serif;">
+
+	  <!-- Blue Header -->
+	  <div style="background:#007BFF; color:white; padding:14px; border-radius:8px 8px 0 0; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.15);">
+		<h2 style="margin:0; font-size:20px;">📊 Evaluation Schemes</h2>
+	  </div>
+
+	  <!-- Table -->
+	  <div style="overflow-x:auto; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px;">
+		<table style="width:100%; border-collapse:collapse; font-size:16px; text-align:center;">
+		  <thead>
+			<tr style="font-weight:bold;">
+			  <th style="padding:14px; border:1px solid #ddd; background:#6C757D; color:white;">Component</th>
+			  <th style="padding:14px; border:1px solid #ddd; background:#FD7E14; color:white;">Theory (CSAI3100)</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Total Marks</td>
+			  <td style="padding:12px; border:1px solid #ddd;">100 (CA: 25 + MSE: 15 + ESE: 60)</td>
+			</tr>
+			<tr style="background:#fdfdfd;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Continuous Assessment</td>
+			  <td style="padding:12px; border:1px solid #ddd; text-align:left;">
+				• Assessment 1: 10 Marks (Units 1 & 2)<br>
+				• Assessment 2: 5 Marks (Units 3 & 4)<br>
+				• Assignment 1: 5 Marks (Units 1 & 2)<br>
+				• Assignment 2: 5 Marks (Units 3, 4, and 5)
+			  </td>
+			</tr>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Mid Semester Exam</td>
+			  <td style="padding:12px; border:1px solid #ddd;">15 Marks</td>
+			</tr>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">End Semester Exam</td>
+			  <td style="padding:12px; border:1px solid #ddd;">60 Marks</td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+
+    <div id="lectures" class="section-box">
+      <h2 class="lectures-title">📚 Lectures</h2>
+    <p class="lectures-intro">Theory lecture materials will be uploaded unit-wise. Each unit will include:</p>
+    <div class="units-container">
+  <!-- Left Column -->
+  <div class="left-column">
+    <div class="unit-card">
+      <h3>Unit 1: Introduction to Soft Computing</h3>
+      <ul>
+        <li>
+		<a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Lecture_Notes/unit_1_Lecture_ppt_Introduction_to_Soft_Computing.pdf" target="_blank">
+		    📑 Lecture PPT on <span style="color:blue;">Introduction to Soft Computing</span>
+		  </a>
+		</li>
+        <li>
+		<a href="#" target="_blank">
+		    📖 Reference Book <span style="color:blue;">Fuzzy Sets and Fuzzy Logic: Theory and Applications by George J. Klir and Bo Yuan, Prentice Hall.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-1 <span style="color:blue;">Genetic Algorithms in Search, Optimization and Machine Learning by David E. Goldberg, Addison Wesley.</span>
+		  </a>
+		</li>
+      	<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-2 <span style="color:blue;">Fuzzy Logic with Engineering Applications by Timothy J. Ross, McGraw Hill.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Neuro-Fuzzy Reference Book <span style="color:blue;">Neuro-Fuzzy and Soft Computing by J.S.R. Jang, C.T. Sun and E. Mizutani, Prentice Hall.</span>
+		  </a>
+		</li>
+      </ul>
+    </div>
+
+    <div class="unit-card">
+      <h3>Unit 2: Fuzzy Logic</h3>
+      <ul>
+        <li>
+		<a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Lecture_Notes/unit_2_Lecture_ppt_Fuzzy_Logic.pdf" target="_blank">
+		    📑 Lecture PPT on <span style="color:blue;">Fuzzy Logic</span>
+		  </a>
+		</li>
+        <li>
+		<a href="#" target="_blank">
+		    📖 Reference Book <span style="color:blue;">Fuzzy Sets and Fuzzy Logic: Theory and Applications by George J. Klir and Bo Yuan, Prentice Hall.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-1 <span style="color:blue;">Genetic Algorithms in Search, Optimization and Machine Learning by David E. Goldberg, Addison Wesley.</span>
+		  </a>
+		</li>
+      	<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-2 <span style="color:blue;">Fuzzy Logic with Engineering Applications by Timothy J. Ross, McGraw Hill.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Neuro-Fuzzy Reference Book <span style="color:blue;">Neuro-Fuzzy and Soft Computing by J.S.R. Jang, C.T. Sun and E. Mizutani, Prentice Hall.</span>
+		  </a>
+		</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="right-column">
+    <div class="unit-card">
+      <h3>Unit 3: Fuzzy Inference System</h3>
+      <ul>
+      <li>
+		<a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Lecture_Notes/unit_3_Lecture_ppt_Fuzzy_Inference_System.pdf" target="_blank">
+		    📑 Lecture PPT on <span style="color:blue;">Fuzzy Inference System and Neuro-Fuzzy Modelling (ANFIS)</span>
+		  </a>
+		</li>
+        <li>
+		<a href="#" target="_blank">
+		    📖 Reference Book <span style="color:blue;">Fuzzy Sets and Fuzzy Logic: Theory and Applications by George J. Klir and Bo Yuan, Prentice Hall.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-1 <span style="color:blue;">Genetic Algorithms in Search, Optimization and Machine Learning by David E. Goldberg, Addison Wesley.</span>
+		  </a>
+		</li>
+      	<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-2 <span style="color:blue;">Fuzzy Logic with Engineering Applications by Timothy J. Ross, McGraw Hill.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Neuro-Fuzzy Reference Book <span style="color:blue;">Neuro-Fuzzy and Soft Computing by J.S.R. Jang, C.T. Sun and E. Mizutani, Prentice Hall.</span>
+		  </a>
+		</li>
+      </ul>
+    </div>
+
+    <div class="unit-card">
+      <h3>Unit 4: Swarm and Evolutionary Algorithms</h3>
+      <ul>
+        <li>
+		<a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Lecture_Notes/unit_4_Lecture_ppt_Swarm_and_Evolutionary_Algorithms.pdf" target="_blank">
+		    📑 Lecture PPT on <span style="color:blue;">Swarm and Evolutionary Algorithms</span>
+		  </a>
+		</li>
+        <li>
+		<a href="#" target="_blank">
+		    📖 Reference Book <span style="color:blue;">Fuzzy Sets and Fuzzy Logic: Theory and Applications by George J. Klir and Bo Yuan, Prentice Hall.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-1 <span style="color:blue;">Genetic Algorithms in Search, Optimization and Machine Learning by David E. Goldberg, Addison Wesley.</span>
+		  </a>
+		</li>
+      	<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-2 <span style="color:blue;">Fuzzy Logic with Engineering Applications by Timothy J. Ross, McGraw Hill.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Neuro-Fuzzy Reference Book <span style="color:blue;">Neuro-Fuzzy and Soft Computing by J.S.R. Jang, C.T. Sun and E. Mizutani, Prentice Hall.</span>
+		  </a>
+		</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Full Width Unit 5 -->
+<div class="full-row">
+  <div class="unit-card">
+    <h3>Unit 5: Multi-objective Optimization Problem Solving</h3>
+    <ul>
+       <li>
+		<a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Lecture_Notes/unit_5_Lecture_ppt_Multi_objective_Optimization.pdf" target="_blank">
+		    📑 Lecture PPT on <span style="color:blue;">Multi-objective Optimization Problem Solving</span>
+		  </a>
+		</li>
+        <li>
+		<a href="#" target="_blank">
+		    📖 Reference Book <span style="color:blue;">Fuzzy Sets and Fuzzy Logic: Theory and Applications by George J. Klir and Bo Yuan, Prentice Hall.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-1 <span style="color:blue;">Genetic Algorithms in Search, Optimization and Machine Learning by David E. Goldberg, Addison Wesley.</span>
+		  </a>
+		</li>
+      	<li>
+		<a href="#" target="_blank">
+		    📖 Additional Reference Book-2 <span style="color:blue;">Fuzzy Logic with Engineering Applications by Timothy J. Ross, McGraw Hill.</span>
+		  </a>
+		</li>
+		<li>
+		<a href="#" target="_blank">
+		    📖 Additional Neuro-Fuzzy Reference Book <span style="color:blue;">Neuro-Fuzzy and Soft Computing by J.S.R. Jang, C.T. Sun and E. Mizutani, Prentice Hall.</span>
+		  </a>
+		</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<div id="assignments" class="section-box">
+        <div class="assignments-header">
+      <h2>📑 Assignments</h2>
+      </div>
+    <!-- Common Instructions -->
+    <div class="common-instructions">
+      <h3>📌 Common Instructions</h3>
+      <ul>
+        <li>All assignments must be submitted before the due date.</li>
+        <li>Upload your solution in <strong>PDF format</strong>.</li>
+        <li>Plagiarism will not be tolerated.</li>
+        <li>Late submissions may not be accepted.</li>
+		<li>All assignments must be handwritten. Answers and solutions should be presented in a clear, step-by-step illustrative manner. Running text format will not be accepted.</li>
+		<li>Students may be asked to explain their answers and solutions while obtaining the instructor’s signature. Grades will be awarded based on the explanation and understanding demonstrated.</li>
+		<li>If any AI tools (such as GPTs) are used in preparing the assignment, students must also submit the complete script or prompt history along with the assignment.</li> 
+      </ul>
+    </div>
+    <!-- Assignment Cards -->
+    <div class="assignment-container">
+  
+      <!-- Assignment 1 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 1: Based on Unit-1 and 2</h3>
+        <p><strong>Due Date:</strong> To be announced</p>
+        <ul class="instructions">
+          <li>All questions are compulsory.</li>
+          <li>Prepared and Submit as a single PDF file.</li>
+          <li>Submit scanned handwritten PDF document using the link mentioned below.</li>
+        </ul>
+        <a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Assignments/CSAI3100_Soft_Computing_Assignment_1.pdf" target="_blank" class="pdf-link">📄 View Assignment</a><br><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSccmUjN_tWv30KzHIZtirXlOZTCmfZW9Ki11I0wXU4q2phwZA/viewform?usp=dialog" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+      <!-- Assignment 2 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 2: Based on Unit-3, 4 and 5</h3>
+        <p><strong>Due Date:</strong> To be announced</p>
+        <ul class="instructions">
+          <li>All questions are compulsory.</li>
+          <li>Include clear reasoning steps.</li>
+          <li>Submit scanned handwritten PDF document using the link mentioned below.</li>
+        </ul>
+        <a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Assignments/CSAI3100_Soft_Computing_Assignment_2.pdf" target="_blank" class="pdf-link">📄 View Assignment</a><br><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSccmUjN_tWv30KzHIZtirXlOZTCmfZW9Ki11I0wXU4q2phwZA/viewform?usp=dialog" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+  
+    </div>
+  </div>
+
+    <div id="Post-doubts" class="section-box">
+       <!-- Blue Header -->
+  <div class="doubts-header">
+    <h2>❓ Post Your Doubts</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="doubts-card">
+    <p>Please fill in your details and doubt. Your submission will be recorded securely.</p>
+
+    <!-- Google Form -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSfs_f4pI58sWuPNEQyIs7Esdh7NdVMzK4VIgxEyi5ES7CM8bA/formResponse" 
+          method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+
+      <input type="text" name="entry.1615842241" placeholder="Student Name" class="form-input" required><br>
+      <input type="text" name="entry.875262622" placeholder="Roll No." class="form-input" required><br>
+      <input type="text" name="entry.1937575059" placeholder="System ID" class="form-input" required><br>
+      <input type="tel"  name="entry.1629869264" placeholder="Mobile No." class="form-input" required><br>
+      <input type="email" name="entry.927567540" placeholder="Email ID" class="form-input" required><br>
+      <textarea name="entry.1974734374" placeholder="Type your doubt here..." class="doubt-input" required></textarea><br>
+
+      <button type="submit" class="doubt-btn">🚀 Submit Doubt</button>
+    </form>
+
+    <!-- Hidden iframe -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <!-- Confirmation -->
+    <p id="thankyou-msg" style="display:none; color:green; font-weight:bold; margin-top:10px;">
+      ✅ Your doubt has been submitted successfully!
+    </p>
+  </div>
+    </div>
+
+<div id="Important-Dates" class="section-box" style="margin-top:30px; font-family:Arial, sans-serif;">
+
+	  <!-- Blue Header -->
+	  <div style="background:#007BFF; color:white; padding:14px; border-radius:8px 8px 0 0; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.15);">
+		<h2 style="margin:0; font-size:20px;">📅 Important Dates</h2>
+	  </div>
+
+	  <!-- Panels Container -->
+	  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:20px;">
+
+		<!-- Theory Panel -->
+		<div style="flex:1; min-width:300px; background:#FFF3E0; border:1px solid #FD7E14; border-radius:8px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+		  <div style="background:#FD7E14; color:white; padding:12px; border-radius:8px 8px 0 0; text-align:center; font-weight:bold;">
+			Theory (CSAI3100)
+		  </div>
+		  <div style="padding:15px; font-size:15px; line-height:1.6; color:#333;">
+			<ul style="margin:0; padding-left:18px;">
+			  <li><b>Assessment 1:</b> To be announced (Units 1 & 2)</li>
+			  <li><b>Assessment 2:</b> To be announced (Units 3 & 4)</li>
+			  <li><b>Assignment 1:</b> To be announced (Submission)</li>
+			  <li><b>Assignment 2:</b> To be announced (Submission)</li>
+			  <li><b>Mid Semester Exam:</b> As per University Schedule</li>
+			  <li><b>End Semester Exam:</b> As per University Schedule</li>
+			</ul>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+
+    <div id="Course-Feedback" class="section-box">
+      <!-- Blue Header -->
+  <div class="feedback-header" 
+       style="background:linear-gradient(90deg, #007BFF, #0056b3); color:white; padding:18px; text-align:center;">
+    <h2 style="margin:0; font-size:22px;">📝 Course Feedback</h2>
+  </div>
+
+  <!-- Description -->
+  <div style="padding:20px; background:#fdfdfd; border-top:1px solid #eee; text-align:center;">
+    <p style="font-size:16px; color:#333; line-height:1.6; margin-bottom:20px;">
+      💡 Your feedback is <b>extremely valuable</b> in improving the course content and teaching effectiveness.  
+      Please take a few minutes to share your thoughts and suggestions with me.
+    </p>
+
+    <!-- Feedback Form Link -->
+    <a href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/Course_Feedback_CSAI3100/" target="_blank"
+       style="display:inline-block; padding:12px 25px; background:linear-gradient(90deg, #007BFF, #0056b3); 
+              color:white; border-radius:8px; font-weight:bold; font-size:16px; text-decoration:none; 
+              box-shadow:0 4px 8px rgba(0,0,0,0.2); transition:0.3s;">
+      🚀 Fill Out the Feedback Form
+    </a>
+  </div>
+    </div>
+
+    <div id="thanks-from-course-instructor" class="section-box">
+      <!-- Blue Header -->
+  <div class="thanks-header">
+    <h2>Thanks From Your Course Instructor</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="thanks-card">
+    <p>
+      <b>Dear Students</b>,  
+      <br><br>
+      Thank you for your active participation in the course.  
+      Your enthusiasm, curiosity, and commitment make this learning journey inspiring.  
+    </p>
+
+    <p style="font-weight:600; color:#0073e6;">
+      Keep asking questions, keep exploring, and never stop learning!
+    </p>
+
+    <p style="margin-top:18px; color:#444;">
+      — <b>Dr. Gopal Chandra Jana</b><br>
+      (Course Instructor)
+    </p>
+  </div>
+  </div>
+  </div>
+
+  <footer>
+    © 2025 Dr. Gopal Chandra Jana | All rights reserved.
+  </footer>
+
+  <script>
+    // Safely attach behavior after DOM is ready
+    (function () {
+      const header = document.querySelector('header');
+      const courseHeader = document.querySelector('.course-header');
+      const btn = document.getElementById('announcement-btn');
+      const ticker = document.getElementById('announcement-ticker');
+      const content = document.getElementById('page-content');
+
+      if (!btn || !ticker || !header || !courseHeader || !content) return;
+
+      function placeTicker() {
+        // Position ticker just below the combined fixed headers
+        const top = header.offsetHeight + courseHeader.offsetHeight;
+        ticker.style.top = top + 'px';
+      }
+
+      function updateContentOffset() {
+        // Add space so content is never hidden behind fixed bars
+        const extra = ticker.classList.contains('open') ? ticker.scrollHeight : 0;
+        const marginTop = header.offsetHeight + courseHeader.offsetHeight + extra + 20;
+        content.style.marginTop = marginTop + 'px';
+      }
+
+      function toggleTicker() {
+        // Toggle open/closed state
+        ticker.classList.toggle('open');
+        // Recompute spacing after the transition finishes
+        setTimeout(updateContentOffset, 10);
+      }
+
+      // Initial layout
+      placeTicker();
+      updateContentOffset();
+
+      // Events
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        toggleTicker();
+      });
+
+      window.addEventListener('resize', function () {
+        placeTicker();
+        updateContentOffset();
+      });
+    })();
+
+    let submitted = false;
+  document.querySelector("form").addEventListener("submit", function() {
+    setTimeout(() => {
+      if (submitted) {
+        document.getElementById("thankyou-msg").style.display = "block";
+      }
+    }, 500);
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
