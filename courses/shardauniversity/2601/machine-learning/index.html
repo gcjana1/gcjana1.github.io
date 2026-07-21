@@ -1,1 +1,1213 @@
-Machine Learning - CSE473/CSP473
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. GC Jana | Machine Learning (CSE473 & CSP473)</title>
+	<meta name="description" content="This is a Machine Learning (CSE473 & CSP473) course content page. The course is taught by Dr. Gopal Chandra Jana (Dr. GC Jana) in the Department of CSE at Sharda University. Students can access all the content, including syllabus, lecture notes, assignments, lab manual, list of experiments, ML algorithms, and also students can check their CA marks.">
+	<meta name="keywords" content="Best Machine Learning course, ML course, Machine Learning course for B.Tech. CSE, Best ML Course, B.Tech. AIML, ML Syllabus, ML Lecture Notes, ML Lecture PPT, CSE473, CSP473, Machine Learning course by Dr. Gopal Chandra Jana, ML course by Dr. Gopal Chandra Jana, ML Course by Dr. GC Jana, ML syllabus, ML lab, supervised learning, unsupervised learning, SVM, Random Forest, ANN, Sharda University ML, Dr GC Jana ML, ML notes, ML assignments">
+	<meta name="author" content="Dr. Gopal Chandra Jana">
+
+	<meta property="og:title" content="Dr. GC Jana | Machine Learning (CSE473 & CSP473)">
+	<meta property="og:description" content="This is a Machine Learning (CSE473 & CSP473) course content page. The course is taught by Dr. Gopal Chandra Jana (Dr. GC Jana) in the Department of CSE at Sharda University. Students can access all the content, including syllabus, lecture notes, assignments, lab manual, list of experiments, ML algorithms, and also students can check their CA marks.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/">
+	<link rel="canonical" href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/">
+
+	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@type": "Course",
+	  "name": "Machine Learning (CSE473 & CSP473) | Dr. GC Jana",
+	  "description": "This is a Machine Learning (CSE473 & CSP473) course content page. The course is taught by Dr. Gopal Chandra Jana (Dr. GC Jana) in the Department of CSE at Sharda University. Students can access all the content, including syllabus, lecture notes, assignments, lab manual, list of experiments, ML algorithms, and also students can check their CA marks.",
+	  "provider": {
+	    "@type": "Person",
+	    "name": "Dr. Gopal Chandra Jana"
+	  }
+	}
+	</script>
+	
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f7;
+      color: #000;
+      line-height: 1.6;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #1a73e8;
+      color: #fff;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .top-menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    .top-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-menu a:hover,
+    .top-menu a.current {
+      text-decoration: underline;
+    }
+
+    .course-header {
+      position: fixed;
+      top: 55px;
+      width: 100%;
+      background-color: #1f3a63;
+      color: white;
+      padding: 5px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      flex-wrap: wrap;
+    }
+
+    .course-info {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .course-info b {
+      font-size: 16px;
+    }
+
+    .course-nav {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .course-nav a {
+      padding: 8px 12px;
+      background-color: #284b80;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .course-nav a:hover,
+    .course-nav a.active {
+      background-color: #3e65a3;
+    }
+
+    /* 🔴 Blinking Announcement Button */
+    .announcement {
+      color: red;
+      font-weight: bold;
+      animation: blink 3s infinite; /* slower blink */
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid rgba(255,0,0,.25);
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    /* Pause scrolling when hovered */
+    .announcement-bar:hover .announcement-track {
+      animation-play-state: paused;
+    }
+
+
+    /* 📢 Sliding Announcement Ticker (starts collapsed) */
+    .announcement-bar {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 2px solid #e5e7eb;
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: bold;
+      color: red;
+      max-height: 0;               /* collapsed */
+      padding: 0 12px;             /* collapsed padding */
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      z-index: 998;
+    }
+
+    .announcement-bar.open {
+      max-height: 56px;            /* expanded height */
+      padding: 6px 12px;           /* restore padding */
+    }
+
+    .announcement-track {
+      display: inline-block;
+      animation: scroll 30s linear infinite;
+    }
+
+    .announcement-track span {
+      margin-right: 60px;
+    }
+
+    @keyframes scroll {
+      0%   { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    /* Style for announcements */
+      .announcement-item {
+        color: #0056b3;            /* nice blue shade */
+        font-weight: 500;          /* medium-bold */
+        font-size: 16px;           /* readable text */
+        padding: 0 20px;           /* spacing between items */
+        white-space: nowrap;       /* keep text in one line */
+        display: inline-block;
+      }
+      
+      .announcement-item b {
+        color: #d9534f;            /* important parts in red */
+        font-weight: 600;          /* make bolded text stand out */
+      }
+
+    .content {
+      margin-top: 180px; /* JS will update this for accuracy */
+      padding: 20px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: margin-top 0.3s ease;
+    }
+
+    .section-box {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #12263A;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .top-menu {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .course-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .course-nav {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .course-info {
+        margin-bottom: 10px;
+      }
+    }
+
+    html {
+      scroll-padding-top: 150px;
+    }
+
+      .syllabus-title {
+    font-size: 26px;
+    color: #1a73e8;
+    margin-bottom: 20px;
+    border-left: 6px solid #1a73e8;
+    padding-left: 10px;
+    font-weight: bold;
+  }
+
+  .syllabus-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .syllabus-list > li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #f9fbfd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+  }
+
+  .syllabus-list > li:hover {
+    transform: translateX(5px);
+    background: #f1f6ff;
+  }
+
+  .unit-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-bottom: 8px;
+  }
+
+  .syllabus-list ul {
+    list-style: square;
+    padding-left: 20px;
+    color: #333;
+    font-size: 15px;
+  }
+
+  .syllabus-list ul li {
+    margin: 5px 0;
+  }
+  .laptop-icon {
+    color: #1a73e8;   /* blue laptop icon */
+  }
+
+  .units-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .left-column,
+  .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .unit-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .unit-card h3 {
+    margin: 0 0 10px;
+    background: #1a73e8;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .unit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .unit-card ul li {
+    margin: 5px 0;
+  }
+  
+  .unit-card ul li a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: 500;
+  }
+  
+  .unit-card ul li a:hover {
+    color: #ff9800;
+  }
+  
+  .full-row {
+    margin-top: 15px;
+  }
+  
+  .full-row .unit-card {
+    width: 100%;
+  }
+  /* Blue header bar */
+  .assignments-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .assignments-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Common instructions card */
+  .common-instructions {
+    background: #f1f7ff;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  }
+  .common-instructions h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  .common-instructions ul {
+    margin: 8px 0 0 20px;
+    color: #444;
+  }
+
+  /* Assignment cards layout */
+  .assignment-container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .assignment-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    width: 48%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .assignment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+  .assignment-card h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #2c3e50;
+  }
+  .assignment-card p {
+    margin: 8px 0;
+    color: #333;
+  }
+  .instructions {
+    margin: 10px 0 15px;
+    padding-left: 20px;
+  }
+  .instructions li {
+    margin-bottom: 6px;
+    color: #444;
+  }
+  .pdf-link {
+    color: #0073e6;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .pdf-link:hover {
+    text-decoration: underline;
+  }
+  .submit-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #0073e6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover {
+    background: #005bb5;
+  }
+
+     .doubts-header {
+    background: #0073e6; color: white;
+    padding: 12px 20px; border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .doubts-header h2 { margin: 0; font-size: 22px; }
+
+  .doubts-card {
+    background: #f9f9f9; border-radius: 12px;
+    padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .form-input, .doubt-input {
+    width: 100%; margin-bottom: 10px;
+    padding: 10px; font-size: 15px;
+    border: 1px solid #ccc; border-radius: 8px;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-input:focus, .doubt-input:focus {
+    border-color: #0073e6;
+    box-shadow: 0 0 6px rgba(0,115,230,0.3);
+  }
+  .doubt-input { height: 100px; resize: none; }
+
+  .doubt-btn {
+    margin-top: 12px; padding: 10px 18px;
+    background: #0073e6; color: white;
+    border: none; border-radius: 8px;
+    font-size: 15px; font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .doubt-btn:hover { background: #005bb5; transform: scale(1.05); }
+
+
+
+
+
+
+/*Thanks Message*/
+  /* Blue header bar */
+  .thanks-header {
+    background: #0073e6;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .thanks-header h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  /* Card style */
+  .thanks-card {
+    background: linear-gradient(135deg, #f9f9f9, #eef6ff);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    text-align: center;
+  }
+  .thanks-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+  .thanks-card p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+</style>
+  
+</head>
+<body>
+
+  <header>
+    <div class="site-title">Dr. GC Jana</div>
+    <div class="top-menu">
+      <a href="https://www.gcjana.in/">Home</a>
+      <a href="https://www.gcjana.in/publications.html">Publications</a>
+      <a href="https://www.gcjana.in/research.html">Research</a>
+      <a href="https://www.gcjana.in/courses.html" class="current">Courses</a>
+      <a href="https://www.gcjana.in/students/">Students</a>
+      <a href="https://www.gcjana.in/TalksandTutorials">Talks/Tutorials</a>
+      <a href="https://www.gcjana.in/External_Examiner">External Examiner</a>
+      <a href="https://www.gcjana.in/Software-Toolbox">Software/Toolbox</a>
+	  <a href="https://www.gcjana.in/opportunities/">Opportunities</a>
+    </div>
+  </header>
+
+  <div class="course-header">
+    <div class="course-info">
+      <b>Machine Learning (Theory & Lab) | CSE473 / CSP473</b><br>
+      Offered by: Dr. Gopal Chandra Jana (Dr. GC Jana)<br>
+      Assistant Professor, Department of CSE, SoCSE, Sharda University<br>
+      Email: First_Name [dot] Last_Name {@} sharda.ac.in
+    </div>
+    <div class="course-nav">
+      <a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/">Course Home</a>
+      <a href="#syllabus-cse473">Syllabus (CSE473)</a>
+      <a href="#syllabus-csp473">Syllabus (CSP473)</a>
+      <a href="#Evaluations-Schemes">Evaluations Schemes</a>
+      <a href="#lectures">Lectures</a>
+      <a href="#lab">Lab</a>
+      <a href="#assignments">Assignments</a>
+      <a href="#Post-doubts">Post Doubts</a>
+      <a href="#Important-Dates">Important Dates</a>
+      <a href="#Course-Feedback">Course Feedback</a>
+	  <a href="https://www.gcjana.in/courses/shardauniversity/2601/CSE473-CSP473_CA_Marks/" target="_blank">Check CA Marks</a>
+      <a href="#thanks-from-course-instructor">Thanks</a>
+      <!-- 🔴 Important Announcement Button -->
+      <span class="announcement" id="announcement-btn" title="Click to view all announcements">
+        Important Announcement
+      </span>
+    </div>
+  </div>
+
+  <!-- 📢 Sliding ticker (JS sets its top dynamically) -->
+  <div id="announcement-ticker" class="announcement-bar" aria-hidden="true">
+    <div class="announcement-track" role="marquee" aria-label="Latest announcements">
+        <span class="announcement-item">
+          📢 Welcome to the <b>Machine Learning (CSE473 / CSP473)</b> course. Lecture notes and lab experiments will be uploaded unit-wise.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>75% Attendance</b> is mandatory for <b>appearing in MSE and ESE</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Assessment-1</b> (Units 1 &amp; 2) schedule will be <b>announced soon</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>ML Lab:</b> Bring your <b>laptop with Python / Google Colab</b> set up for every lab session.
+        </span>
+
+      <!-- second copy -->
+      <span class="announcement-item">
+          📢 Welcome to the <b>Machine Learning (CSE473 / CSP473)</b> course. Lecture notes and lab experiments will be uploaded unit-wise.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>75% Attendance</b> is mandatory for <b>appearing in MSE and ESE</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>Assessment-1</b> (Units 1 &amp; 2) schedule will be <b>announced soon</b>.
+        </span>
+
+        <span class="announcement-item">
+          📢 <b>ML Lab:</b> Bring your <b>laptop with Python / Google Colab</b> set up for every lab session.
+        </span>
+    </div>
+  </div>
+
+  <div class="content" id="page-content">
+	<p style="text-align: justify;">
+	  This <strong>Machine Learning (Theory & Lab) (CSE473 / CSP473)</strong> course content is designed for undergraduate students in the Department of Computer Science and Engineering at Sharda University. The course provides a comprehensive foundation in <strong>Machine Learning concepts, mathematical foundations, learning algorithms, and real-world data-driven applications</strong>.
+	
+	  It is structured into five major units: <strong>Unit 1: Core Concepts of Machine Learning</strong>, covering the ML mindset, problem framing, learning scenarios, data preparation and feature engineering; <strong>Unit 2: Supervised Learning Algorithms – Part One</strong>, focusing on linear regression, gradient descent, regularization (Ridge &amp; Lasso), logistic regression and LDA; <strong>Unit 3: Supervised Learning Algorithms – Part Two</strong>, covering Support Vector Machines, Artificial Neural Networks with backpropagation, Decision Trees (ID3) and Random Forests; <strong>Unit 4: Unsupervised Learning</strong>, covering clustering methods, k-Means, Gaussian Mixture Models and Principal Component Analysis; and <strong>Unit 5: Parameter Estimation, Model Evaluation and Ensemble Methods</strong>, highlighting maximum likelihood estimation, cross-validation, the ROC curve, and ensemble techniques (bagging, boosting, stacking).
+	
+	  The lab component (CSP473) complements theoretical concepts through hands-on implementation using <strong>Python, Google Colab, and open-source ML libraries such as scikit-learn, NumPy, Pandas, Matplotlib and TensorFlow/Keras</strong>, enabling students to build and evaluate learning models. Students gain practical experience in <strong>algorithm design, model development, and solving real-world ML problems through a course project</strong>.
+	
+	  The course is supported by <strong>structured lecture notes, reference books, additional PPTs and study material links, assignments, lab experiments, and evaluation schemes</strong>, ensuring a balanced approach to both conceptual understanding and practical skill development.
+	</p>
+    <div id="syllabus-cse473" class="section-box">
+    <h2 class="syllabus-title">📘 Syllabus (CSE473 - Theory)</h2>
+    <ul class="syllabus-list">
+      <li>
+        <div class="unit-title">Unit 1: Core Concepts of Machine Learning</div>
+        <ul>
+          <li>A. What is Machine Learning? The ML mindset; ML problem framing (common ML problems, use cases, identifying good vs hard ML problems); ML applications (image &amp; speech recognition, medical diagnosis, statistical arbitrage, learning associations); standard learning tasks (classification, regression, ranking, clustering, dimensionality reduction / manifold learning)</li>
+          <li>B. Learning stages (features, labels, hyperparameters, validation &amp; test samples, loss function, hypothesis tests); learning scenarios (supervised, unsupervised, semi-supervised, transductive inference, online, reinforcement, active learning); generalization</li>
+          <li>C. Data preparation &amp; feature engineering; data preprocessing &amp; data quality; data cleaning (missing values, noisy data); data integration; data reduction (attribute subset selection, histograms, sampling, aggregation); data transformation &amp; discretization (normalization, binning, concept hierarchy)</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 2: Supervised Learning Algorithms - Part One</div>
+        <ul>
+          <li>A. How supervised learning algorithms work; bias–variance trade-off; function complexity vs amount of training data; dimensionality of the input space; noise in output values; data heterogeneity, redundancy, interactions and non-linearities</li>
+          <li>B. Linear Regression: model representation, simple linear regression, ordinary least squares, gradient descent; regularization / shrinkage (Lasso &amp; Ridge), overfitting; cost function, feature scaling, normalization, learning rate, convergence test</li>
+          <li>C. Logistic Regression: the logistic model, odds, odds ratio &amp; logit; model fitting (IRLS, goodness of fit, limitations); Linear Discriminant Analysis (LDA); applications (bankruptcy prediction, face recognition, marketing, biomedical studies)</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 3: Supervised Learning Algorithms - Part Two</div>
+        <ul>
+          <li>A. Support Vector Machines: linear SVM (hard-margin, soft-margin), non-linear classification, computing the SVM classifier (primal, dual, kernel trick), sub-gradient &amp; coordinate descent, empirical risk minimization, hinge loss, parameter selection</li>
+          <li>B. Artificial Neural Networks: feed-forward network functions, weight-space symmetries; network training &amp; parameter optimization; gradient descent optimization; error backpropagation and its efficiency</li>
+          <li>C. Decision Tree Learning: tree representation, ID3 algorithm, entropy, information gain, overfitting &amp; validation, pruning; Random Forests: bagging, from bagging to random forests, extra trees, variable importance</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 4: Unsupervised Learning</div>
+        <ul>
+          <li>A. What is unsupervised learning?; clustering methods (Euclidean-distance based, probability based, hierarchical clustering)</li>
+          <li>B. k-Means clustering algorithm (naive k-means, initialization methods); applications (vector quantization, cluster analysis, feature learning); Gaussian Mixture Models; Expectation–Maximization method</li>
+          <li>C. Principal Component Analysis (first &amp; further components, covariances, dimensionality reduction, SVD); properties &amp; limitations of PCA; computing PCA via the covariance method; typical applications</li>
+        </ul>
+      </li>
+      <li>
+        <div class="unit-title">Unit 5: Parameter Estimation, Model Evaluation and Ensemble Methods</div>
+        <ul>
+          <li>A. Parameter Estimation: point estimation, Maximum Likelihood Estimation, unbiased estimation, confidence intervals (one mean, two means, variances)</li>
+          <li>B. Model Evaluation: holdout set validation, cross-validation, leave-one-out, random subsampling, teach-and-test, bootstrapping; the ROC curve</li>
+          <li>C. Ensemble Methods: ensemble theory &amp; size; voting and averaging based methods; boosting, weighted average, stacking, bagging and bootstrap aggregating</li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+    <div id="syllabus-csp473" class="section-box">
+      <h2 class="syllabus-title">
+      <span class="laptop-icon">💻</span> Syllabus (CSP473 - Lab)
+      </h2>
+    <ul class="syllabus-list">
+      <li>
+        <div class="unit-title">Unit 1: Core Concepts of Machine Learning</div>
+        <ul>
+          <li>1. Understanding problem solving through Machine Learning and problem identification. <b>[CO1]</b></li>
+          <li>2. State-of-the-art review of tools used in Machine Learning experiments and project development. <b>[CO1]</b></li>
+          <li>3. Write a program to load and view a dataset file. <em>[Iris dataset]</em> <b>[CO1]</b></li>
+          <li>4. Implement simple linear regression using the housing price prediction problem. <em>[California Housing dataset]</em> <b>[CO1]</b></li>
+          <li>5. Implement binary logistic regression using the cancer identification problem. <em>[Breast Cancer Wisconsin dataset]</em> <b>[CO2]</b></li>
+        </ul>
+      </li>
+    
+      <li>
+        <div class="unit-title">Unit 2: Supervised Learning Algorithms - Part One</div>
+        <ul>
+          <li>6. Implement the Gradient Descent algorithm to optimize model parameters and visualize convergence of the cost function. <em>[California Housing dataset]</em> <b>[CO2]</b></li>
+          <li>7. Investigate the effect of learning rate and number of iterations on Gradient Descent convergence. <em>[California Housing dataset]</em> <b>[CO2]</b></li>
+          <li>8. Implement Ridge and Lasso regularized linear regression and compare their performance with standard linear regression. <em>[California Housing &amp; Breast Cancer Wisconsin datasets]</em> <b>[CO2]</b></li>
+          <li>9. Develop a regularized logistic regression model and analyze the impact of regularization strength on classification accuracy. <em>[California Housing &amp; Breast Cancer Wisconsin datasets]</em> <b>[CO2]</b></li>
+        </ul>
+      </li>
+    
+      <li>
+        <div class="unit-title">Unit 3: Supervised Learning Algorithms - Part Two</div>
+        <ul>
+          <li>10. Implement a Support Vector Regression (SVR) model, compare different kernel functions, and evaluate using MAE, MSE and R² score. <em>[California Housing / UCI Diabetes dataset]</em> <b>[CO3]</b></li>
+          <li>11. Design and train an Artificial Neural Network using the Backpropagation algorithm; analyze the effect of network architecture, activation functions and learning rate. <em>[MNIST / Fashion-MNIST dataset]</em> <b>[CO3]</b></li>
+          <li>12. Demonstrate the working of the decision tree based ID3 algorithm and classify a new sample. <em>[Play Tennis / Iris dataset]</em> <b>[CO3]</b></li>
+          <li>13. Demonstrate the working of the Random Forest algorithm and classify a new sample. <em>[Wine / Breast Cancer dataset]</em> <b>[CO3]</b></li>
+        </ul>
+      </li>
+    
+      <li>
+        <div class="unit-title">Unit 4: Unsupervised Learning</div>
+        <ul>
+          <li>14. Implement the K-Means clustering algorithm using an appropriate dataset. <em>[Iris / Mall Customers dataset]</em> <b>[CO4]</b></li>
+        </ul>
+      </li>
+    
+      <li>
+        <div class="unit-title">Unit 5: Model Evaluation, Ensemble Methods &amp; Course Project</div>
+        <ul>
+          <li>15. Split data into training, cross-validation and testing sets; evaluate model performance using Hold-Out and k-Fold Cross-Validation. <em>[Iris dataset]</em> <b>[CO5]</b></li>
+          <li>16. Implement an Ensemble Learning approach (Bagging, Boosting or Stacking) by combining models to solve a time-series prediction problem. <em>[California Housing / UCI Bike Sharing Demand dataset]</em> <b>[CO5]</b></li>
+          <li>17. Perform statistical hypothesis testing (t-test, Chi-square, ANOVA or Mann-Whitney U) and interpret the results using Python statistical libraries. <em>[Tips / Titanic / Iris dataset]</em> <b>[CO5]</b></li>
+          <li>18. Course Project Evaluation — three reviews (Problem Statement, Design Specification, Development &amp; Results). <b>[CO6]</b></li>
+        </ul>
+      </li>
+    </ul>
+    </div>
+
+  <div id="Evaluations-Schemes" class="section-box" style="margin-top:30px; font-family:Arial, sans-serif;">
+
+	  <!-- Blue Header -->
+	  <div style="background:#007BFF; color:white; padding:14px; border-radius:8px 8px 0 0; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.15);">
+		<h2 style="margin:0; font-size:20px;">📊 Evaluation Schemes</h2>
+	  </div>
+
+	  <!-- Table -->
+	  <div style="overflow-x:auto; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px;">
+		<table style="width:100%; border-collapse:collapse; font-size:16px; text-align:center;">
+		  <thead>
+			<tr style="font-weight:bold;">
+			  <th style="padding:14px; border:1px solid #ddd; background:#6C757D; color:white;">Component</th>
+			  <th style="padding:14px; border:1px solid #ddd; background:#FD7E14; color:white;">Theory (CSE473)</th>
+			  <th style="padding:14px; border:1px solid #ddd; background:#28A745; color:white;">Lab (CSP473)</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Total Weightage</td>
+			  <td style="padding:12px; border:1px solid #ddd;">100% (CA: 25% + ETE: 75%)</td>
+			  <td style="padding:12px; border:1px solid #ddd;">100% (CA: 30% + CE: 30% + ETE: 40%)</td>
+			</tr>
+			<tr style="background:#fdfdfd;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Continuous Assessment (CA)</td>
+			  <td style="padding:12px; border:1px solid #ddd; text-align:left;">
+				• Internal Assessment 1 (Units 1 &amp; 2)<br>
+				• Internal Assessment 2 (Units 3 &amp; 4)<br>
+				• Assignment 1 (Units 1 &amp; 2)<br>
+				• Assignment 2 (Units 3, 4 &amp; 5)
+			  </td>
+			  <td style="padding:12px; border:1px solid #ddd; text-align:left;">
+				• Practical Records File<br>
+				• Performance in Experiments (In-Class)<br>
+				• Viva-Voce (throughout semester)
+			  </td>
+			</tr>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">Continuous Evaluation (CE)</td>
+			  <td style="padding:12px; border:1px solid #ddd;">Included within ETE</td>
+			  <td style="padding:12px; border:1px solid #ddd;">30% — Course Project (Implementation, Working Source Code &amp; Results)</td>
+			</tr>
+			<tr style="background:#ffffff;">
+			  <td style="padding:12px; border:1px solid #ddd; font-weight:bold;">End Term Examination (ETE)</td>
+			  <td style="padding:12px; border:1px solid #ddd;">75%</td>
+			  <td style="padding:12px; border:1px solid #ddd;">40% (External Practical Exam)</td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+
+    <div id="lectures" class="section-box">
+      <h2 class="lectures-title">📚 Lectures</h2>
+    <p class="lectures-intro">Theory lecture materials will be uploaded unit-wise as the course progresses. Please go through and review all the lecture content and additional materials carefully. If you have any doubts, post them using the “Post Doubt” option.</p>
+    <div class="units-container">
+  <!-- Left Column -->
+  <div class="left-column">
+    <div class="unit-card">
+      <h3>Unit 1: Core Concepts of Machine Learning</h3>
+      <ul>
+        <li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_1_Lecture_1_Introduction_to_Machine_Learning.pdf" target="_blank">
+			    📑 Lecture-1 PPT on <span style="color:blue;">Introduction to Machine Learning &amp; ML Problem Framing</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_1_Lecture_2_Learning_Scenarios_and_Feature_Engineering.pdf" target="_blank">
+			    📑 Lecture-2 PPT on <span style="color:blue;">Learning Scenarios, Data Preparation &amp; Feature Engineering</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank">
+			    📘 Reference Book-1: <span style="color:blue;">Chapter-1, "Pattern Recognition and Machine Learning", C. M. Bishop, Springer, 2006.</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://cs.nyu.edu/~mohri/mlbook/" target="_blank">
+			    📘 Reference Book-2: <span style="color:blue;">"Foundations of Machine Learning" (2nd Ed.), Mohri, Rostamizadeh &amp; Talwalkar, MIT Press, 2018.</span>
+	 		</a>
+		</li>
+      </ul>
+    </div>
+
+    <div class="unit-card">
+      <h3>Unit 2: Supervised Learning Algorithms - Part One</h3>
+      <ul>
+    	<li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_2_Lecture_1_Linear_Regression_and_Gradient_Descent.pdf" target="_blank">
+			    📑 Lecture-1 PPT on <span style="color:blue;">Linear Regression, Ordinary Least Squares &amp; Gradient Descent</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE473/lecture-notes/Unit_2_Lecture_2_Regularization_and_Logistic_Regression.pdf" target="_blank">
+			    📑 Lecture-2 PPT on <span style="color:blue;">Regularization (Ridge &amp; Lasso), Logistic Regression &amp; LDA</span>
+	 		</a>
+		</li>
+        <li>
+			<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank">
+			    📘 Reference Book-1: <span style="color:blue;">Chapters 3 &amp; 4, "Pattern Recognition and Machine Learning", C. M. Bishop, Springer, 2006.</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.robots.ox.ac.uk/~twgr/teaching/" target="_blank">
+			    🔗 Additional Reference: <span style="color:blue;">Machine Learning teaching material by Dr. Tom Rainforth, University of Oxford (for the mathematical background).</span>
+	 		</a>
+		</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="right-column">
+    <div class="unit-card">
+      <h3>Unit 3: Supervised Learning Algorithms - Part Two</h3>
+      <ul>
+        <li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_3_Lecture_1_SVM_and_ANN_Backpropagation.pdf" target="_blank">
+			    📑 Lecture-1 PPT on <span style="color:blue;">Support Vector Machines &amp; Artificial Neural Networks (Backpropagation)</span>
+	 		</a>
+		</li>
+        <li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_3_Lecture_2_Decision_Trees_and_Random_Forest.pdf" target="_blank">
+			    📑 Lecture-2 PPT on <span style="color:blue;">Decision Tree Learning (ID3) &amp; Random Forests</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank">
+			    📘 Reference Book-1: <span style="color:blue;">Chapters 5 &amp; 7, "Pattern Recognition and Machine Learning", C. M. Bishop, Springer, 2006.</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.robots.ox.ac.uk/~twgr/assets/teaching/lecture_18.pdf" target="_blank">
+			    🔗 Additional Reference PPT on <span style="color:blue;">"Neural Networks" by Dr. Tom Rainforth, University of Oxford.</span>
+	 		</a>
+		</li>
+      </ul>
+    </div>
+
+    <div class="unit-card">
+      <h3>Unit 4: Unsupervised Learning</h3>
+      <ul>
+        <li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_4_Lecture_1_Clustering_and_KMeans.pdf" target="_blank">
+			    📑 Lecture-1 PPT on <span style="color:blue;">Clustering Methods, k-Means &amp; Gaussian Mixture Models (EM)</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_4_Lecture_2_Principal_Component_Analysis.pdf" target="_blank">
+			    📑 Lecture-2 PPT on <span style="color:blue;">Principal Component Analysis (PCA) &amp; Dimensionality Reduction</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank">
+			    📘 Reference Book-1: <span style="color:blue;">Chapters 9 &amp; 12, "Pattern Recognition and Machine Learning", C. M. Bishop, Springer, 2006.</span>
+	 		</a>
+		</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Full Width Unit 5 -->
+<div class="full-row">
+  <div class="unit-card">
+    <h3>Unit 5: Parameter Estimation, Model Evaluation &amp; Ensemble Methods</h3>
+    <ul>
+        <li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_5_Lecture_1_Parameter_Estimation_and_Model_Evaluation.pdf" target="_blank">
+			    📑 Lecture-1 PPT on <span style="color:blue;">Parameter Estimation (MLE), Model Evaluation, Cross-Validation &amp; ROC Curve</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/lecture-notes/Unit_5_Lecture_2_Ensemble_Methods.pdf" target="_blank">
+			    📑 Lecture-2 PPT on <span style="color:blue;">Ensemble Methods: Bagging, Boosting &amp; Stacking</span>
+	 		</a>
+		</li>
+		<li>
+			<a href="https://www.toptal.com/machine-learning/ensemble-methods-machine-learning" target="_blank">
+			    🔗 Additional Reference on <span style="color:blue;">Ensemble Methods in Machine Learning (Toptal).</span>
+	 		</a>
+		</li>
+    </ul>
+  </div>
+</div>
+
+
+</div>
+
+<div id="lab" class="section-box" 
+     style="max-width:1000px; margin:30px auto; font-family:Arial, sans-serif;">
+
+  <!-- Lab Header -->
+  <div style="background:linear-gradient(90deg,#007BFF,#0056b3); color:white; padding:15px; border-radius:8px 8px 0 0;">
+    <h2 style="margin:0;">🧪 Machine Learning Lab (CSP473)</h2>
+  </div>
+
+  <!-- Lab Intro Note -->
+  <div style="padding:20px; background:#fdfdfd; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px;">
+    <p style="font-size:16px; color:#333; line-height:1.6; margin-bottom:20px;">
+      💡 <b>Note:</b> In the ML Lab, we will be using tools like 
+      <b>Python and Google Colab</b>, including various 
+      <b>ML and DL libraries such as scikit-learn, NumPy, Pandas, Matplotlib, Seaborn and TensorFlow/Keras</b> to perform the experiments.
+    </p>
+
+    <!-- Two Column Layout -->
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:25px;">
+      
+      <!-- Left Panel: Experiments -->
+      <div style="flex:1; min-width:300px; background:#f9f9f9; border:1px solid #ddd; border-radius:8px; padding:15px;">
+        <h3 style="margin-top:0; color:#007BFF;">📘 List of Experiments</h3>
+        <p>Find the list of lab experiments with instructions and notes.</p>
+        <a href="experiments.html" target="_blank" 
+           style="display:inline-block; padding:10px 20px; background:#007BFF; color:white; 
+                  border-radius:6px; text-decoration:none; font-weight:bold;">
+          🔗 View Experiments
+        </a>
+      </div>
+
+      <!-- Right Panel: Lab Manual -->
+      <div style="flex:1; min-width:300px; background:#f9f9f9; border:1px solid #ddd; border-radius:8px; padding:15px;">
+        <h3 style="margin-top:0; color:#007BFF;">📖 Lab Manual</h3>
+        <p>Download the official ML Lab Manual for complete guidelines.</p>
+        <a href="ML_Lab_Manual.pdf" target="_blank" 
+           style="display:inline-block; padding:10px 20px; background:#28a745; color:white; 
+                  border-radius:6px; text-decoration:none; font-weight:bold;">
+          ⬇️ Download Lab Manual
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Panel: Submission -->
+	<div style="background:#fffbea; border:1px solid #f0e68c; border-radius:8px; padding:15px; text-align:center;">
+	  <h3 style="margin-top:0; color:#d35400;">📤 Lab Submissions</h3>
+	  <p>Please submit your lab reports and code files using your respective group link.</p>
+	
+	  <!-- Group 1 -->
+	  <a href="https://forms.gle/5ztVY1cj9BbzcdAaA" target="_blank"
+	     style="display:inline-block; margin:8px; padding:10px 20px; background:#27ae60; color:white; 
+	            border-radius:6px; text-decoration:none; font-weight:bold;">
+	    👨‍💻 Submission Link for Group 1
+	  </a>
+	
+	  <!-- Group 2 -->
+	  <a href="https://forms.gle/ACWgv4HPyCY8ftYBA" target="_blank"
+	     style="display:inline-block; margin:8px; padding:10px 20px; background:#2980b9; color:white; 
+	            border-radius:6px; text-decoration:none; font-weight:bold;">
+	    👩‍💻 Submission Link for Group 2
+	  </a>
+	</div>
+  </div>
+</div>
+
+
+  <div id="assignments" class="section-box">
+        <div class="assignments-header">
+      <h2>📑 Assignments</h2>
+      </div>
+    <!-- Common Instructions -->
+    <div class="common-instructions">
+      <h3>📌 Common Instructions</h3>
+      <ul>
+        <li>All assignments must be submitted before the due date.</li>
+        <li>Upload your solution in <strong>PDF format</strong>.</li>
+        <li>Plagiarism will not be tolerated.</li>
+        <li>Late submissions may not be accepted.</li>
+		<li>All assignments must be handwritten. Answers and solutions should be presented in a clear, step-by-step illustrative manner. Running text format will not be accepted.</li>
+		<li>Students may be asked to explain their answers and solutions while obtaining the instructor’s signature. Grades will be awarded based on the explanation and understanding demonstrated.</li>
+		<li>If any AI tools (such as GPTs) are used in preparing the assignment, students must also submit the complete script or prompt history along with the assignment.</li> 
+      </ul>
+    </div>
+    <!-- Assignment Cards -->
+    <div class="assignment-container">
+  
+      <!-- Assignment 1 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 1: Based on Unit-1 and 2</h3>
+        <p><strong>Due Date:</strong> To be announced</p>
+        <ul class="instructions">
+          <li>All questions are compulsory.</li>
+          <li>Prepare and submit as a single PDF file.</li>
+          <li>Submit scanned handwritten PDF document using the link mentioned below.</li>
+        </ul>
+        <a href="https://www.gcjana.in/courses/shardauniversity/2502/Assignments/CSE473_Assignment_1.pdf" target="_blank" class="pdf-link">📄 View Assignment-1</a><br><br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSccmUjN_tWv30KzHIZtirXlOZTCmfZW9Ki11I0wXU4q2phwZA/viewform?usp=dialog" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+      <!-- Assignment 2 -->
+      <div class="assignment-card">
+        <h3>📘 Assignment 2: Based on Unit-3, 4 and 5</h3>
+        <p><strong>Due Date:</strong> To be announced</p>
+        <ul class="instructions">
+          <li>All questions are compulsory.</li>
+          <li>Include clear reasoning steps.</li>
+          <li>Submit scanned handwritten PDF document using the link mentioned below.</li>
+        </ul>
+        <a href="https://www.gcjana.in/courses/shardauniversity/2502/Assignments/Assignment-2_CSE473.pdf" target="_blank" class="pdf-link">📄 View Assignment-2</a><br><br>
+        <a href="https://forms.gle/RbtUGZx57Qa5yfqt8" target="_blank" class="submit-btn">🔗 Submit Here</a>
+      </div>
+  
+    </div>
+  </div>
+
+    <div id="Post-doubts" class="section-box">
+       <!-- Blue Header -->
+  <div class="doubts-header">
+    <h2>❓ Post Your Doubts</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="doubts-card">
+    <p>Please fill in your details and doubt. Your submission will be recorded securely.</p>
+
+    <!-- Google Form -->
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSfs_f4pI58sWuPNEQyIs7Esdh7NdVMzK4VIgxEyi5ES7CM8bA/formResponse" 
+          method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+
+      <input type="text" name="entry.1615842241" placeholder="Student Name" class="form-input" required><br>
+      <input type="text" name="entry.875262622" placeholder="Roll No." class="form-input" required><br>
+      <input type="text" name="entry.1937575059" placeholder="System ID" class="form-input" required><br>
+      <input type="tel"  name="entry.1629869264" placeholder="Mobile No." class="form-input" required><br>
+      <input type="email" name="entry.927567540" placeholder="Email ID" class="form-input" required><br>
+      <textarea name="entry.1974734374" placeholder="Type your doubt here..." class="doubt-input" required></textarea><br>
+
+      <button type="submit" class="doubt-btn">🚀 Submit Doubt</button>
+    </form>
+
+    <!-- Hidden iframe -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <!-- Confirmation -->
+    <p id="thankyou-msg" style="display:none; color:green; font-weight:bold; margin-top:10px;">
+      ✅ Your doubt has been submitted successfully!
+    </p>
+  </div>
+    </div>
+
+<div id="Important-Dates" class="section-box" style="margin-top:30px; font-family:Arial, sans-serif;">
+
+	  <!-- Blue Header -->
+	  <div style="background:#007BFF; color:white; padding:14px; border-radius:8px 8px 0 0; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.15);">
+		<h2 style="margin:0; font-size:20px;">📅 Important Dates</h2>
+	  </div>
+
+	  <!-- Panels Container -->
+	  <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:20px;">
+
+		<!-- Theory Panel -->
+		<div style="flex:1; min-width:300px; background:#FFF3E0; border:1px solid #FD7E14; border-radius:8px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+		  <div style="background:#FD7E14; color:white; padding:12px; border-radius:8px 8px 0 0; text-align:center; font-weight:bold;">
+			Theory (CSE473)
+		  </div>
+		  <div style="padding:15px; font-size:15px; line-height:1.6; color:#333;">
+			<ul style="margin:0; padding-left:18px;">
+			  <li><b>Assessment 1:</b> To be announced (Units 1 &amp; 2)</li>
+			  <li><b>Assessment 2:</b> To be announced (Units 3 &amp; 4)</li>
+			  <li><b>Assignment 1:</b> To be announced (Units 1 &amp; 2)</li>
+			  <li><b>Assignment 2:</b> To be announced (Units 3, 4 &amp; 5)</li>
+			  <li><b>Mid Semester Exam:</b> As per University Schedule</li>
+			  <li><b>End Semester Exam:</b> As per University Schedule</li>
+			</ul>
+		  </div>
+		</div>
+
+		<!-- Lab Panel -->
+		<div style="flex:1; min-width:300px; background:#E8F5E9; border:1px solid #28A745; border-radius:8px; box-shadow:0 3px 6px rgba(0,0,0,0.1);">
+		  <div style="background:#28A745; color:white; padding:12px; border-radius:8px 8px 0 0; text-align:center; font-weight:bold;">
+			Lab (CSP473)
+		  </div>
+		  <div style="padding:15px; font-size:15px; line-height:1.6; color:#333;">
+			<ul style="margin:0; padding-left:18px;">
+			  <li><b>Practical Records File:</b> Ongoing (Weekly Check)</li>
+			  <li><b>Performance in Experiments:</b> Continuous (In-Class)</li>
+			  <li><b>Course Project:</b> Three Reviews — dates to be announced</li>
+			  <li><b>Viva-Voce:</b> Throughout Semester</li>
+			  <li><b>End Semester Lab Exam (External):</b> As per University Schedule</li>
+			</ul>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+
+    <div id="Course-Feedback" class="section-box">
+      <!-- Blue Header -->
+  <div class="feedback-header" 
+       style="background:linear-gradient(90deg, #007BFF, #0056b3); color:white; padding:18px; text-align:center;">
+    <h2 style="margin:0; font-size:22px;">📝 Course Feedback</h2>
+  </div>
+
+  <!-- Description -->
+  <div style="padding:20px; background:#fdfdfd; border-top:1px solid #eee; text-align:center;">
+    <p style="font-size:16px; color:#333; line-height:1.6; margin-bottom:20px;">
+      💡 Your feedback is <b>extremely valuable</b> in improving the course content and teaching effectiveness.  
+      Please take a few minutes to share your thoughts and suggestions with me.
+    </p>
+
+    <!-- Feedback Form Link -->
+    <a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE473/Course_Feedback_CSE473/" target="_blank"
+       style="display:inline-block; padding:12px 25px; background:linear-gradient(90deg, #007BFF, #0056b3); 
+              color:white; border-radius:8px; font-weight:bold; font-size:16px; text-decoration:none; 
+              box-shadow:0 4px 8px rgba(0,0,0,0.2); transition:0.3s;">
+      🚀 Fill Out the Feedback Form
+    </a>
+  </div>
+    </div>
+
+    <div id="thanks-from-course-instructor" class="section-box">
+      <!-- Blue Header -->
+  <div class="thanks-header">
+    <h2>Thanks From Your Course Instructor</h2>
+  </div>
+
+  <!-- Card -->
+  <div class="thanks-card">
+    <p>
+      <b>Dear Students</b>,  
+      <br><br>
+      Thank you for your active participation in the course.  
+      Your enthusiasm, curiosity, and commitment make this learning journey inspiring.  
+    </p>
+
+    <p style="font-weight:600; color:#0073e6;">
+      Keep asking questions, keep exploring, and never stop learning!
+    </p>
+
+    <p style="margin-top:18px; color:#444;">
+      — <b>Dr. Gopal Chandra Jana</b><br>
+      (Course Instructor)
+    </p>
+  </div>
+  </div>
+  </div>
+
+  <footer>
+    © 2025 Dr. Gopal Chandra Jana | All rights reserved.
+  </footer>
+
+  <script>
+    // Safely attach behavior after DOM is ready
+    (function () {
+      const header = document.querySelector('header');
+      const courseHeader = document.querySelector('.course-header');
+      const btn = document.getElementById('announcement-btn');
+      const ticker = document.getElementById('announcement-ticker');
+      const content = document.getElementById('page-content');
+
+      if (!btn || !ticker || !header || !courseHeader || !content) return;
+
+      function placeTicker() {
+        // Position ticker just below the combined fixed headers
+        const top = header.offsetHeight + courseHeader.offsetHeight;
+        ticker.style.top = top + 'px';
+      }
+
+      function updateContentOffset() {
+        // Add space so content is never hidden behind fixed bars
+        const extra = ticker.classList.contains('open') ? ticker.scrollHeight : 0;
+        const marginTop = header.offsetHeight + courseHeader.offsetHeight + extra + 20;
+        content.style.marginTop = marginTop + 'px';
+      }
+
+      function toggleTicker() {
+        // Toggle open/closed state
+        ticker.classList.toggle('open');
+        // Recompute spacing after the transition finishes
+        setTimeout(updateContentOffset, 10);
+      }
+
+      // Initial layout
+      placeTicker();
+      updateContentOffset();
+
+      // Events
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        toggleTicker();
+      });
+
+      window.addEventListener('resize', function () {
+        placeTicker();
+        updateContentOffset();
+      });
+    })();
+
+    let submitted = false;
+  document.querySelector("form").addEventListener("submit", function() {
+    setTimeout(() => {
+      if (submitted) {
+        document.getElementById("thankyou-msg").style.display = "block";
+      }
+    }, 500);
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
