@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List of Experiments — Machine Learning Lab (CSP473) | Dr. GC Jana</title>
+  <meta name="description" content="Interactive list of Machine Learning Lab (CSP473) experiments by Dr. Gopal Chandra Jana, Sharda University. Each experiment includes a reference link to read, a dataset link, and a one-click Google Colab redirect. Students can search, filter, bookmark, and track their progress.">
+  <meta name="keywords" content="Machine Learning Lab experiments, CSP473, ML lab list of experiments, Google Colab ML, scikit-learn experiments, Dr GC Jana, Sharda University ML lab, ML datasets, ML programming experiments">
+  <meta name="author" content="Dr. Gopal Chandra Jana">
+  <meta property="og:title" content="List of Experiments — Machine Learning Lab (CSP473) | Dr. GC Jana">
+  <meta property="og:description" content="Interactive list of Machine Learning Lab (CSP473) experiments with read references, datasets, and one-click Google Colab links. Search, filter, bookmark and track progress.">
+  <meta property="og:type" content="website">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #1a73e8;
+      --brand-dark: #1f3a63;
+      --brand-2: #0d47a1;
+      --ok: #28a745;
+      --warn: #FD7E14;
+      --bg: #f5f6f7;
+      --card: #ffffff;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: #12263A;
+      line-height: 1.6;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: var(--brand);
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .site-title { font-size: 22px; font-weight: bold; }
+    .top-menu { display: flex; gap: 18px; flex-wrap: wrap; }
+    .top-menu a { color: #fff; text-decoration: none; font-weight: 500; }
+    .top-menu a:hover, .top-menu a.current { text-decoration: underline; }
+
+    .course-header {
+      background-color: var(--brand-dark);
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .course-info { font-size: 14px; line-height: 1.4; }
+    .course-info b { font-size: 16px; }
+    .course-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    .course-nav a {
+      padding: 7px 12px;
+      background-color: #284b80;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .course-nav a:hover { background-color: #3e65a3; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+    .page-title {
+      font-size: 26px;
+      color: var(--brand);
+      border-left: 6px solid var(--brand);
+      padding-left: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .intro {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+      font-size: 15px;
+    }
+    .intro .legend { margin-top: 10px; display:flex; gap:16px; flex-wrap:wrap; font-size:13.5px; color:#444; }
+    .intro .legend span { display:inline-flex; align-items:center; gap:6px; }
+
+    /* Toolbar */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--card);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    .toolbar-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      display:flex; align-items:center; gap:8px;
+      border:1px solid #d5dbe3; border-radius:8px; padding:8px 12px; background:#fbfcfe;
+    }
+    .search-box input { border:none; outline:none; width:100%; font-size:15px; background:transparent; }
+    .filters { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip {
+      border:1px solid #cdd6e2; background:#fff; color:#33475b;
+      padding:7px 12px; border-radius:20px; font-size:13.5px; cursor:pointer;
+      transition: all .15s ease; user-select:none;
+    }
+    .chip:hover { border-color: var(--brand); color: var(--brand); }
+    .chip.active { background: var(--brand); border-color: var(--brand); color:#fff; }
+
+    .progress-wrap { margin-top:14px; }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; font-size:14px; margin-bottom:6px; }
+    .progress-top b { color: var(--brand-2); }
+    .bar { height:12px; background:#e7ecf3; border-radius:20px; overflow:hidden; }
+    .bar > i { display:block; height:100%; width:0%; background:linear-gradient(90deg,#28a745,#1a73e8); transition:width .4s ease; }
+    .reset-btn {
+      margin-top:10px; background:none; border:none; color:#c0392b; font-size:13px; cursor:pointer; text-decoration:underline;
+    }
+
+    /* Unit sections */
+    .unit-section { margin-bottom: 26px; }
+    .unit-heading {
+      font-size: 18px; font-weight: bold; color:#fff;
+      background: linear-gradient(90deg, var(--brand-2), var(--brand));
+      padding: 10px 16px; border-radius: 8px; margin-bottom: 14px;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .unit-heading .count { font-size:13px; font-weight:500; background:rgba(255,255,255,.2); padding:3px 10px; border-radius:20px; }
+
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:16px; }
+
+    .exp-card {
+      background: var(--card);
+      border:1px solid #e6eaf0;
+      border-left:5px solid var(--brand);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.06);
+      display:flex; flex-direction:column;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .exp-card:hover { transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12); }
+    .exp-card.done { border-left-color: var(--ok); background:#f6fbf7; }
+
+    .exp-top { display:flex; align-items:flex-start; gap:12px; }
+    .exp-num {
+      flex-shrink:0;
+      width:38px; height:38px; border-radius:50%;
+      background: var(--brand); color:#fff; font-weight:bold;
+      display:flex; align-items:center; justify-content:center; font-size:15px;
+    }
+    .exp-card.done .exp-num { background: var(--ok); }
+    .exp-title { font-size:15px; font-weight:600; color:#12263A; }
+
+    .badges { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 4px; }
+    .badge { font-size:11.5px; padding:3px 9px; border-radius:20px; font-weight:600; }
+    .badge.co { background:#eaf1ff; color:#0d47a1; }
+    .badge.ds { background:#fff3e0; color:#c05600; }
+
+    .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .btn {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:8px 12px; border-radius:8px; font-size:13px; font-weight:600;
+      text-decoration:none; cursor:pointer; border:1px solid transparent; transition: all .15s ease;
+    }
+    .btn.read { background:#eef2f7; color:#33475b; }
+    .btn.read:hover { background:#e1e8f1; }
+    .btn.data { background:#fff3e0; color:#c05600; }
+    .btn.data:hover { background:#ffe6c7; }
+    .btn.colab { background:#F9AB00; color:#fff; }
+    .btn.colab:hover { background:#e69a00; }
+    .btn.disabled { opacity:.45; pointer-events:none; }
+
+    .card-footer {
+      margin-top:14px; padding-top:12px; border-top:1px solid #eef1f5;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .toggle {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:13px; cursor:pointer; user-select:none; padding:5px 10px; border-radius:8px;
+      border:1px solid #dfe5ee; background:#fff; color:#4b5b6e; transition: all .15s ease;
+    }
+    .toggle:hover { border-color:#b9c4d4; }
+    .toggle.like.active { background:#fff7e6; border-color:#f0c36d; color:#b8860b; }
+    .toggle.done.active { background:#e8f7ec; border-color:#8fd6a4; color:#1e7d34; }
+
+    .empty {
+      text-align:center; color:#7a8699; padding:40px 20px; font-size:15px;
+      background:var(--card); border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    footer {
+      text-align:center; padding:14px; background-color:#12263A; color:#fff; font-size:14px; margin-top:20px;
+    }
+
+    @media (max-width:600px){
+      .grid { grid-template-columns:1fr; }
+      .top-menu { gap:12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="site-title">Dr. GC Jana</div>
+    <div class="top-menu">
+      <a href="https://www.gcjana.in/">Home</a>
+      <a href="https://www.gcjana.in/publications.html">Publications</a>
+      <a href="https://www.gcjana.in/research.html">Research</a>
+      <a href="https://www.gcjana.in/courses.html" class="current">Courses</a>
+      <a href="https://www.gcjana.in/students/">Students</a>
+      <a href="https://www.gcjana.in/Software-Toolbox">Software/Toolbox</a>
+    </div>
+  </header>
+
+  <div class="course-header">
+    <div class="course-info">
+      <b>Machine Learning Lab | CSP473</b><br>
+      Offered by: Dr. Gopal Chandra Jana (Dr. GC Jana), Department of CSE, Sharda University
+    </div>
+    <div class="course-nav">
+      <a href="https://www.gcjana.in/courses/shardauniversity/2501/CSE473/">⬅ Course Home</a>
+      <a href="ML_Lab_Manual.pdf" target="_blank">📖 Lab Manual</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h1 class="page-title">🧪 List of Experiments — Machine Learning Lab (CSP473)</h1>
+
+    <div class="intro">
+      💡 <b>How to use this page:</b> Each experiment card gives you a <b>📖 Read</b> reference to learn the concept,
+      a <b>🗂️ Dataset</b> link to get the data, and a <b>▶️ Open in Colab</b> button that launches a fresh Google Colab
+      notebook so you can start coding right away. Use the search box and filters to find experiments, tap <b>⭐ Bookmark</b>
+      to save the ones you like, and tick <b>✅ Done</b> as you complete them — your progress is saved on this device.
+      <div class="legend">
+        <span>🐍 Recommended stack: Python · scikit-learn · NumPy · Pandas · Matplotlib · Seaborn · TensorFlow/Keras</span>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-row">
+        <div class="search-box">
+          🔍 <input type="text" id="search" placeholder="Search experiments, datasets, algorithms…" aria-label="Search experiments">
+        </div>
+        <div class="filters" id="unit-filters">
+          <span class="chip active" data-unit="all">All Units</span>
+          <span class="chip" data-unit="1">Unit 1</span>
+          <span class="chip" data-unit="2">Unit 2</span>
+          <span class="chip" data-unit="3">Unit 3</span>
+          <span class="chip" data-unit="4">Unit 4</span>
+          <span class="chip" data-unit="5">Unit 5</span>
+        </div>
+        <div class="filters" id="state-filters">
+          <span class="chip" data-state="bookmarked">⭐ Bookmarked</span>
+          <span class="chip" data-state="pending">⏳ Pending</span>
+          <span class="chip" data-state="done">✅ Completed</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <span>Your progress: <b id="progress-text">0 of 0 completed</b></span>
+          <span id="bookmark-count">⭐ 0 bookmarked</span>
+        </div>
+        <div class="bar"><i id="progress-bar"></i></div>
+        <button class="reset-btn" id="reset-btn">Reset my progress</button>
+      </div>
+    </div>
+
+    <div id="experiments-root"></div>
+    <div class="empty" id="empty-state" style="display:none;">No experiments match your search or filters.</div>
+  </div>
+
+  <footer>
+    © 2025 Dr. Gopal Chandra Jana | Machine Learning Lab (CSP473) · All rights reserved.
+  </footer>
+
+  <script>
+    // ---- One-click "new Colab notebook" link ----
+    const NEW_COLAB = "https://colab.research.google.com/#create=true";
+
+    // ---- Experiment data ----
+    const EXPERIMENTS = [
+      { n:1, unit:1, co:"CO1", title:"Understanding problem solving through Machine Learning and problem identification.",
+        datasets:[], read:"https://developers.google.com/machine-learning/problem-framing" },
+      { n:2, unit:1, co:"CO1", title:"State-of-the-art review of tools used in Machine Learning experiments and project development.",
+        datasets:[], read:"https://scikit-learn.org/stable/" },
+      { n:3, unit:1, co:"CO1", title:"Write a program to load and view a dataset file.",
+        datasets:[{label:"Iris", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html"}],
+        read:"https://pandas.pydata.org/docs/user_guide/10min.html" },
+      { n:4, unit:1, co:"CO1", title:"Implement simple linear regression using the housing price prediction problem.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"}],
+        read:"https://developers.google.com/machine-learning/crash-course/linear-regression" },
+      { n:5, unit:1, co:"CO2", title:"Implement binary logistic regression using the cancer identification problem.",
+        datasets:[{label:"Breast Cancer Wisconsin", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html"}],
+        read:"https://developers.google.com/machine-learning/crash-course/logistic-regression" },
+      { n:6, unit:2, co:"CO2", title:"Implement the Gradient Descent algorithm to optimize model parameters and visualize convergence of the cost function.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"}],
+        read:"https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent" },
+      { n:7, unit:2, co:"CO2", title:"Investigate the effect of learning rate and number of iterations on Gradient Descent convergence.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"}],
+        read:"https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent-exercise" },
+      { n:8, unit:2, co:"CO2", title:"Implement Ridge and Lasso regularized linear regression and compare their performance with standard linear regression.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"},{label:"Breast Cancer", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html"}],
+        read:"https://scikit-learn.org/stable/modules/linear_model.html" },
+      { n:9, unit:2, co:"CO2", title:"Develop a regularized logistic regression model and analyze the impact of regularization strength on classification accuracy.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"},{label:"Breast Cancer", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html"}],
+        read:"https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression" },
+      { n:10, unit:3, co:"CO3", title:"Implement a Support Vector Regression (SVR) model, compare different kernel functions, and evaluate using MAE, MSE and R² score.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"},{label:"UCI Diabetes", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_diabetes.html"}],
+        read:"https://scikit-learn.org/stable/modules/svm.html#regression" },
+      { n:11, unit:3, co:"CO3", title:"Design and train an Artificial Neural Network using Backpropagation; analyze the effect of architecture, activation functions and learning rate.",
+        datasets:[{label:"MNIST", url:"https://keras.io/api/datasets/mnist/"},{label:"Fashion-MNIST", url:"https://keras.io/api/datasets/fashion_mnist/"}],
+        read:"https://keras.io/guides/sequential_model/" },
+      { n:12, unit:3, co:"CO3", title:"Demonstrate the working of the decision tree based ID3 algorithm and classify a new sample.",
+        datasets:[{label:"Play Tennis / Iris", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html"}],
+        read:"https://scikit-learn.org/stable/modules/tree.html" },
+      { n:13, unit:3, co:"CO3", title:"Demonstrate the working of the Random Forest algorithm and classify a new sample.",
+        datasets:[{label:"Wine", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html"},{label:"Breast Cancer", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html"}],
+        read:"https://scikit-learn.org/stable/modules/ensemble.html#random-forests" },
+      { n:14, unit:4, co:"CO4", title:"Implement the K-Means clustering algorithm using an appropriate dataset.",
+        datasets:[{label:"Iris", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html"},{label:"Mall Customers", url:"https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python"}],
+        read:"https://scikit-learn.org/stable/modules/clustering.html#k-means" },
+      { n:15, unit:5, co:"CO5", title:"Split data into training, cross-validation and testing sets; evaluate using Hold-Out and k-Fold Cross-Validation.",
+        datasets:[{label:"Iris", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html"}],
+        read:"https://scikit-learn.org/stable/modules/cross_validation.html" },
+      { n:16, unit:5, co:"CO5", title:"Implement an Ensemble Learning approach (Bagging, Boosting or Stacking) to solve a time-series prediction problem.",
+        datasets:[{label:"California Housing", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html"},{label:"UCI Bike Sharing", url:"https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset"}],
+        read:"https://scikit-learn.org/stable/modules/ensemble.html" },
+      { n:17, unit:5, co:"CO5", title:"Perform statistical hypothesis testing (t-test, Chi-square, ANOVA or Mann-Whitney U) and interpret the results using Python statistical libraries.",
+        datasets:[{label:"Tips / Titanic / Iris (seaborn)", url:"https://github.com/mwaskom/seaborn-data"}],
+        read:"https://docs.scipy.org/doc/scipy/reference/stats.html" },
+      { n:18, unit:5, co:"CO6", title:"Course Project Evaluation — three reviews (Problem Statement, Design Specification, Development & Results).",
+        datasets:[{label:"Project dataset (your choice)", url:"https://archive.ics.uci.edu/"}],
+        read:"https://www.gcjana.in/courses/shardauniversity/2501/CSE473/", noColab:true }
+    ];
+
+    const UNIT_TITLES = {
+      1: "Unit 1 · Core Concepts of Machine Learning",
+      2: "Unit 2 · Supervised Learning Algorithms – Part One",
+      3: "Unit 3 · Supervised Learning Algorithms – Part Two",
+      4: "Unit 4 · Unsupervised Learning",
+      5: "Unit 5 · Model Evaluation, Ensemble Methods & Course Project"
+    };
+
+    // ---- Persistent state (safe: won't crash if storage is blocked) ----
+    const STORE_KEY = "ml_csp473_experiments_state_v1";
+    let state = { liked:{}, done:{} };
+    function loadState(){
+      try { const raw = localStorage.getItem(STORE_KEY); if(raw) state = JSON.parse(raw); }
+      catch(e){ /* storage unavailable (e.g. preview) — continue in-memory */ }
+    }
+    function saveState(){
+      try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){}
+    }
+    loadState();
+
+    // ---- Filter state ----
+    let activeUnit = "all";
+    let activeStateFilter = null; // 'bookmarked' | 'pending' | 'done' | null
+    let searchTerm = "";
+
+    const root = document.getElementById("experiments-root");
+    const emptyState = document.getElementById("empty-state");
+
+    function cardMatchesFilters(exp){
+      if(activeUnit !== "all" && String(exp.unit) !== String(activeUnit)) return false;
+      if(activeStateFilter === "bookmarked" && !state.liked[exp.n]) return false;
+      if(activeStateFilter === "done" && !state.done[exp.n]) return false;
+      if(activeStateFilter === "pending" && state.done[exp.n]) return false;
+      if(searchTerm){
+        const hay = (exp.title + " " + exp.co + " " + exp.datasets.map(d=>d.label).join(" ")).toLowerCase();
+        if(!hay.includes(searchTerm)) return false;
+      }
+      return true;
+    }
+
+    function render(){
+      root.innerHTML = "";
+      let anyShown = false;
+
+      for(let u=1; u<=5; u++){
+        const unitExps = EXPERIMENTS.filter(e => e.unit === u && cardMatchesFilters(e));
+        if(unitExps.length === 0) continue;
+        anyShown = true;
+
+        const section = document.createElement("div");
+        section.className = "unit-section";
+
+        const doneInUnit = EXPERIMENTS.filter(e=>e.unit===u && state.done[e.n]).length;
+        const totalInUnit = EXPERIMENTS.filter(e=>e.unit===u).length;
+
+        section.innerHTML = `
+          <div class="unit-heading">
+            <span>${UNIT_TITLES[u]}</span>
+            <span class="count">${doneInUnit}/${totalInUnit} done</span>
+          </div>
+          <div class="grid"></div>`;
+        const grid = section.querySelector(".grid");
+
+        unitExps.forEach(exp => grid.appendChild(buildCard(exp)));
+        root.appendChild(section);
+      }
+
+      emptyState.style.display = anyShown ? "none" : "block";
+      updateProgress();
+    }
+
+    function buildCard(exp){
+      const card = document.createElement("div");
+      card.className = "exp-card" + (state.done[exp.n] ? " done" : "");
+
+      const dsBadges = exp.datasets.length
+        ? exp.datasets.map(d=>`<span class="badge ds">🗂️ ${d.label}</span>`).join("")
+        : `<span class="badge ds">No dataset — conceptual</span>`;
+
+      const dataBtn = exp.datasets.length
+        ? `<a class="btn data" href="${exp.datasets[0].url}" target="_blank" rel="noopener">🗂️ Dataset</a>`
+        : `<span class="btn data disabled">🗂️ Dataset</span>`;
+
+      const colabBtn = exp.noColab
+        ? ``
+        : `<a class="btn colab" href="${NEW_COLAB}" target="_blank" rel="noopener">▶️ Open in Colab</a>`;
+
+      card.innerHTML = `
+        <div class="exp-top">
+          <div class="exp-num">${exp.n}</div>
+          <div class="exp-title">${exp.title}</div>
+        </div>
+        <div class="badges">
+          <span class="badge co">🎯 ${exp.co}</span>
+          ${dsBadges}
+        </div>
+        <div class="actions">
+          <a class="btn read" href="${exp.read}" target="_blank" rel="noopener">📖 Read</a>
+          ${dataBtn}
+          ${colabBtn}
+        </div>
+        <div class="card-footer">
+          <span class="toggle like ${state.liked[exp.n] ? "active":""}" data-like="${exp.n}">
+            ${state.liked[exp.n] ? "⭐ Bookmarked" : "☆ Bookmark"}
+          </span>
+          <span class="toggle done ${state.done[exp.n] ? "active":""}" data-done="${exp.n}">
+            ${state.done[exp.n] ? "✅ Done" : "◻️ Mark done"}
+          </span>
+        </div>`;
+
+      card.querySelector("[data-like]").addEventListener("click", () => {
+        state.liked[exp.n] = !state.liked[exp.n];
+        if(!state.liked[exp.n]) delete state.liked[exp.n];
+        saveState(); render();
+      });
+      card.querySelector("[data-done]").addEventListener("click", () => {
+        state.done[exp.n] = !state.done[exp.n];
+        if(!state.done[exp.n]) delete state.done[exp.n];
+        saveState(); render();
+      });
+
+      return card;
+    }
+
+    function updateProgress(){
+      const total = EXPERIMENTS.length;
+      const done = Object.keys(state.done).length;
+      const liked = Object.keys(state.liked).length;
+      const pct = total ? Math.round((done/total)*100) : 0;
+      document.getElementById("progress-text").textContent = `${done} of ${total} completed (${pct}%)`;
+      document.getElementById("progress-bar").style.width = pct + "%";
+      document.getElementById("bookmark-count").textContent = `⭐ ${liked} bookmarked`;
+    }
+
+    // ---- Toolbar wiring ----
+    document.getElementById("search").addEventListener("input", e => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      render();
+    });
+
+    document.querySelectorAll("#unit-filters .chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll("#unit-filters .chip").forEach(c=>c.classList.remove("active"));
+        chip.classList.add("active");
+        activeUnit = chip.dataset.unit;
+        render();
+      });
+    });
+
+    document.querySelectorAll("#state-filters .chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        const val = chip.dataset.state;
+        if(activeStateFilter === val){
+          activeStateFilter = null;
+          chip.classList.remove("active");
+        } else {
+          document.querySelectorAll("#state-filters .chip").forEach(c=>c.classList.remove("active"));
+          chip.classList.add("active");
+          activeStateFilter = val;
+        }
+        render();
+      });
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      if(confirm("Reset all your bookmarks and completed marks on this device?")){
+        state = { liked:{}, done:{} };
+        saveState(); render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
