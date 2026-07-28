@@ -295,9 +295,9 @@
     // ---- Experiment data ----
     const EXPERIMENTS = [
       { n:1, unit:1, co:"CO1", title:"Understanding problem solving through Machine Learning and problem identification.",
-        datasets:[], read:"https://developers.google.com/machine-learning/problem-framing" },
+        datasets:[], read:"https://developers.google.com/machine-learning/problem-framing", submission:"https://YOUR_SUBMISSION_LINK_1" },
       { n:2, unit:1, co:"CO1", title:"State-of-the-art review of tools used in Machine Learning experiments and project development.",
-        datasets:[], read:"https://scikit-learn.org/stable/" },
+        datasets:[], read:"https://scikit-learn.org/stable/", submission:"https://YOUR_SUBMISSION_LINK_2" },
       { n:3, unit:1, co:"CO1", title:"Write a program to load and view a dataset file.",
         datasets:[{label:"Iris", url:"https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html"}],
         read:"https://pandas.pydata.org/docs/user_guide/10min.html" },
@@ -345,7 +345,7 @@
         read:"https://docs.scipy.org/doc/scipy/reference/stats.html" },
       { n:18, unit:5, co:"CO6", title:"Course Project Evaluation — three reviews (Problem Statement, Design Specification, Development & Results).",
         datasets:[{label:"Project dataset (your choice)", url:"https://archive.ics.uci.edu/"}],
-        read:"https://www.gcjana.in/courses/shardauniversity/2501/CSE473/", noColab:true }
+        read:"https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/", noColab:true }
     ];
 
     const UNIT_TITLES = {
@@ -431,9 +431,11 @@
         ? `<a class="btn data" href="${exp.datasets[0].url}" target="_blank" rel="noopener">🗂️ Dataset</a>`
         : `<span class="btn data disabled">🗂️ Dataset</span>`;
 
-      const colabBtn = exp.noColab
-        ? ``
-        : `<a class="btn colab" href="${NEW_COLAB}" target="_blank" rel="noopener">▶️ Open in Colab</a>`;
+    const actionBtn = exp.submission
+        ? `<a class="btn colab" href="${exp.submission}" target="_blank" rel="noopener">📤 Submission</a>`
+        : (exp.noColab
+            ? ``
+            : `<a class="btn colab" href="${NEW_COLAB}" target="_blank" rel="noopener">▶️ Open in Colab</a>`);
 
       card.innerHTML = `
         <div class="exp-top">
@@ -447,7 +449,7 @@
         <div class="actions">
           <a class="btn read" href="${exp.read}" target="_blank" rel="noopener">📖 Read</a>
           ${dataBtn}
-          ${colabBtn}
+          ${actionBtn}
         </div>
         <div class="card-footer">
           <span class="toggle like ${state.liked[exp.n] ? "active":""}" data-like="${exp.n}">
