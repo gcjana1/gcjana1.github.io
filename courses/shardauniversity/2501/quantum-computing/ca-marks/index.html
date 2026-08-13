@@ -1,242 +1,404 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Quantum Computing (CSE063) CA Marks (Only for Special Summer Students-2512) | Dr. GC Jana</title>
 
 <style>
 
 body{
-font-family: Arial, sans-serif;
-background:#f4f6f9;
-text-align:center;
-padding:50px;
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    text-align:center;
+    padding:50px;
 }
 
 .container{
-background:white;
-padding:30px;
-width:480px;
-margin:auto;
-border-radius:10px;
-box-shadow:0px 0px 15px rgba(0,0,0,0.1);
+    background:white;
+    padding:30px;
+    width:480px;
+    margin:auto;
+    border-radius:10px;
+    box-shadow:0px 0px 15px rgba(0,0,0,0.1);
 }
 
 h2{
-margin-bottom:20px;
-color:#004aad;
+    margin-bottom:20px;
+    color:#004aad;
 }
 
 input,select{
-padding:10px;
-width:90%;
-margin:10px 0;
-border-radius:5px;
-border:1px solid #ccc;
+    padding:10px;
+    width:90%;
+    margin:10px 0;
+    border-radius:5px;
+    border:1px solid #ccc;
 }
 
 button{
-padding:10px 25px;
-background:#004aad;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:bold;
+    padding:10px 25px;
+    background:#004aad;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 button:hover{
-background:#003080;
+    background:#003080;
 }
 
 .result-card{
-margin-top:20px;
-padding:15px;
-background:#f1f7ff;
-border-radius:8px;
-text-align:left;
+    margin-top:20px;
+    padding:15px;
+    background:#f1f7ff;
+    border-radius:8px;
+    text-align:left;
 }
 
 .error{
-margin-top:15px;
-color:red;
-font-weight:bold;
+    margin-top:15px;
+    color:red;
+    font-weight:bold;
 }
 
 .marks-badge{
-font-size:22px;
-font-weight:bold;
-padding:8px 14px;
-border-radius:20px;
-color:white;
+    font-size:22px;
+    font-weight:bold;
+    padding:8px 14px;
+    border-radius:20px;
+    color:white;
 }
 
 .good{
-background:#28a745;
+    background:#28a745;
 }
 
 .average{
-background:#007bff;
+    background:#007bff;
 }
 
 .low{
-background:#dc3545;
-}
-
-.view-btn{
-background:#28a745;
-margin-top:10px;
+    background:#dc3545;
 }
 
 .note{
-margin-top:20px;
-font-size:14px;
-color:#555;
-background:#fff8e1;
-padding:10px;
-border-radius:5px;
+    margin-top:20px;
+    font-size:14px;
+    color:#555;
+    background:#fff8e1;
+    padding:10px;
+    border-radius:5px;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h2>Check Your Quantum Computing (CSE063) CA Marks (Only for Special Summer Students-2512)</h2>
+<h2>
+Check Your Quantum Computing (CSE063) CA Marks
+<br>
+(Only for Special Summer Students-2512)
+</h2>
 
 <select id="component">
+
 <option value="">Select Component</option>
-<option value="Assignmnet-1 Marks (10)">Assignment-1</option>
-<option value="Assessment-1 Marks(15)">Assessment-1</option>
-<option value="Mid-Sem Marks (15)">MTE</option>
+
+<option value="Assignment-1 (10)">
+Assignment-1
+</option>
+
+<option value="Assessment-1 (15)">
+Assessment-1
+</option>
+
+<option value="MTE (15)">
+MTE
+</option>
+
 </select>
 
-<input type="text" id="systemId" placeholder="Enter SYSTEM ID">
+<input 
+    type="text" 
+    id="systemId" 
+    placeholder="Enter SYSTEM ID"
+>
 
 <button onclick="getMarks()">Check</button>
 
 <div id="result"></div>
 
 <div class="note">
-<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage and evaluation policy of the University.
+<b>Note:</b> The marks displayed here are for reference only.
+Please refer to the University Academic Portal for final marks
+as per official weightage and evaluation policy of the University.
 </div>
 
 </div>
+
 
 <script>
 
 function getMarks(){
 
-var id=document.getElementById("systemId").value.trim();
-var component=document.getElementById("component").value;
-var resultDiv=document.getElementById("result");
+    var id = document.getElementById("systemId").value.trim();
 
-if(id=="" || component==""){
-resultDiv.innerHTML="<div class='error'>Please enter SYSTEM ID and select component.</div>";
-return;
-}
+    var component = document.getElementById("component").value;
 
-fetch("https://docs.google.com/spreadsheets/d/1rnXXYlqhTmJe092KIz_Fwz3XtGyj_DoJxT-3O6Z7gkw/gviz/tq?tqx=out:json")
+    var resultDiv = document.getElementById("result");
 
-.then(response=>response.text())
 
-.then(text=>{
+    if(id == "" || component == ""){
 
-var json=JSON.parse(text.substr(47).slice(0,-2));
-var rows=json.table.rows;
+        resultDiv.innerHTML =
+        "<div class='error'>Please enter SYSTEM ID and select component.</div>";
 
-var found=null;
+        return;
+    }
 
-rows.forEach(r=>{
-if(r.c[0] && r.c[0].v==id){
-found=r;
-}
-});
 
-if(!found){
-resultDiv.innerHTML="<div class='error'>No record found!</div>";
-return;
-}
+    /*
+    Google Sheet
+    Columns:
 
-var name=found.c[1] ? found.c[1].v : "";
+    A = Student ID
+    B = Name
+    C = Assignment-1 (10)
+    D = Assessment-1 (15)
+    E = MTE (15)
+    */
 
-var marks="";
-var link="";
+    fetch(
+        "https://docs.google.com/spreadsheets/d/1rnXXYlqhTmJe092KIz_Fwz3XtGyj_DoJxT-3O6Z7gkw/gviz/tq?tqx=out:json"
+    )
 
-// Assignment-1
-if(component=="Assignmnet-1 Marks (10)")
-marks=found.c[2] ? found.c[2].v : "";
+    .then(response => response.text())
 
-// Assessment-1
-if(component=="Assessment-1 Marks(15)")
-marks=found.c[3] ? found.c[3].v : "";
+    .then(text => {
 
-// Assignment-2
-if(component=="Assignment-2 Marks (20)"){
-marks=found.c[4] ? found.c[4].v : "";
-link=found.c[6] ? found.c[6].v : "";
-}
+        var json = JSON.parse(
+            text.substr(47).slice(0,-2)
+        );
 
-// Assessment-2
-if(component=="Assessment-2 Marks (20)")
-marks=found.c[5] ? found.c[5].v : "";
+        var rows = json.table.rows;
 
-// Handle "Absent"
-if(marks==="Absent"){
-resultDiv.innerHTML="<div class='error'>Student marked Absent</div>";
-return;
-}
+        var found = null;
 
-if(marks==="" && marks!==0){
-resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
-return;
-}
 
-var maxMarks=20;
-var percent=(marks/maxMarks)*100;
+        /*
+        Find student using Student ID
+        Column A = c[0]
+        */
 
-var gradeClass="average";
+        rows.forEach(r => {
 
-if(percent>=75) gradeClass="good";
-else if(percent<50) gradeClass="low";
+            if(
+                r.c[0] &&
+                String(r.c[0].v).trim() == String(id).trim()
+            ){
 
-// Button
-var buttonHTML="";
+                found = r;
 
-if(component=="Assignment-2 Marks (20)" && link){
-buttonHTML=`
-<br>
-<a href="${link}" target="_blank">
-<button class="view-btn">View Checked Copy</button>
-</a>
-`;
-}
+            }
 
-resultDiv.innerHTML=`
+        });
 
-<div class="result-card">
 
-<b>SYSTEM ID:</b> ${id}<br><br>
+        if(!found){
 
-<b>STUDENT NAME:</b> ${name}<br><br>
+            resultDiv.innerHTML =
+            "<div class='error'>No record found!</div>";
 
-<b>${component}:</b>
-<span class="marks-badge ${gradeClass}">
-${marks} / ${maxMarks}
-</span>
+            return;
+        }
 
-${buttonHTML}
 
-</div>
+        /*
+        Student Name
+        Column B = c[1]
+        */
 
-`;
+        var name =
+            found.c[1]
+            ? found.c[1].v
+            : "";
 
-})
 
-.catch(error=>{
-resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
-});
+        var marks = "";
+
+
+        /*
+        Assignment-1
+        Column C = c[2]
+        Maximum = 10
+        */
+
+        if(component == "Assignment-1 (10)"){
+
+            marks =
+                found.c[2]
+                ? found.c[2].v
+                : "";
+
+        }
+
+
+        /*
+        Assessment-1
+        Column D = c[3]
+        Maximum = 15
+        */
+
+        if(component == "Assessment-1 (15)"){
+
+            marks =
+                found.c[3]
+                ? found.c[3].v
+                : "";
+
+        }
+
+
+        /*
+        MTE
+        Column E = c[4]
+        Maximum = 15
+        */
+
+        if(component == "MTE (15)"){
+
+            marks =
+                found.c[4]
+                ? found.c[4].v
+                : "";
+
+        }
+
+
+        /*
+        Handle Absent
+        */
+
+        if(
+            String(marks).trim().toLowerCase() === "absent"
+        ){
+
+            resultDiv.innerHTML =
+            "<div class='error'>Student marked Absent</div>";
+
+            return;
+        }
+
+
+        /*
+        Handle blank marks
+        */
+
+        if(marks === "" && marks !== 0){
+
+            resultDiv.innerHTML =
+            "<div class='error'>Marks not available.</div>";
+
+            return;
+        }
+
+
+        /*
+        Maximum marks according to selected component
+        */
+
+        var maxMarks = 15;
+
+        if(component == "Assignment-1 (10)"){
+
+            maxMarks = 10;
+
+        }
+
+        else if(component == "Assessment-1 (15)"){
+
+            maxMarks = 15;
+
+        }
+
+        else if(component == "MTE (15)"){
+
+            maxMarks = 15;
+
+        }
+
+
+        /*
+        Calculate percentage
+        */
+
+        var percent =
+            (Number(marks) / maxMarks) * 100;
+
+
+        /*
+        Grade colour
+        */
+
+        var gradeClass = "average";
+
+
+        if(percent >= 75){
+
+            gradeClass = "good";
+
+        }
+
+        else if(percent < 50){
+
+            gradeClass = "low";
+
+        }
+
+
+        /*
+        Display result
+        */
+
+        resultDiv.innerHTML = `
+
+        <div class="result-card">
+
+            <b>SYSTEM ID:</b>
+            ${id}
+            <br><br>
+
+            <b>STUDENT NAME:</b>
+            ${name}
+            <br><br>
+
+            <b>${component}:</b>
+
+            <span class="marks-badge ${gradeClass}">
+                ${marks} / ${maxMarks}
+            </span>
+
+        </div>
+
+        `;
+
+    })
+
+
+    .catch(error => {
+
+        console.error(error);
+
+        resultDiv.innerHTML =
+        "<div class='error'>Error fetching data.</div>";
+
+    });
 
 }
 
