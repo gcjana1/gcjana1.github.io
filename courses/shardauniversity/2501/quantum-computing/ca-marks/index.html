@@ -107,10 +107,9 @@ border-radius:5px;
 
 <select id="component">
 <option value="">Select Component</option>
-<option value="Assignmnet-1 Marks (20)">Assignment-1</option>
-<option value="Assessment-1 Marks(20)">Assessment-1</option>
-<option value="Assignment-2 Marks (20)">Assignment-2</option>
-<option value="Assessment-2 Marks (20)">Assessment-2</option>
+<option value="Assignmnet-1 Marks (10)">Assignment-1</option>
+<option value="Assessment-1 Marks(15)">Assessment-1</option>
+<option value="Mid-Sem Marks (15)">MTE</option>
 </select>
 
 <input type="text" id="systemId" placeholder="Enter SYSTEM ID">
@@ -138,7 +137,7 @@ resultDiv.innerHTML="<div class='error'>Please enter SYSTEM ID and select compon
 return;
 }
 
-fetch("https://docs.google.com/spreadsheets/d/1TbBGA_g-RfVjAi-upNhZbm7Ag2pqDgyu-KFgYOQ2qrc/gviz/tq?tqx=out:json")
+fetch("https://docs.google.com/spreadsheets/d/1rnXXYlqhTmJe092KIz_Fwz3XtGyj_DoJxT-3O6Z7gkw/gviz/tq?tqx=out:json")
 
 .then(response=>response.text())
 
@@ -166,11 +165,11 @@ var marks="";
 var link="";
 
 // Assignment-1
-if(component=="Assignmnet-1 Marks (20)")
+if(component=="Assignmnet-1 Marks (10)")
 marks=found.c[2] ? found.c[2].v : "";
 
 // Assessment-1
-if(component=="Assessment-1 Marks(20)")
+if(component=="Assessment-1 Marks(15)")
 marks=found.c[3] ? found.c[3].v : "";
 
 // Assignment-2
