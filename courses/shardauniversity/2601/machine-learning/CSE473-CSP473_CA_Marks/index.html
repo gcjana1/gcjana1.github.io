@@ -1,7 +1,37 @@
 <!DOCTYPE html> 
 <html>
 <head>
-<title>CSE473 and CSP473 CA Marks</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CSE473 and CSP473 CA Marks - Machine Learning | Dr.GC Jana</title>
+
+<meta name="description"
+      content="Check CSE473 and CSP473 Continuous Assessment marks for Section D, including assignments, assessments, lab marks and Mid-Sem marks using your System ID.">
+
+<meta name="robots" content="noindex, follow">
+<meta name="googlebot" content="noindex, follow">
+<meta name="author" content="Dr. Gopal Chandra Jana">
+<meta name="theme-color" content="#004aad">
+
+<!-- Canonical: replace this URL if this HTML file is hosted at a different path. -->
+<link rel="canonical" href="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/CSE473-CSP473_CA_Marks/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="CSE473 & CSP473 CA Marks Checker">
+<meta property="og:description"
+      content="Check CSE473 and CSP473 CA, Assignment, Assessment, Lab and Mid-Sem marks using your System ID.">
+<meta property="og:url"
+      content="https://www.gcjana.in/courses/shardauniversity/2601/machine-learning/CSE473-CSP473_CA_Marks/">
+<meta property="og:site_name" content="GC Jana">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSE473 & CSP473 CA Marks Checker">
+<meta name="twitter:description"
+      content="Check CSE473 and CSP473 academic assessment marks using your System ID.">
+
 
 <style>
 body{
@@ -193,22 +223,28 @@ resultDiv.innerHTML="<div class='error'>Please select all fields.</div>";
 return;
 }
 
-var sheetURL="";
+// ============================================================
+// GOOGLE SHEET CONFIGURATION
+// Each assessment type uses its OWN Google Sheet.
+// ============================================================
 
-if(type=="theory"){
-sheetURL="https://docs.google.com/spreadsheets/d/1OTh-O8M1PGJDCeg2SJE22V8LLKQXETWIcGqNhB5lWc4/gviz/tq?tqx=out:json";
-}
+// IMPORTANT: If you create new Mid Sem or Lab sheets later, change ONLY
+// the corresponding URL below. Theory, Lab and Mid Sem remain independent.
+const SHEETS = {
+    theory: "https://docs.google.com/spreadsheets/d/1OTh-O8M1PGJDCeg2SJE22V8LLKQXETWIcGqNhB5lWc4/gviz/tq?tqx=out:json",
+    lab:    "https://docs.google.com/spreadsheets/d/1a0W4vwBtbDDVphS9MJutiWC12_DJpa0WxrBOBHaMiXY/gviz/tq?tqx=out:json",
+    midsem: "https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json"
+};
 
-if(type=="lab"){
-sheetURL="https://docs.google.com/spreadsheets/d/1a0W4vwBtbDDVphS9MJutiWC12_DJpa0WxrBOBHaMiXY/gviz/tq?tqx=out:json";
-}
+var sheetURL = SHEETS[type];
 
-if(type=="theory" || type=="midsem"){
-sheetURL="https://docs.google.com/spreadsheets/d/1p5_2LFB5UG3_SQnxPIYF1vg49VwEHjOSAEt1PJqUECk/gviz/tq?tqx=out:json";
-}
+resultDiv.innerHTML="<div class='result-card'>Fetching marks...</div>";
 
 fetch(sheetURL)
-.then(response=>response.text())
+.then(response=>{
+    if(!response.ok) throw new Error("Unable to access Google Sheet");
+    return response.text();
+})
 .then(text=>{
 
 var json=JSON.parse(text.substr(47).slice(0,-2));
@@ -222,7 +258,7 @@ found=r;
 });
 
 if(!found){
-resultDiv.innerHTML="<div class='error'>No record found!</div>";
+resultDiv.innerHTML="<div class='error'>No record found in the selected sheet!</div>";
 return;
 }
 
@@ -315,7 +351,7 @@ ${(showLink && submissionLink) ? `
 
 })
 .catch(error=>{
-resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
+resultDiv.innerHTML="<div class='error'>Unable to fetch marks. Please check that the selected Google Sheet is shared/published for web access.</div>";
 });
 
 }
