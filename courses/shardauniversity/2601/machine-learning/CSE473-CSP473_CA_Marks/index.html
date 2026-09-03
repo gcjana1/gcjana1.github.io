@@ -263,17 +263,23 @@ return;
 }
 
 var name=found.c[1]?.v || "";
-var submissionLink = found.c[6]?.v || "";
+
+// Theory sheet columns:
+// G (index 6) = Assignment-1 Submission Link
+// H (index 7) = Assignment-2 Submission Link
+var assignment1Link = found.c[6]?.v || "";
+var assignment2Link = found.c[7]?.v || "";
 
 var marks="";
 var componentName="";
-var showLink=false;
+var submissionLink="";
 
 // 🔹 Correct Mapping (Based on your sheet)
 
 if(component=="A1"){
 marks=found.c[2]?.v;
 componentName="Assignment-1";
+submissionLink=assignment1Link;
 }
 
 if(component=="T1"){
@@ -284,7 +290,7 @@ componentName="Assessment-1";
 if(component=="A2"){
 marks=found.c[4]?.v;
 componentName="Assignment-2";
-showLink=true;
+submissionLink=assignment2Link;
 }
 
 if(component=="T2"){
@@ -340,8 +346,8 @@ ${marks} / ${maxMarks}
 
 <br><br>
 
-${(showLink && submissionLink) ? `
-<a href="${submissionLink}" target="_blank">
+${(submissionLink) ? `
+<a href="${submissionLink}" target="_blank" rel="noopener noreferrer">
 <button style="background:#28a745;">View Graded Submission</button>
 </a>
 ` : ``}
