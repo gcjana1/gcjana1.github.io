@@ -138,6 +138,15 @@
       color:#004aad;
       font-weight:bold;
     }
+    .submission-note{
+      margin-top:12px;
+      padding:10px 12px;
+      background:#fff8e1;
+      border-left:4px solid #f0ad4e;
+      border-radius:5px;
+      color:#555;
+      font-size:14px;
+    }
   </style>
 </head>
 
@@ -281,20 +290,32 @@
         if (percent >= 75) gradeClass = "good";
         else if (percent < 50) gradeClass = "low";
 
-        let buttonHTML = "";
-        if (config.linkIndex !== null) {
-          const link = String(getCellValue(found, config.linkIndex)).trim();
+        let submissionHTML = "";
 
-          // Only create a clickable link for HTTPS URLs from Google Drive.
-          if (/^https:\/\/drive\.google\.com\//i.test(link)) {
-            buttonHTML = `
+        if (config.linkIndex !== null) {
+          const submissionValue = String(
+            getCellValue(found, config.linkIndex)
+          ).trim();
+
+          // If the submission column contains a Google Drive URL,
+          // show the checked-copy button.
+          if (/^https:\/\/drive\.google\.com\//i.test(submissionValue)) {
+            submissionHTML = `
               <br>
               <a class="view-btn"
-                 href="${escapeHTML(link)}"
+                 href="${escapeHTML(submissionValue)}"
                  target="_blank"
                  rel="noopener noreferrer">
                 View Checked Copy
               </a>`;
+          }
+          // If marks are zero, display the note/status stored in the
+          // submission-link column, e.g. "Not Submitted".
+          else if (marks === 0 && submissionValue !== "") {
+            submissionHTML = `
+              <div class="submission-note">
+                <b>Submission Note:</b> ${escapeHTML(submissionValue)}
+              </div>`;
           }
         }
 
@@ -306,7 +327,7 @@
             <span class="marks-badge ${gradeClass}">
               ${escapeHTML(marks)} / ${maxMarks}
             </span>
-            ${buttonHTML}
+            ${submissionHTML}
           </div>
         `;
       } catch (error) {
