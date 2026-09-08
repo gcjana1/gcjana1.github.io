@@ -1,247 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>CSA301 CA Marks (Only for Section - G) | Dr. GC Jana</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+  <title>Soft Computing CA Marks | B.Tech CSE AI&ML | Dr. GC Jana</title>
+  <meta name="description" content="Check Soft Computing Continuous Assessment (CA) marks for B.Tech CSE AI&ML students using your System ID. View Assignment-1, Assessment-1, Assignment-2 and Assessment-2 marks and available checked-copy links.">
+  <meta name="keywords" content="Soft Computing CA marks, Soft Computing marks, CA marks, B.Tech CSE AI&ML, CSE AI ML, Assignment marks, Assessment marks, System ID, Dr. GC Jana">
+  <meta name="author" content="Dr. GC Jana">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#004aad">
+  <link rel="canonical" href="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/ca-marks/">
 
-body{
-font-family: Arial, sans-serif;
-background:#f4f6f9;
-text-align:center;
-padding:50px;
-}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Soft Computing CA Marks | B.Tech CSE AI&ML">
+  <meta property="og:description" content="Check Soft Computing Continuous Assessment marks by System ID.">
+  <meta property="og:url" content="https://www.gcjana.in/courses/shardauniversity/2601/soft-computing/ca-marks/">
+  <meta property="og:site_name" content="Dr. GC Jana">
 
-.container{
-background:white;
-padding:30px;
-width:480px;
-margin:auto;
-border-radius:10px;
-box-shadow:0px 0px 15px rgba(0,0,0,0.1);
-}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Soft Computing CA Marks | B.Tech CSE AI&ML">
+  <meta name="twitter:description" content="Check Soft Computing CA marks using your System ID.">
 
-h2{
-margin-bottom:20px;
-color:#004aad;
-}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Soft Computing CA Marks",
+    "description": "Soft Computing Continuous Assessment marks checker for B.Tech CSE AI&ML students.",
+    "author": {
+      "@type": "Person",
+      "name": "Dr. GC Jana"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Soft Computing"
+    }
+  }
+  </script>
 
-input,select{
-padding:10px;
-width:90%;
-margin:10px 0;
-border-radius:5px;
-border:1px solid #ccc;
-}
-
-button{
-padding:10px 25px;
-background:#004aad;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:bold;
-}
-
-button:hover{
-background:#003080;
-}
-
-.result-card{
-margin-top:20px;
-padding:15px;
-background:#f1f7ff;
-border-radius:8px;
-text-align:left;
-}
-
-.error{
-margin-top:15px;
-color:red;
-font-weight:bold;
-}
-
-.marks-badge{
-font-size:22px;
-font-weight:bold;
-padding:8px 14px;
-border-radius:20px;
-color:white;
-}
-
-.good{
-background:#28a745;
-}
-
-.average{
-background:#007bff;
-}
-
-.low{
-background:#dc3545;
-}
-
-.view-btn{
-background:#28a745;
-margin-top:10px;
-}
-
-.note{
-margin-top:20px;
-font-size:14px;
-color:#555;
-background:#fff8e1;
-padding:10px;
-border-radius:5px;
-}
-
-</style>
+  <style>
+    body{
+      font-family:Arial,sans-serif;
+      background:#f4f6f9;
+      text-align:center;
+      padding:30px 15px;
+      margin:0;
+      color:#222;
+    }
+    .container{
+      background:white;
+      padding:30px;
+      max-width:520px;
+      width:calc(100% - 30px);
+      box-sizing:border-box;
+      margin:auto;
+      border-radius:12px;
+      box-shadow:0 4px 18px rgba(0,0,0,.10);
+    }
+    h1{
+      margin:0 0 10px;
+      color:#004aad;
+      font-size:25px;
+    }
+    .subtitle{
+      margin:0 0 22px;
+      color:#555;
+      font-size:14px;
+    }
+    input,select{
+      padding:12px;
+      width:100%;
+      box-sizing:border-box;
+      margin:9px 0;
+      border-radius:6px;
+      border:1px solid #ccc;
+      font-size:15px;
+    }
+    button{
+      padding:11px 28px;
+      background:#004aad;
+      color:white;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:15px;
+    }
+    button:hover{background:#003080}
+    button:disabled{opacity:.65;cursor:not-allowed}
+    .result-card{
+      margin-top:20px;
+      padding:18px;
+      background:#f1f7ff;
+      border-radius:8px;
+      text-align:left;
+      line-height:1.5;
+    }
+    .error{
+      margin-top:15px;
+      color:#c00;
+      font-weight:bold;
+    }
+    .marks-badge{
+      display:inline-block;
+      font-size:20px;
+      font-weight:bold;
+      padding:6px 13px;
+      border-radius:20px;
+      color:white;
+    }
+    .good{background:#28a745}
+    .average{background:#007bff}
+    .low{background:#dc3545}
+    .view-btn{
+      display:inline-block;
+      margin-top:12px;
+      background:#28a745;
+      color:white;
+      text-decoration:none;
+      padding:10px 16px;
+      border-radius:6px;
+      font-weight:bold;
+    }
+    .view-btn:hover{background:#218838}
+    .note{
+      margin-top:20px;
+      font-size:13px;
+      color:#555;
+      background:#fff8e1;
+      padding:11px;
+      border-radius:6px;
+      text-align:left;
+    }
+    .loading{
+      margin-top:15px;
+      color:#004aad;
+      font-weight:bold;
+    }
+  </style>
 </head>
 
 <body>
+  <main class="container">
+    <h1>Check Your Soft Computing CA Marks</h1>
+    <p class="subtitle">B.Tech CSE AI&ML • Enter your System ID to view your Continuous Assessment marks</p>
 
-<div class="container">
+    <select id="component" aria-label="Select assessment component">
+      <option value="">Select Component</option>
+      <option value="assignment1">Assignment-1</option>
+      <option value="assessment1">Assessment-1</option>
+      <option value="assignment2">Assignment-2</option>
+      <option value="assessment2">Assessment-2</option>
+    </select>
 
-<h2>Check Your CSA301 CA Marks (Only for Section - G)</h2>
+    <input type="text" id="systemId" placeholder="Enter SYSTEM ID" inputmode="numeric" autocomplete="off">
 
-<select id="component">
-<option value="">Select Component</option>
-<option value="Assignmnet-1 Marks (20)">Assignment-1</option>
-<option value="Assessment-1 Marks(20)">Assessment-1</option>
-<option value="Assignment-2 Marks (20)">Assignment-2</option>
-<option value="Assessment-2 Marks (20)">Assessment-2</option>
-</select>
+    <button id="checkButton" onclick="getMarks()">Check Marks</button>
 
-<input type="text" id="systemId" placeholder="Enter SYSTEM ID">
+    <div id="result" aria-live="polite"></div>
 
-<button onclick="getMarks()">Check</button>
+    <div class="note">
+      <b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per the official weightage and evaluation policy of the University.
+    </div>
+  </main>
 
-<div id="result"></div>
+  <script>
+    const SHEET_ID = "1GYxfa5xxiVOJ5INtWFYKP4w1DiHIRvTvidritFYkLmU";
+    const SHEET_GID = "0";
+    const SHEET_URL =
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}&tqx=out:json`;
 
-<div class="note">
-<b>Note:</b> The marks displayed here are for reference only. Please refer to the University Academic Portal for final marks as per official weightage and evaluation policy of the University.
-</div>
+    /*
+      Google Sheet columns shown in the provided sheet:
+      A = System ID
+      B = Name of the student
+      C = Assignment-1 Marks (20)
+      D = Assessment-1 Marks (20)
+      E = Assignment-2 Marks (20)
+      F = Assessment-2 Marks (20)
+      G = Assignment-1 Submission Link
+      H = Assignment-2 Submission Link
 
-</div>
+      JavaScript array indexes are zero-based, hence:
+      System ID = 0, Name = 1, A1 = 2, As1 = 3, A2 = 4, As2 = 5,
+      A1 link = 6, A2 link = 7.
+    */
 
-<script>
+    const COMPONENTS = {
+      assignment1: { label: "Assignment-1", marksIndex: 2, linkIndex: 6 },
+      assessment1: { label: "Assessment-1", marksIndex: 3, linkIndex: null },
+      assignment2: { label: "Assignment-2", marksIndex: 4, linkIndex: 7 },
+      assessment2: { label: "Assessment-2", marksIndex: 5, linkIndex: null }
+    };
 
-function getMarks(){
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
-var id=document.getElementById("systemId").value.trim();
-var component=document.getElementById("component").value;
-var resultDiv=document.getElementById("result");
+    function normaliseId(value) {
+      return String(value ?? "").trim().replace(/\\.0$/, "");
+    }
 
-if(id=="" || component==""){
-resultDiv.innerHTML="<div class='error'>Please enter SYSTEM ID and select component.</div>";
-return;
-}
+    function getCellValue(row, index) {
+      return row?.c?.[index]?.v ?? "";
+    }
 
-fetch("https://docs.google.com/spreadsheets/d/1TbBGA_g-RfVjAi-upNhZbm7Ag2pqDgyu-KFgYOQ2qrc/gviz/tq?tqx=out:json")
+    async function getRows() {
+      const response = await fetch(SHEET_URL, { cache: "no-store" });
+      if (!response.ok) throw new Error("Unable to access the Google Sheet.");
 
-.then(response=>response.text())
+      const text = await response.text();
 
-.then(text=>{
+      // Google Visualization returns JSONP such as:
+      // google.visualization.Query.setResponse({...});
+      const match = text.match(/setResponse\\((.*)\\);?\\s*$/s);
+      if (!match) throw new Error("Unexpected Google Sheet response.");
 
-var json=JSON.parse(text.substr(47).slice(0,-2));
-var rows=json.table.rows;
+      const json = JSON.parse(match[1]);
+      return json.table.rows || [];
+    }
 
-var found=null;
+    async function getMarks() {
+      const id = normaliseId(document.getElementById("systemId").value);
+      const componentKey = document.getElementById("component").value;
+      const resultDiv = document.getElementById("result");
+      const checkButton = document.getElementById("checkButton");
 
-rows.forEach(r=>{
-if(r.c[0] && r.c[0].v==id){
-found=r;
-}
-});
+      resultDiv.innerHTML = "";
 
-if(!found){
-resultDiv.innerHTML="<div class='error'>No record found!</div>";
-return;
-}
+      if (!id || !componentKey) {
+        resultDiv.innerHTML = "<div class='error'>Please enter SYSTEM ID and select a component.</div>";
+        return;
+      }
 
-var name=found.c[1] ? found.c[1].v : "";
+      checkButton.disabled = true;
+      resultDiv.innerHTML = "<div class='loading'>Checking marks...</div>";
 
-var marks="";
-var link="";
+      try {
+        const rows = await getRows();
+        const config = COMPONENTS[componentKey];
 
-// Assignment-1
-if(component=="Assignmnet-1 Marks (20)")
-marks=found.c[2] ? found.c[2].v : "";
+        const found = rows.find(row => normaliseId(getCellValue(row, 0)) === id);
 
-// Assessment-1
-if(component=="Assessment-1 Marks(20)")
-marks=found.c[3] ? found.c[3].v : "";
+        if (!found) {
+          resultDiv.innerHTML = "<div class='error'>No record found for the entered SYSTEM ID.</div>";
+          return;
+        }
 
-// Assignment-2
-if(component=="Assignment-2 Marks (20)"){
-marks=found.c[4] ? found.c[4].v : "";
-link=found.c[6] ? found.c[6].v : "";
-}
+        const name = getCellValue(found, 1);
+        const rawMarks = getCellValue(found, config.marksIndex);
+        const marksText = String(rawMarks).trim();
 
-// Assessment-2
-if(component=="Assessment-2 Marks (20)")
-marks=found.c[5] ? found.c[5].v : "";
+        if (marksText.toLowerCase() === "absent") {
+          resultDiv.innerHTML = "<div class='error'>Student marked Absent.</div>";
+          return;
+        }
 
-// Handle "Absent"
-if(marks==="Absent"){
-resultDiv.innerHTML="<div class='error'>Student marked Absent</div>";
-return;
-}
+        if (marksText === "") {
+          resultDiv.innerHTML = "<div class='error'>Marks not available.</div>";
+          return;
+        }
 
-if(marks==="" && marks!==0){
-resultDiv.innerHTML="<div class='error'>Marks not available.</div>";
-return;
-}
+        const marks = Number(rawMarks);
 
-var maxMarks=20;
-var percent=(marks/maxMarks)*100;
+        if (!Number.isFinite(marks)) {
+          resultDiv.innerHTML = "<div class='error'>Marks value is not available in a valid format.</div>";
+          return;
+        }
 
-var gradeClass="average";
+        const maxMarks = 20;
+        const percent = (marks / maxMarks) * 100;
 
-if(percent>=75) gradeClass="good";
-else if(percent<50) gradeClass="low";
+        let gradeClass = "average";
+        if (percent >= 75) gradeClass = "good";
+        else if (percent < 50) gradeClass = "low";
 
-// Button
-var buttonHTML="";
+        let buttonHTML = "";
+        if (config.linkIndex !== null) {
+          const link = String(getCellValue(found, config.linkIndex)).trim();
 
-if(component=="Assignment-2 Marks (20)" && link){
-buttonHTML=`
-<br>
-<a href="${link}" target="_blank">
-<button class="view-btn">View Checked Copy</button>
-</a>
-`;
-}
+          // Only create a clickable link for HTTPS URLs from Google Drive.
+          if (/^https:\\/\\/drive\\.google\\.com\\//i.test(link)) {
+            buttonHTML = `
+              <br>
+              <a class="view-btn"
+                 href="${escapeHTML(link)}"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                View Checked Copy
+              </a>`;
+          }
+        }
 
-resultDiv.innerHTML=`
+        resultDiv.innerHTML = `
+          <div class="result-card">
+            <b>SYSTEM ID:</b> ${escapeHTML(id)}<br><br>
+            <b>STUDENT NAME:</b> ${escapeHTML(name)}<br><br>
+            <b>${escapeHTML(config.label)}:</b>
+            <span class="marks-badge ${gradeClass}">
+              ${escapeHTML(marks)} / ${maxMarks}
+            </span>
+            ${buttonHTML}
+          </div>
+        `;
+      } catch (error) {
+        console.error(error);
+        resultDiv.innerHTML =
+          "<div class='error'>Error fetching data. Please try again later.</div>";
+      } finally {
+        checkButton.disabled = false;
+      }
+    }
 
-<div class="result-card">
-
-<b>SYSTEM ID:</b> ${id}<br><br>
-
-<b>STUDENT NAME:</b> ${name}<br><br>
-
-<b>${component}:</b>
-<span class="marks-badge ${gradeClass}">
-${marks} / ${maxMarks}
-</span>
-
-${buttonHTML}
-
-</div>
-
-`;
-
-})
-
-.catch(error=>{
-resultDiv.innerHTML="<div class='error'>Error fetching data.</div>";
-});
-
-}
-
-</script>
-
+    // Allow Enter key to check marks.
+    document.getElementById("systemId").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") getMarks();
+    });
+  </script>
 </body>
 </html>
