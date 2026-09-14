@@ -178,7 +178,7 @@ function buildIndex() {
 <div class="meta" style="color:var(--ink-faint);font-size:.9rem">${fmtDate(feat.date)} · ${rt(feat)} min read</div>
 </div></div>
 </div></section>
-
+${rest.length ? `
 <div class="filterbar"><div class="wrap">
 <div class="chips" id="chips">${chips}</div>
 <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
@@ -191,7 +191,7 @@ function buildIndex() {
 ${rest.map(card).join("\n")}
 <div class="empty" id="empty" style="display:none">No articles match yet. Try another topic or search term.</div>
 </div>
-</div>
+</div>` : ""}
 </main>` + footer() + `
 <script>(function(){var m=new URLSearchParams(location.search).get('c');if(m){var b=document.querySelector('.chip[data-cat="'+m.replace(/"/g,'')+'"]');if(b)b.click();var g=document.getElementById('grid-title');if(g)g.scrollIntoView();}})();</script>
 ` + enhancers;
@@ -248,11 +248,11 @@ ${older ? `<a class="prev" href="${purl(older.slug)}"><div class="lbl">← Previ
 ${newer ? `<a class="next" href="${purl(newer.slug)}"><div class="lbl">Next →</div><div class="ttl">${esc(newer.title)}</div></a>` : "<span></span>"}
 </nav>
 </article>
-
+${rel.length ? `
 <section class="related"><div class="wrap">
 <h2 class="section-title" style="margin-top:0">More to read</h2>
 <div class="grid">${rel.map(card).join("")}</div>
-</div></section>
+</div></section>` : ""}
 </main>` + footer() + enhancers;
 
   const dir = path.join(OUT, p.slug);
