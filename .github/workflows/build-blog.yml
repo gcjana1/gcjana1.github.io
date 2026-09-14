@@ -1,0 +1,41 @@
+name: Build blog
+
+# Rebuilds the blog whenever you edit the post data or the generator.
+# You edit blogs/assets/posts.js -> commit -> this regenerates every page,
+# cover, the sitemap and the RSS feed.
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - "blogs/assets/posts.js"
+      - "blogs/generate.cjs"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-blog
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Generate pages
+        run: node blogs/generate.cjs
+      - name: Commit rebuilt files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A blogs/
+          if git diff --staged --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Rebuild blog [skip ci]"
+            git push
+          fi
