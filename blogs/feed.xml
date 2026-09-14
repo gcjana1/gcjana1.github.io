@@ -5,51 +5,11 @@
   <description>Essays on advanced technology, recent research, the higher-education ecosystem, and student life — written for researchers, engineers, and students.</description>
   <language>en</language>
   <item>
-    <title>Foundation models are quietly rewriting scientific computing</title>
-    <link>https://www.gcjana.in/blogs/foundation-models-scientific-computing/</link>
-    <guid>https://www.gcjana.in/blogs/foundation-models-scientific-computing/</guid>
-    <pubDate>Tue, 10 Jun 2025 09:00:00 GMT</pubDate>
-    <category>Advanced Tech</category>
-    <description>Large pretrained models are moving from chatbots into simulation, discovery, and lab automation. Here is what changes for the people who actually run the experiments.</description>
-  </item>
-  <item>
-    <title>Reproducibility is a feature, not a chore</title>
-    <link>https://www.gcjana.in/blogs/reproducible-research-code/</link>
-    <guid>https://www.gcjana.in/blogs/reproducible-research-code/</guid>
-    <pubDate>Wed, 28 May 2025 09:00:00 GMT</pubDate>
-    <category>Research</category>
-    <description>Research code that someone else can run a year later is worth more than a clever result nobody can reproduce. A practical checklist for shipping work that survives.</description>
-  </item>
-  <item>
-    <title>How to read a machine-learning paper in 20 minutes</title>
-    <link>https://www.gcjana.in/blogs/read-ml-paper-in-20-minutes/</link>
-    <guid>https://www.gcjana.in/blogs/read-ml-paper-in-20-minutes/</guid>
-    <pubDate>Wed, 14 May 2025 09:00:00 GMT</pubDate>
-    <category>Students</category>
-    <description>You cannot read every paper front to back, and you should not try. A repeatable method for extracting what matters — fast — without fooling yourself.</description>
-  </item>
-  <item>
-    <title>The systems that make a research group healthy</title>
-    <link>https://www.gcjana.in/blogs/healthy-research-group/</link>
-    <guid>https://www.gcjana.in/blogs/healthy-research-group/</guid>
-    <pubDate>Wed, 30 Apr 2025 09:00:00 GMT</pubDate>
+    <title>When the agents can do it, what is a classroom for?</title>
+    <link>https://www.gcjana.in/blogs/what-is-a-classroom-for/</link>
+    <guid>https://www.gcjana.in/blogs/what-is-a-classroom-for/</guid>
+    <pubDate>Mon, 14 Sep 2026 09:00:00 GMT</pubDate>
     <category>Academia</category>
-    <description>Great groups are not built on brilliant individuals but on quiet systems — for feedback, credit, and care. What those systems look like, and why they scale trust.</description>
-  </item>
-  <item>
-    <title>Doing more with tiny models: edge AI in healthcare</title>
-    <link>https://www.gcjana.in/blogs/tiny-models-edge-ai-healthcare/</link>
-    <guid>https://www.gcjana.in/blogs/tiny-models-edge-ai-healthcare/</guid>
-    <pubDate>Sat, 12 Apr 2025 09:00:00 GMT</pubDate>
-    <category>Advanced Tech</category>
-    <description>The most useful medical AI often runs on a wearable, not a data centre. Why small, efficient models matter — and the techniques that make them work.</description>
-  </item>
-  <item>
-    <title>From coursework to research: a first-year roadmap</title>
-    <link>https://www.gcjana.in/blogs/first-year-graduate-roadmap/</link>
-    <guid>https://www.gcjana.in/blogs/first-year-graduate-roadmap/</guid>
-    <pubDate>Sat, 22 Mar 2025 09:00:00 GMT</pubDate>
-    <category>Students</category>
-    <description>The jump from taking classes to doing research is the hardest transition in graduate school. A month-by-month way to make it feel less like falling.</description>
+    <description>If AI agents can already learn and execute complex work, the reason to attend a lecture collapses — unless the classroom was never really about information. What is left is more valuable, not less.</description>
   </item>
 </channel></rss>
