@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Research cover">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#22D3EE"/>
+</linearGradient>
+<radialGradient id="glow" cx="30%" cy="24%" r="80%">
+<stop offset="0" stop-color="#ffffff" stop-opacity=".28"/><stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="800" fill="url(#g)"/>
+<circle cx="864" cy="400" r="82" fill="none" stroke="#fff" stroke-opacity="0.16499999999999998" stroke-width="1.6"/><circle cx="864" cy="400" r="164" fill="none" stroke="#fff" stroke-opacity="0.15" stroke-width="1.6"/><circle cx="864" cy="400" r="246" fill="none" stroke="#fff" stroke-opacity="0.135" stroke-width="1.6"/><circle cx="864" cy="400" r="328" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="1.6"/><circle cx="864" cy="400" r="410" fill="none" stroke="#fff" stroke-opacity="0.105" stroke-width="1.6"/><circle cx="864" cy="400" r="492" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="1.6"/><circle cx="801.0" cy="637.8" r="8.5" fill="#fff" fill-opacity="0.7105521874967963"/><circle cx="990.6" cy="295.8" r="5.0" fill="#fff" fill-opacity="0.5400966326473281"/><circle cx="826.1" cy="74.2" r="8.3" fill="#fff" fill-opacity="0.5103020940208808"/><circle cx="944.6" cy="385.0" r="6.3" fill="#fff" fill-opacity="0.5449059292208404"/><circle cx="499.1" cy="587.0" r="5.3" fill="#fff" fill-opacity="0.8887183996615932"/><circle cx="782.8" cy="388.3" r="7.3" fill="#fff" fill-opacity="0.6136063879588619"/><circle cx="1110.0" cy="402.0" r="10.1" fill="#fff" fill-opacity="0.5255790197756142"/>
+<rect width="1200" height="800" fill="url(#glow)"/>
+</svg>
