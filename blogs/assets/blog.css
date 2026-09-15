@@ -310,6 +310,11 @@ a:hover { color: var(--brand-deep); }
   .anim-figure .div-node { animation: none; }
 }
 
+/* shareable image embedded in article content */
+.share-figure { margin: 2.4rem 0; text-align: center; }
+.share-figure img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow-md); border: 1px solid var(--line); }
+.share-figure figcaption { font-size: .88rem; color: var(--ink-faint); margin-top: .8rem; }
+
 /* article tags + share */
 .article-foot { width: min(100% - 2.5rem, var(--measure)); margin: 2.4rem auto 0; }
 .taglist { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.6rem; }
