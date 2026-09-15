@@ -293,6 +293,23 @@ a:hover { color: var(--brand-deep); }
 .references li { margin: .5rem 0; }
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: .2rem 0; }
 
+/* inline animated diagram (used inside article content) */
+.anim-figure { margin: .2rem 0 2.2rem; }
+.anim-figure svg { width: 100%; height: auto; display: block; }
+.anim-figure figcaption { font-size: .86rem; color: var(--ink-faint); margin-top: .7rem; text-align: center; }
+.anim-figure .conv-line {
+  stroke-dasharray: 420; stroke-dashoffset: 420;
+  animation: anim-draw 1.6s ease-out forwards;
+}
+.anim-figure .div-node { animation: anim-pulse 2.6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.anim-figure .div-node:nth-of-type(2) { animation-delay: .5s; }
+@keyframes anim-draw { to { stroke-dashoffset: 0; } }
+@keyframes anim-pulse { 0%,100% { opacity: .85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) {
+  .anim-figure .conv-line { animation: none; stroke-dashoffset: 0; }
+  .anim-figure .div-node { animation: none; }
+}
+
 /* article tags + share */
 .article-foot { width: min(100% - 2.5rem, var(--measure)); margin: 2.4rem auto 0; }
 .taglist { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.6rem; }
