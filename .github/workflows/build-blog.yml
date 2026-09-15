@@ -1,14 +1,15 @@
 name: Build blog
 
 # Rebuilds the blog whenever you edit the post data or the generator.
-# You edit blogs/assets/posts.js -> commit -> this regenerates every page,
-# cover, the sitemap and the RSS feed.
+# Edit blogs/assets/posts.js -> commit -> this regenerates every page, cover,
+# share card, the sitemap and the RSS feed.
 on:
   push:
     branches: [ main, master ]
     paths:
       - "blogs/assets/posts.js"
       - "blogs/generate.cjs"
+      - "blogs/package.json"
   workflow_dispatch:
 
 permissions:
@@ -26,6 +27,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Install image library (for share cards)
+        working-directory: blogs
+        run: npm install --no-audit --no-fund
       - name: Generate pages
         run: node blogs/generate.cjs
       - name: Commit rebuilt files
