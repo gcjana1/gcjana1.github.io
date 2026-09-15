@@ -1,0 +1,9 @@
+{
+  "name": "the-signal-blog",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static blog generator",
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const { SITE, POSTS } = require("./assets/posts.js");
+let sharp = null; try { sharp = require("sharp"); } catch (e) { /* PNG share cards skipped if sharp is unavailable */ }
 
 const OUT = __dirname;
 const BASE = SITE.basePath.endsWith("/") ? SITE.basePath : SITE.basePath + "/";
@@ -77,6 +78,53 @@ function coverFor(p) {
   return BASE + "assets/covers/" + p.slug + ".svg";
 }
 
+/* ---------- social share card (1200x630 PNG, auto-fetched by LinkedIn/X/WhatsApp) ---------- */
+function wrapText(text, maxChars, maxLines) {
+  const words = String(text).split(/\s+/); const lines = []; let line = "";
+  for (const w of words) {
+    if ((line + " " + w).trim().length > maxChars && line) { lines.push(line); line = w; }
+    else line = (line + " " + w).trim();
+    if (lines.length === maxLines - 1 && (line + " ").length > maxChars) break;
+  }
+  if (line) lines.push(line);
+  if (lines.length > maxLines) { lines.length = maxLines; lines[maxLines - 1] = lines[maxLines - 1].replace(/\W?\w+$/, "") + "…"; }
+  return lines;
+}
+function ogCardSVG(p) {
+  const c = cat(p.category); const r = rng(p.slug + "og");
+  const lines = wrapText(p.title, 26, 3);
+  const startY = 470 - (lines.length - 1) * 74;
+  const tspans = lines.map((ln, i) => `<text x="70" y="${startY + i * 74}" font-family="Georgia, 'DejaVu Serif', serif" font-size="60" font-weight="700" fill="#ffffff">${esc(ln)}</text>`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c.color}"/><stop offset="1" stop-color="${c.color2}"/></linearGradient>
+<linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></linearGradient>
+</defs>
+<rect width="1200" height="630" fill="url(#g)"/>
+<g transform="scale(1,0.7875)" opacity=".9">${motif(c.motif, r)}</g>
+<rect width="1200" height="630" fill="url(#s)"/>
+<circle cx="86" cy="86" r="22" fill="#ffffff" fill-opacity=".18"/>
+<path d="M74 86h6l3-8 4 16 4-12 3 6h6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="120" y="95" font-family="'DejaVu Sans', sans-serif" font-size="30" font-weight="700" fill="#ffffff">${esc(SITE.name)}</text>
+<rect x="70" y="${startY - 96}" rx="16" ry="16" width="${p.category.length * 15 + 40}" height="40" fill="#ffffff" fill-opacity=".22"/>
+<text x="90" y="${startY - 69}" font-family="'DejaVu Sans', sans-serif" font-size="24" font-weight="700" fill="#ffffff">${esc(p.category)}</text>
+${tspans}
+<text x="70" y="575" font-family="'DejaVu Sans', sans-serif" font-size="26" fill="#ffffff" fill-opacity=".92">${esc(SITE.author)}</text>
+</svg>`;
+}
+async function ogImage(p) {
+  if (p.image) return p.image;                 // author-provided image wins
+  const dir = path.join(OUT, "assets", "covers");
+  fs.mkdirSync(dir, { recursive: true });
+  if (sharp) {
+    try {
+      await sharp(Buffer.from(ogCardSVG(p))).png().toFile(path.join(dir, p.slug + ".og.png"));
+      return BASE + "assets/covers/" + p.slug + ".og.png";
+    } catch (e) { /* fall through to SVG */ }
+  }
+  return coverFor(p);                          // fallback: the on-page SVG cover
+}
+
 /* ---------- shared chrome ---------- */
 function head(o) {
   const canonical = SITE.origin + o.path;
@@ -111,23 +159,23 @@ function header() {
   const links = SITE.nav.map((l) => `<a href="${escA(l.href)}">${esc(l.label)}</a>`).join("");
   return `<header class="site-header"><div class="wrap">
 <a class="brand" href="${BASE}"><span class="logo" aria-hidden="true"><svg width="17" height="12" viewBox="0 0 22 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h4l2-5 3 11 3-8 2 4h4"/></svg></span><span class="name">${esc(SITE.name)}</span></a>
-<nav class="nav"><span class="links" id="nav-links">${links}<a href="${BASE}feed.xml">RSS</a></span>
+<nav class="nav"><span class="links" id="nav-links">${links}</span>
 <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
 <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme"></button></nav>
 </div></header>`;
 }
 function footer() {
-  const nav = SITE.nav.map((l) => `<a href="${escA(l.href)}">${esc(l.label)}</a>`).join("");
   const soc = SITE.social.map((l) => `<a href="${escA(l.href)}" rel="noopener">${esc(l.label)}</a>`).join("");
   const cats = Object.keys(SITE.categories).map((k) => `<a href="${BASE}?c=${encodeURIComponent(k)}">${esc(k)}</a>`).join("");
+  const about = SITE.nav[0] ? SITE.nav[0].href : SITE.homeUrl;
   return `<footer class="site-footer"><div class="wrap">
 <div class="top">
 <div><div class="name"><span class="logo"><svg width="15" height="11" viewBox="0 0 22 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8h4l2-5 3 11 3-8 2 4h4"/></svg></span>${esc(SITE.name)}</div>
 <p>${esc(SITE.description)}</p></div>
 <div class="cols">
 <div><h4>Topics</h4>${cats}</div>
-<div><h4>Site</h4>${nav}<a href="${BASE}feed.xml">RSS feed</a></div>
-<div><h4>Elsewhere</h4>${soc}</div>
+<div><h4>Site</h4><a href="${escA(about)}">About Author</a><a href="${BASE}feed.xml">RSS feed</a></div>
+<div><h4>Contact</h4><a href="mailto:${escA(SITE.email)}">Email: ${esc(SITE.email)}</a>${soc}</div>
 </div></div>
 <div class="legal"><span>© ${new Date().getFullYear()} ${esc(SITE.author)}</span><span>${esc(SITE.name)} · ${esc(SITE.tagline)}</span></div>
 </div></footer>`;
@@ -153,30 +201,38 @@ function card(p) {
 }
 
 /* ---------- home ---------- */
-function buildIndex() {
+async function buildIndex() {
   const feat = sorted[0], rest = sorted.slice(1);
-  const c = cat(feat.category); const featCover = coverFor(feat);
+  const c = cat(feat.category); const featCover = coverFor(feat); const ogImg = await ogImage(feat);
   const chips = ['<button class="chip" data-cat="All" aria-pressed="true">All</button>']
     .concat(Object.keys(SITE.categories).map((k) => `<button class="chip" data-cat="${escA(k)}">${esc(k)}</button>`)).join("");
 
   const html = head({
     title: `${SITE.name} — ${SITE.tagline}`,
-    desc: SITE.description, path: BASE, ogType: "website", image: featCover,
+    desc: SITE.description, path: BASE, ogType: "website", image: ogImg,
     jsonld: { "@context": "https://schema.org", "@type": "Blog", name: SITE.name, description: SITE.description, url: SITE.origin + BASE, author: { "@type": "Person", name: SITE.author, url: SITE.authorUrl } },
   }) + header() + `
 <main>
-<section class="masthead"><div class="wrap">
+<section class="wrap"><div class="hero-split">
+<div class="intro">
 <div class="eyebrow">${esc(SITE.name)}</div>
 <h1>${esc(SITE.tagline)}</h1>
 <p>${esc(SITE.description)}</p>
-<div class="featured">
-<a class="cover" href="${purl(feat.slug)}"><img src="${escA(featCover)}" alt="" width="1200" height="800"/></a>
-<div class="body">
+<div class="actions">
+<a class="btn" href="${purl(feat.slug)}">Read the latest &rarr;</a>
+<a class="btn ghost" href="${BASE}feed.xml">Subscribe &middot; RSS</a>
+</div>
+<div class="topichints">${Object.keys(SITE.categories).map((k) => `<a href="${BASE}?c=${encodeURIComponent(k)}">${esc(k)}</a>`).join("")}</div>
+</div>
+<a class="feature-card" href="${purl(feat.slug)}" aria-label="${escA(feat.title)}">
+<img src="${escA(featCover)}" alt="" width="1200" height="800"/>
+<span class="scrim"></span>
+<div class="fc-body">
 <span class="cat" style="--cat:${c.color}">${esc(feat.category)}</span>
-<h2><a href="${purl(feat.slug)}">${esc(feat.title)}</a></h2>
-<p class="excerpt">${esc(feat.excerpt)}</p>
-<div class="meta" style="color:var(--ink-faint);font-size:.9rem">${fmtDate(feat.date)} · ${rt(feat)} min read</div>
-</div></div>
+<h2>${esc(feat.title)}</h2>
+<div class="meta">${fmtDate(feat.date)} &middot; ${rt(feat)} min read</div>
+</div>
+</a>
 </div></section>
 ${rest.length ? `
 <div class="filterbar"><div class="wrap">
@@ -204,16 +260,16 @@ function related(p) {
   const pool = (same.length ? same : sorted.filter((x) => x.slug !== p.slug)).slice(0, 3);
   return pool;
 }
-function buildPost(p) {
+async function buildPost(p) {
   const i = sorted.indexOf(p), newer = sorted[i - 1], older = sorted[i + 1];
-  const c = cat(p.category); const cover = coverFor(p);
+  const c = cat(p.category); const cover = coverFor(p); const ogImg = await ogImage(p);
   const canonical = SITE.origin + purl(p.slug);
   const rel = related(p);
 
   const html = head({
     title: `${p.title} — ${SITE.name}`, desc: p.excerpt, path: purl(p.slug),
-    ogType: "article", published: p.date, image: cover,
-    jsonld: { "@context": "https://schema.org", "@type": "BlogPosting", headline: p.title, description: p.excerpt, image: SITE.origin + (cover.startsWith("http") ? "" : "") + cover, datePublished: p.date, dateModified: p.date, articleSection: p.category, keywords: (p.tags || []).join(", "), url: canonical, mainEntityOfPage: canonical, author: { "@type": "Person", name: SITE.author, url: SITE.authorUrl }, publisher: { "@type": "Person", name: SITE.author } },
+    ogType: "article", published: p.date, image: ogImg,
+    jsonld: { "@context": "https://schema.org", "@type": "BlogPosting", headline: p.title, description: p.excerpt, image: ogImg.startsWith("http") ? ogImg : SITE.origin + ogImg, datePublished: p.date, dateModified: p.date, articleSection: p.category, keywords: (p.tags || []).join(", "), url: canonical, mainEntityOfPage: canonical, author: { "@type": "Person", name: SITE.author, url: SITE.authorUrl }, publisher: { "@type": "Person", name: SITE.author } },
   }) + header() + `
 <main><article>
 <div class="article-hero"><div class="cover"><img src="${escA(cover)}" alt="" width="1200" height="800"/></div></div>
@@ -286,8 +342,10 @@ ${items}
 }
 
 /* ---------- run ---------- */
-buildIndex();
-sorted.forEach(buildPost);
-buildSitemap();
-buildFeed();
-console.log(`Built ${sorted.length} posts + home + covers + sitemap + feed into ${BASE}`);
+(async () => {
+  await buildIndex();
+  for (const p of sorted) await buildPost(p);
+  buildSitemap();
+  buildFeed();
+  console.log(`Built ${sorted.length} posts + home + covers${sharp ? " + share cards" : ""} + sitemap + feed into ${BASE}`);
+})();

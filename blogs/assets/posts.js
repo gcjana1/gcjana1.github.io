@@ -25,9 +25,11 @@ const SITE = {
   basePath: "/blogs/",                // where this folder is served from
   twitter: "",                        // e.g. "gcjana" (without @) — used for share/meta; leave "" if none
 
-  // Header + footer navigation
+  email: "gcjana@gcjana.in",
+
+  // Header navigation (RSS now lives in the footer only)
   nav: [
-    { label: "Home",         href: "https://www.gcjana.in/" },
+    { label: "About Author", href: "https://www.gcjana.in/" },
     { label: "Research",     href: "https://www.gcjana.in/research.html" },
     { label: "Publications", href: "https://www.gcjana.in/publications.html" },
   ],
