@@ -210,6 +210,11 @@ const POSTS = [
       build around that knowledge, and on whether they can turn a student's own ability, combined with AI, into
       something neither could have produced alone.</p>
 
+      <figure class="share-figure">
+        <img src="/blogs/assets/img/will-ai-make-all-universities-equal.share.gif" alt="Animated share card: Will AI make all universities equal? — The Signal, Dr. Gopal Chandra Jana" loading="lazy" width="1200" height="630"/>
+        <figcaption>Like this piece? Save this card and share it on LinkedIn or X — it animates natively when uploaded as an image/video attachment.</figcaption>
+      </figure>
+
       <ol class="references">
         <li>Spence, M. (1973). Job Market Signaling. <em>The Quarterly Journal of Economics</em>, 87(3), 355–374.</li>
         <li>Merton, R. K. (1968). The Matthew Effect in Science. <em>Science</em>, 159(3810), 56–63.</li>
