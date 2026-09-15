@@ -141,7 +141,13 @@ function head(o) {
 <meta property="og:title" content="${escA(o.title)}"/>
 <meta property="og:description" content="${escA(o.desc)}"/>
 <meta property="og:url" content="${escA(canonical)}"/>
-${img ? `<meta property="og:image" content="${escA(img)}"/>` : ""}
+${img ? `<meta property="og:image" content="${escA(img)}"/>
+<meta property="og:image:secure_url" content="${escA(img)}"/>${img.endsWith(".og.png") ? `
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>` : ""}
+<meta property="og:image:alt" content="${escA(o.title)}"/>
+<meta name="twitter:image" content="${escA(img)}"/>` : ""}
 <meta name="twitter:card" content="${img ? "summary_large_image" : "summary"}"/>
 ${SITE.twitter ? `<meta name="twitter:creator" content="@${escA(SITE.twitter)}"/>` : ""}
 ${o.published ? `<meta property="article:published_time" content="${o.published}"/>` : ""}
