@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-label="Academia cover">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0D9488"/><stop offset="1" stop-color="#34D399"/>
+</linearGradient>
+<radialGradient id="glow" cx="30%" cy="24%" r="80%">
+<stop offset="0" stop-color="#ffffff" stop-opacity=".28"/><stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1200" height="800" fill="url(#g)"/>
+<circle cx="554.8" cy="464.2" r="201.6" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/><circle cx="1014.5" cy="605.0" r="291.2" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/><circle cx="667.6" cy="357.8" r="172.8" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/><circle cx="284.6" cy="186.4" r="124.4" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/><circle cx="517.2" cy="505.3" r="288.4" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/><circle cx="544.8" cy="445.1" r="6" fill="#fff" fill-opacity=".7"/><circle cx="418.5" cy="591.9" r="6" fill="#fff" fill-opacity=".7"/><circle cx="651.6" cy="574.8" r="6" fill="#fff" fill-opacity=".7"/><circle cx="578.6" cy="575.2" r="6" fill="#fff" fill-opacity=".7"/><circle cx="1006.0" cy="487.6" r="6" fill="#fff" fill-opacity=".7"/>
+<rect width="1200" height="800" fill="url(#glow)"/>
+</svg>
