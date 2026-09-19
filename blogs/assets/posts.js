@@ -30,8 +30,6 @@ const SITE = {
   // Header navigation (RSS now lives in the footer only)
   nav: [
     { label: "About Author", href: "https://www.gcjana.in/" },
-    { label: "Research",     href: "https://www.gcjana.in/research.html" },
-    { label: "Publications", href: "https://www.gcjana.in/publications.html" },
   ],
   social: [
     { label: "Google Scholar", href: "http://scholar.google.co.in/citations?user=rju8YWkAAAAJ&hl=en" },
