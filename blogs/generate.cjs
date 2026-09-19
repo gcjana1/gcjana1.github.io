@@ -226,7 +226,7 @@ async function buildIndex() {
 <p>${esc(SITE.description)}</p>
 <div class="actions">
 <a class="btn" href="${purl(feat.slug)}">Read the latest &rarr;</a>
-<a class="btn ghost" href="${BASE}feed.xml">Subscribe &middot; RSS</a>
+${rest.length ? `<a class="btn ghost" href="#grid-title">Browse all articles &darr;</a>` : ""}
 </div>
 <div class="topichints">${Object.keys(SITE.categories).map((k) => `<a href="${BASE}?c=${encodeURIComponent(k)}">${esc(k)}</a>`).join("")}</div>
 </div>
