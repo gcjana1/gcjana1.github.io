@@ -210,6 +210,7 @@ function card(p) {
 /* ---------- home ---------- */
 async function buildIndex() {
   const feat = sorted[0], rest = sorted.slice(1);
+  const hasMore = sorted.length > 1;
   const c = cat(feat.category); const featCover = coverFor(feat); const ogImg = await ogImage(feat);
   const chips = ['<button class="chip" data-cat="All" aria-pressed="true">All</button>']
     .concat(Object.keys(SITE.categories).map((k) => `<button class="chip" data-cat="${escA(k)}">${esc(k)}</button>`)).join("");
@@ -227,7 +228,7 @@ async function buildIndex() {
 <p>${esc(SITE.description)}</p>
 <div class="actions">
 <a class="btn" href="${purl(feat.slug)}">Read the latest &rarr;</a>
-${rest.length ? `<a class="btn ghost" href="#grid-title">Browse all articles &darr;</a>` : ""}
+${hasMore ? `<a class="btn ghost" href="${BASE}#grid-title">Browse all articles &darr;</a>` : ""}
 </div>
 <div class="topichints">${Object.keys(SITE.categories).map((k) => `<a href="${BASE}?c=${encodeURIComponent(k)}">${esc(k)}</a>`).join("")}</div>
 </div>
@@ -241,7 +242,7 @@ ${rest.length ? `<a class="btn ghost" href="#grid-title">Browse all articles &da
 </div>
 </a>
 </div></section>
-${rest.length ? `
+${hasMore ? `
 <div class="filterbar"><div class="wrap">
 <div class="chips" id="chips">${chips}</div>
 <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
@@ -249,9 +250,9 @@ ${rest.length ? `
 </div></div>
 
 <div class="wrap">
-<h2 class="section-title" id="grid-title">Latest articles</h2>
+<h2 class="section-title" id="grid-title">All articles</h2>
 <div class="grid" id="grid">
-${rest.map(card).join("\n")}
+${sorted.map(card).join("\n")}
 <div class="empty" id="empty" style="display:none">No articles match yet. Try another topic or search term.</div>
 </div>
 </div>` : ""}
