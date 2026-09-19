@@ -196,8 +196,9 @@ const enhancers = `
 function card(p) {
   const c = cat(p.category); const cover = coverFor(p);
   const data = `${p.title} ${p.excerpt} ${p.category} ${(p.tags || []).join(" ")}`;
+  const isLatest = sorted[0] && sorted[0].slug === p.slug;
   return `<article class="card" data-cat="${escA(p.category)}" data-text="${escA(data)}">
-<a class="cover" href="${purl(p.slug)}" aria-label="${escA(p.title)}"><img src="${escA(cover)}" alt="" loading="lazy" width="1200" height="800"/></a>
+<a class="cover" href="${purl(p.slug)}" aria-label="${escA(p.title)}"><img src="${escA(cover)}" alt="" loading="lazy" width="1200" height="800"/>${isLatest ? '<span class="badge-latest">Latest</span>' : ""}</a>
 <div class="pad">
 <span class="cat" style="--cat:${c.color}">${esc(p.category)}</span>
 <h3><a href="${purl(p.slug)}">${esc(p.title)}</a></h3>
@@ -262,9 +263,22 @@ ${rest.map(card).join("\n")}
 
 /* ---------- article ---------- */
 function related(p) {
-  const same = sorted.filter((x) => x.slug !== p.slug && x.category === p.category);
-  const pool = (same.length ? same : sorted.filter((x) => x.slug !== p.slug)).slice(0, 3);
-  return pool;
+  const items = []; const seen = new Set([p.slug]);
+  // Always surface the single latest post first, unless we're already on it
+  if (sorted[0] && !seen.has(sorted[0].slug)) { items.push(sorted[0]); seen.add(sorted[0].slug); }
+  // Fill remaining slots with posts from the same category
+  for (const x of sorted) {
+    if (items.length >= 3) break;
+    if (seen.has(x.slug) || x.category !== p.category) continue;
+    items.push(x); seen.add(x.slug);
+  }
+  // Fill any leftover slots with whatever is next most recent
+  for (const x of sorted) {
+    if (items.length >= 3) break;
+    if (seen.has(x.slug)) continue;
+    items.push(x); seen.add(x.slug);
+  }
+  return items;
 }
 async function buildPost(p) {
   const i = sorted.indexOf(p), newer = sorted[i - 1], older = sorted[i + 1];
