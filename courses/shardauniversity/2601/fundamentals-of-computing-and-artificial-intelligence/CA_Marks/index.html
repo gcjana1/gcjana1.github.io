@@ -1,1 +1,498 @@
-CA_Marks
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CSAI1101 CA Marks | Fundamentals of Computing and Artificial Intelligence | Dr. GC Jana</title>
+
+<meta name="description"
+content="Check Fundamentals of Computing and Artificial Intelligence (CSAI1101) continuous assessment marks, assignments and assessments using your System ID.">
+
+<meta name="robots" content="noindex, follow">
+<meta name="googlebot" content="noindex, follow">
+<meta name="author" content="Dr. Gopal Chandra Jana">
+<meta name="theme-color" content="#004aad">
+
+<!-- Update this URL if you host this page at another path -->
+<link rel="canonical"
+href="https://www.gcjana.in/courses/shardauniversity/2601/CSAI1101-CA-Marks/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="CSAI1101 CA Marks Checker">
+<meta property="og:description"
+content="Check your CSAI1101 assignment and assessment marks using your System ID.">
+<meta property="og:site_name" content="GC Jana">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSAI1101 CA Marks Checker">
+<meta name="twitter:description"
+content="Check your Continuous Assessment marks using your System ID.">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    text-align: center;
+    padding: 30px 15px;
+    margin: 0;
+    color: #202124;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    width: 100%;
+    max-width: 520px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #004aad;
+    font-size: 23px;
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+input, select {
+    display: block;
+    padding: 12px;
+    width: 100%;
+    margin: 12px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background: white;
+}
+
+button {
+    padding: 11px 22px;
+    background: #004aad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.88;
+}
+
+.check-btn {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.result-card {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f1f7ff;
+    border-radius: 8px;
+    text-align: left;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.error {
+    margin-top: 15px;
+    color: #c5221f;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.note {
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
+    background: #fff8e1;
+    padding: 12px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.marks-badge {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 6px 13px;
+    border-radius: 20px;
+    color: white;
+    margin-top: 5px;
+}
+
+.good {
+    background: #28a745;
+}
+
+.average {
+    background: #007bff;
+}
+
+.low {
+    background: #dc3545;
+}
+
+.course-buttons {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.course-buttons a {
+    text-decoration: none;
+}
+
+.btn-course {
+    background: #004aad;
+}
+
+.btn-instructor {
+    background: #28a745;
+}
+
+.btn-feedback {
+    background: #ff9800;
+}
+
+.submission-btn {
+    background: #28a745;
+    margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .container {
+        padding: 20px 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .course-buttons {
+        flex-direction: column;
+    }
+
+    .course-buttons a,
+    .course-buttons button {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Fundamentals of Computing and Artificial Intelligence</h2>
+
+    <p class="subtitle">
+        Course Code: <b>CSAI1101</b><br>
+        Continuous Assessment (CA) Marks Checker
+    </p>
+
+    <select id="courseType" onchange="updateComponents()">
+        <option value="">Select Assessment Type</option>
+        <option value="theory">Theory CA</option>
+    </select>
+
+    <select id="component">
+        <option value="">Select Component</option>
+    </select>
+
+    <input
+        type="text"
+        id="systemId"
+        placeholder="Enter your System ID"
+        autocomplete="off"
+        inputmode="numeric"
+    >
+
+    <button class="check-btn" onclick="getMarks()">Check Marks</button>
+
+    <div id="result" aria-live="polite"></div>
+
+    <div class="note">
+        <b>Note:</b> The marks displayed here are for reference only.
+        Please refer to the University Academic Portal for official marks
+        and applicable assessment weightage. Blank marks indicate that
+        marks are not currently available in the displayed sheet.
+    </div>
+
+    <div class="course-buttons">
+
+        <a href="https://www.gcjana.in/courses/shardauniversity/"
+           target="_blank" rel="noopener noreferrer">
+            <button type="button" class="btn-course">Course Page</button>
+        </a>
+
+        <a href="https://www.gcjana.in"
+           target="_blank" rel="noopener noreferrer">
+            <button type="button" class="btn-instructor">
+                Course Instructor
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+// =====================================================
+// GOOGLE SHEET CONFIGURATION
+// Spreadsheet: CA Marks_Computing-AI_CSAI1101
+// Sheet tab: Sheet1 (gid=0)
+// =====================================================
+
+const SHEET_URL =
+"https://docs.google.com/spreadsheets/d/1Vt77lofv3WsFED5DdbccD7wnxD2jk0XlhulakjOfINo/gviz/tq?tqx=out:json&gid=0";
+
+// Assessment component mapping:
+// A = System ID
+// B = Student Name
+// C = Assignment-1 Marks (20)
+// D = Assessment-1 Marks (20)
+// E = Assignment-2 Marks (20)
+// F = Assessment-2 Marks (20)
+// G = Assignment-1 Submission Link
+// H = Assignment-2 Submission Link
+
+const COMPONENTS = {
+    A1: {
+        name: "Assignment-1",
+        column: 2,
+        maxMarks: 20,
+        linkColumn: 6
+    },
+    T1: {
+        name: "Assessment-1",
+        column: 3,
+        maxMarks: 20
+    },
+    A2: {
+        name: "Assignment-2",
+        column: 4,
+        maxMarks: 20,
+        linkColumn: 7
+    },
+    T2: {
+        name: "Assessment-2",
+        column: 5,
+        maxMarks: 20
+    }
+};
+
+function updateComponents() {
+    const type = document.getElementById("courseType").value;
+    const comp = document.getElementById("component");
+
+    comp.innerHTML = '<option value="">Select Component</option>';
+
+    if (type === "theory") {
+        comp.innerHTML += '<option value="A1">Assignment-1 (20)</option>';
+        comp.innerHTML += '<option value="T1">Assessment-1 (20)</option>';
+        comp.innerHTML += '<option value="A2">Assignment-2 (20)</option>';
+        comp.innerHTML += '<option value="T2">Assessment-2 (20)</option>';
+    }
+}
+
+// Escape student data before inserting it into HTML.
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+// Google Sheets Visualization API returns a JSONP-style response.
+function parseGoogleSheet(responseText) {
+    const start = responseText.indexOf("{");
+    const end = responseText.lastIndexOf("}");
+
+    if (start === -1 || end === -1 || end < start) {
+        throw new Error("Invalid response from Google Sheets.");
+    }
+
+    return JSON.parse(responseText.substring(start, end + 1));
+}
+
+async function getMarks() {
+
+    const id = document.getElementById("systemId").value.trim();
+    const component = document.getElementById("component").value;
+    const type = document.getElementById("courseType").value;
+    const resultDiv = document.getElementById("result");
+
+    if (!id || !component || !type) {
+        resultDiv.innerHTML =
+            '<div class="error">Please select the assessment type, component, and enter your System ID.</div>';
+        return;
+    }
+
+    resultDiv.innerHTML =
+        '<div class="result-card">Fetching marks. Please wait...</div>';
+
+    try {
+        const response = await fetch(SHEET_URL);
+
+        if (!response.ok) {
+            throw new Error("Unable to access the Google Sheet.");
+        }
+
+        const responseText = await response.text();
+        const json = parseGoogleSheet(responseText);
+        const rows = json.table.rows || [];
+
+        let found = null;
+
+        for (const row of rows) {
+            const cells = row.c || [];
+            const sheetId = cells[0]?.v;
+
+            if (sheetId != null &&
+                String(sheetId).trim() === id) {
+                found = cells;
+                break;
+            }
+        }
+
+        if (!found) {
+            resultDiv.innerHTML =
+                '<div class="error">No student record found for this System ID. Please verify your ID.</div>';
+            return;
+        }
+
+        const studentName = found[1]?.v ?? "";
+        const config = COMPONENTS[component];
+
+        const rawMarks = found[config.column]?.v;
+        const submissionLink = config.linkColumn !== undefined
+            ? (found[config.linkColumn]?.v ?? "")
+            : "";
+
+        if (rawMarks === null || rawMarks === undefined ||
+            String(rawMarks).trim() === "") {
+            resultDiv.innerHTML =
+                '<div class="error">Marks are not available for this component yet. Please check again later.</div>';
+            return;
+        }
+
+        const marks = Number(rawMarks);
+
+        if (!Number.isFinite(marks)) {
+            resultDiv.innerHTML =
+                '<div class="error">The marks entry is invalid. Please contact the course instructor.</div>';
+            return;
+        }
+
+        const maxMarks = config.maxMarks;
+        const percentage = (marks / maxMarks) * 100;
+
+        let gradeClass = "average";
+
+        if (percentage >= 75) {
+            gradeClass = "good";
+        } else if (percentage < 50) {
+            gradeClass = "low";
+        }
+
+        // Only allow web links using HTTP or HTTPS.
+        let safeSubmissionLink = "";
+
+        if (submissionLink) {
+            try {
+                const parsedURL = new URL(String(submissionLink));
+
+                if (parsedURL.protocol === "https:" ||
+                    parsedURL.protocol === "http:") {
+                    safeSubmissionLink = parsedURL.href;
+                }
+            } catch (e) {
+                safeSubmissionLink = "";
+            }
+        }
+
+        resultDiv.innerHTML = `
+            <div class="result-card">
+
+                <b>System ID:</b> ${escapeHTML(id)}<br><br>
+
+                <b>Student Name:</b>
+                ${escapeHTML(studentName)}<br><br>
+
+                <b>Assessment Component:</b>
+                ${escapeHTML(config.name)}<br><br>
+
+                <b>Marks Obtained:</b><br>
+
+                <span class="marks-badge ${gradeClass}">
+                    ${escapeHTML(marks)} / ${maxMarks}
+                </span>
+
+                ${
+                    safeSubmissionLink
+                    ? `
+                        <br><br>
+                        <a href="${escapeHTML(safeSubmissionLink)}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <button type="button" class="submission-btn">
+                                View Submission
+                            </button>
+                        </a>
+                    `
+                    : ""
+                }
+
+            </div>
+        `;
+
+    } catch (error) {
+        console.error(error);
+
+        resultDiv.innerHTML =
+            '<div class="error">Unable to fetch marks. Please verify the Google Sheet ID and ensure the sheet is accessible for viewing on the web.</div>';
+    }
+}
+
+// Allow students to press Enter to check their marks.
+document.getElementById("systemId").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        getMarks();
+    }
+});
+
+</script>
+
+</body>
+</html>
+
