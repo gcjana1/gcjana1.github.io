@@ -461,6 +461,43 @@
   .soi .email-btn:hover { background: var(--blue-dk); }
   .soi .email-plain { display: block; margin-top: 10px; font-size: .82rem; color: var(--text-mute); }
   .soi .email-plain a { font-weight: 600; }
+
+	/* Student profile links */
+	.student-profiles {
+	  display: flex;
+	  flex-wrap: wrap;
+	  gap: 10px;
+	  margin-top: 16px;
+	}
+	
+	.profile-link {
+	  display: inline-block;
+	  padding: 7px 13px;
+	  border: 1px solid #dadce0;
+	  border-radius: 6px;
+	  text-decoration: none;
+	  font-size: 13px;
+	  font-weight: 500;
+	  transition: background-color 0.2s, color 0.2s;
+	}
+	
+	.profile-link.linkedin {
+	  color: #0a66c2;
+	}
+	
+	.profile-link.github {
+	  color: #24292f;
+	}
+	
+	.profile-link.leetcode {
+	  color: #b85c00;
+	}
+	
+	.profile-link:hover {
+	  background-color: #f1f3f4;
+	  text-decoration: underline;
+	}
+
 </style>
 </head>
 
